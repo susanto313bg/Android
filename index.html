@@ -3,32 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BG 9930</title>
+  <title>BG 9930 - Pengaturan Profil</title>
 
   <!-- Hubungkan ke PWA Manifest & Warna Tema -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1e293b">
   <link rel="apple-touch-icon" href="icon-192.png">
 
-  <!-- ========================================== -->
-  <!-- 1. CSS / DESAIN TAMPILAN APLIKASI (BG 9930) -->
-  <!-- ========================================== -->
   <style>
     :root {
-      --sidebar-width: 240px;
+      --sidebar-width: 260px;
       --primary-color: #1e293b;
+      --primary-hover: #0f172a;
       --accent-color: #2563eb;
+      --accent-hover: #1d4ed8;
       --bg-color: #f8fafc;
       --card-bg: #ffffff;
+      --card-border: #e2e8f0;
       --text-color: #0f172a;
       --text-muted: #64748b;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --radius: 12px;
+    }
+
+    /* Dark Mode variables */
+    [data-theme="dark"] {
+      --primary-color: #0f172a;
+      --primary-hover: #020617;
+      --accent-color: #3b82f6;
+      --accent-hover: #2563eb;
+      --bg-color: #090d16;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-color: #f8fafc;
+      --text-muted: #94a3b8;
+      --input-bg: #0f172a;
+      --input-border: #475569;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
     }
 
     body {
@@ -36,6 +58,7 @@
       color: var(--text-color);
       display: flex;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* --- Sidebar (Bilah Kiri) --- */
@@ -48,57 +71,98 @@
       bottom: 0;
       left: 0;
       z-index: 1000;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       flex-direction: column;
+      box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
     }
 
     .sidebar-header {
       padding: 1.25rem 1.5rem;
-      font-size: 1.2rem;
-      font-weight: bold;
+      font-size: 1.25rem;
+      font-weight: 800;
       letter-spacing: 1px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .sidebar-brand-badge {
+      background: var(--accent-color);
+      color: white;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
     }
 
     .sidebar-menu {
       list-style: none;
       padding: 1rem 0;
+      flex: 1;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 0.25rem;
     }
 
     .sidebar-menu li a {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      padding: 0.8rem 1.5rem;
-      color: #cbd5e1;
+      gap: 0.85rem;
+      padding: 0.85rem 1.5rem;
+      color: #94a3b8;
       text-decoration: none;
       font-size: 0.95rem;
       font-weight: 500;
       transition: all 0.2s ease;
+      border-left: 4px solid transparent;
+      cursor: pointer;
     }
 
-    .sidebar-menu li a:hover,
-    .sidebar-menu li a.active {
-      background-color: rgba(255, 255, 255, 0.1);
+    .sidebar-menu li a:hover {
+      background-color: rgba(255, 255, 255, 0.05);
       color: #ffffff;
-      border-left: 4px solid var(--accent-color);
+    }
+
+    .sidebar-menu li a.active {
+      background-color: rgba(37, 99, 235, 0.15);
+      color: #ffffff;
+      border-left-color: var(--accent-color);
     }
 
     .sidebar-menu svg {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       fill: currentColor;
+      flex-shrink: 0;
     }
 
-    /* Overlay latar belakang untuk layar HP saat Sidebar terbuka */
+    .sidebar-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.8rem;
+      color: #64748b;
+      text-align: center;
+    }
+
+    /* Overlay latar belakang untuk layar HP */
     .overlay {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
       z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      display: block;
+      opacity: 1;
     }
 
     /* --- Area Utama --- */
@@ -108,37 +172,46 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      transition: margin-left 0.3s ease;
+      width: calc(100% - var(--sidebar-width));
+      transition: margin-left 0.3s ease, width 0.3s ease;
     }
 
-    /* --- Header Atas --- */
+    /* --- Navbar Atas --- */
     .navbar {
       background-color: var(--card-bg);
-      height: 60px;
+      height: 65px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 0 1.5rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--shadow-sm);
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .toggle-btn {
       background: none;
       border: none;
       cursor: pointer;
-      margin-right: 1rem;
       color: var(--text-color);
       display: flex;
       align-items: center;
-      padding: 0.3rem;
-      border-radius: 6px;
+      justify-content: center;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: background-color 0.2s;
     }
 
     .toggle-btn:hover {
-      background-color: #f1f5f9;
+      background-color: rgba(0, 0, 0, 0.05);
     }
 
     .toggle-btn svg {
@@ -148,58 +221,363 @@
     }
 
     .app-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
-      color: var(--primary-color);
+      color: var(--text-color);
       letter-spacing: 0.5px;
+    }
+
+    .navbar-user-preview {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 30px;
+      background: rgba(0,0,0,0.03);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .navbar-user-preview:hover {
+      background: rgba(0,0,0,0.07);
+    }
+
+    .navbar-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent-color);
+    }
+
+    .navbar-user-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .navbar-user-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .navbar-user-role {
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
 
     /* --- Container Konten --- */
     .container {
-      padding: 1.5rem;
-      max-width: 800px;
+      padding: 1.75rem;
+      max-width: 960px;
       width: 100%;
       margin: 0 auto;
       flex: 1;
     }
 
+    .page-section {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .page-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- Card & Section Styling --- */
     .card {
       background: var(--card-bg);
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-      border: 1px solid #e2e8f0;
-      margin-bottom: 1rem;
+      padding: 1.75rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--card-border);
+      margin-bottom: 1.5rem;
     }
 
-    .card h2 {
-      margin-bottom: 0.5rem;
-      font-size: 1.25rem;
-      color: #1e293b;
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 0.75rem;
     }
 
-    .card p {
+    .card-title svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--accent-color);
+    }
+
+    /* Profile Header Box */
+    .profile-header-card {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(37, 99, 235, 0.05) 100%);
+      border: 1px solid var(--card-border);
+      padding: 1.75rem;
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      flex-shrink: 0;
+    }
+
+    .profile-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--card-bg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .avatar-upload-btn {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      background: var(--accent-color);
+      color: white;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .avatar-upload-btn:hover {
+      transform: scale(1.1);
+      background: var(--accent-hover);
+    }
+
+    .avatar-upload-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .profile-details-head {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .profile-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-color);
+    }
+
+    .profile-email {
       color: var(--text-muted);
-      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      gap: 0.4rem;
+      padding: 0.25rem 0.75rem;
+      background-color: rgba(37, 99, 235, 0.12);
+      color: var(--accent-color);
+      font-weight: 700;
+      font-size: 0.8rem;
+      border-radius: 20px;
+      margin-top: 0.4rem;
+    }
+
+    .role-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-color);
+      border-radius: 50%;
+    }
+
+    /* Form Grids */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .required-star {
+      color: #ef4444;
+      margin-left: 2px;
+    }
+
+    .input-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      background-color: var(--input-bg);
+      color: var(--text-color);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input-control:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    textarea.input-control {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    /* Switch / Toggle Preference */
+    .setting-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .setting-item:last-child {
+      border-bottom: none;
+    }
+
+    .setting-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .setting-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .setting-desc {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+    }
+
+    /* Custom Toggle Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #cbd5e1;
+      transition: .3s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--accent-color);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+
+    /* Action Buttons */
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
     }
 
     .btn {
-      display: inline-block;
-      width: 100%;
-      margin-top: 1rem;
-      padding: 0.75rem 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
       background-color: var(--accent-color);
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
     }
 
     .btn:hover {
-      background-color: #1d4ed8;
+      background-color: var(--accent-hover);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--text-color);
+      border: 1px solid var(--input-border);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(0,0,0,0.05);
     }
 
     #btnInstall {
@@ -209,6 +587,112 @@
 
     #btnInstall:hover {
       background-color: #047857;
+    }
+
+    /* --- STREAMING_CHUNK: Styling Custom Toast Notification System --- */
+    .toast-container {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+      max-width: 380px;
+      width: calc(100% - 3rem);
+    }
+
+    .toast {
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      padding: 0.9rem 1.1rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      pointer-events: auto;
+      transform: translateX(120%);
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s ease;
+      border: 1px solid var(--card-border);
+      border-left: 5px solid #2563eb;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    /* Variants */
+    .toast.toast-success {
+      border-left-color: #10b981;
+    }
+    .toast.toast-success .toast-icon {
+      fill: #10b981;
+    }
+
+    .toast.toast-error {
+      border-left-color: #ef4444;
+    }
+    .toast.toast-error .toast-icon {
+      fill: #ef4444;
+    }
+
+    .toast.toast-warning {
+      border-left-color: #f59e0b;
+    }
+    .toast.toast-warning .toast-icon {
+      fill: #f59e0b;
+    }
+
+    .toast.toast-info {
+      border-left-color: #3b82f6;
+    }
+    .toast.toast-info .toast-icon {
+      fill: #3b82f6;
+    }
+
+    .toast-icon {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .toast-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .toast-title {
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    .toast-text {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .toast-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 2px;
+      border-radius: 4px;
+      transition: color 0.2s;
+    }
+
+    .toast-close:hover {
+      color: var(--text-color);
     }
 
     /* --- Responsif Layar HP (Mobile) --- */
@@ -221,12 +705,34 @@
         transform: translateX(0);
       }
 
-      .overlay.active {
-        display: block;
-      }
-
       .main-wrapper {
         margin-left: 0;
+        width: 100%;
+      }
+
+      .profile-header-card {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+
+      .role-badge {
+        align-self: center;
+      }
+
+      .btn-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .toast-container {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        width: auto;
       }
     }
   </style>
@@ -236,11 +742,13 @@
   <!-- 1. Sidebar (Bilah Kiri) -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      MENU
+      BG 9930
+      <span class="sidebar-brand-badge">PRO</span>
     </div>
+
     <ul class="sidebar-menu">
       <li>
-        <a href="#" class="active">
+        <a href="#home" class="nav-link active" data-page="home">
           <!-- Ikon Home (SVG) -->
           <svg viewBox="0 0 24 24">
             <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
@@ -248,55 +756,522 @@
           <span>Home</span>
         </a>
       </li>
+      <li>
+        <a href="#settings" class="nav-link" data-page="settings">
+          <!-- Ikon Roda Gigi / Settings (Gear SVG) -->
+          <svg viewBox="0 0 24 24">
+            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+          </svg>
+          <span>Pengaturan</span>
+        </a>
+      </li>
     </ul>
+
+    <div class="sidebar-footer">
+      &copy; 2026 BG 9930 System v2.0
+    </div>
   </aside>
 
-  <!-- Overlay hitam transparan untuk HP saat sidebar terbuka -->
+  <!-- Overlay transparan untuk HP saat sidebar terbuka -->
   <div class="overlay" id="overlay"></div>
 
-  <!-- 2. Area Utama & Header -->
+  <!-- 2. Area Utama & Navbar -->
   <div class="main-wrapper">
-    <!-- Header Atas -->
     <header class="navbar">
-      <button class="toggle-btn" id="btnToggleSidebar" aria-label="Toggle Navigation">
-        <!-- Ikon Menu Hamburger -->
-        <svg viewBox="0 0 24 24">
-          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-        </svg>
-      </button>
-      <div class="app-title">BG 9930</div>
+      <div class="navbar-left">
+        <button class="toggle-btn" id="btnToggleSidebar" aria-label="Toggle Navigation">
+          <!-- Ikon Menu Hamburger -->
+          <svg viewBox="0 0 24 24">
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </button>
+        <div class="app-title">BG 9930</div>
+      </div>
+
+      <!-- Quick User Profile Info in Navbar -->
+      <div class="navbar-user-preview" id="navProfileTrigger" title="Buka Profil">
+        <img id="navAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Avatar" class="navbar-avatar">
+        <div class="navbar-user-info">
+          <span id="navName" class="navbar-user-name">Ahmad Subagja</span>
+          <span id="navRole" class="navbar-user-role">Administrator</span>
+        </div>
+      </div>
     </header>
 
     <!-- Konten Utama -->
     <main class="container">
-      <section class="card">
-        <h2>Selamat Datang di BG 9930</h2>
-        <p>Aplikasi telah diperbarui dengan bilah navigasi kiri dan header atas yang modern.</p>
-        
-        <button id="btnKlik" class="btn">Uji Tombol</button>
-        <button id="btnInstall" class="btn">Install Aplikasi ke HP</button>
+      
+      <!-- Halaman HOME -->
+      <section id="page-home" class="page-section active">
+        <div class="card">
+          <h2 class="card-title">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            Selamat Datang di BG 9930
+          </h2>
+          <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem;">
+            Aplikasi PWA modern dengan fitur pengelolaan profil pengguna yang interaktif. Anda dapat mengakses menu <strong>Pengaturan</strong> di sidebar kiri untuk memperbarui data diri, keamanan, dan tema aplikasi.
+          </p>
+          
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button id="btnQuickProfile" class="btn">
+              <span>Buka Pengaturan Profil</span>
+            </button>
+            <button id="btnInstall" class="btn">Install Aplikasi ke HP</button>
+          </div>
+        </div>
       </section>
+
+      <!-- Halaman PENGATURAN / SETTINGS -->
+      <section id="page-settings" class="page-section">
+        
+        <!-- Header Profile Card -->
+        <div class="profile-header-card">
+          <div class="avatar-wrapper">
+            <img id="displayAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Foto Profil" class="profile-avatar-img">
+            <label for="fileInput" class="avatar-upload-btn" title="Ganti Foto Profil">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>
+              </svg>
+            </label>
+            <input type="file" id="fileInput" accept="image/*">
+          </div>
+
+          <div class="profile-details-head">
+            <h1 id="displayFullName" class="profile-name">Ahmad Subagja</h1>
+            <p id="displayEmail" class="profile-email">ahmad@bg9930.com</p>
+            <span id="displayRoleBadge" class="role-badge">Administrator</span>
+          </div>
+        </div>
+
+        <!-- Form Pengaturan Profil (novalidate mematikan tooltip bawaan browser) -->
+        <form id="profileForm" novalidate>
+          
+          <!-- Card Data Diri -->
+          <div class="card">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              Data Diri Pengguna
+            </h2>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="inputFullName">Nama Lengkap <span class="required-star">*</span></label>
+                <input type="text" id="inputFullName" class="input-control" placeholder="Masukkan nama lengkap">
+              </div>
+
+              <div class="form-group">
+                <label for="inputUsername">Username</label>
+                <input type="text" id="inputUsername" class="input-control" placeholder="Masukkan username">
+              </div>
+
+              <div class="form-group">
+                <label for="inputEmail">Email / Surel <span class="required-star">*</span></label>
+                <input type="email" id="inputEmail" class="input-control" placeholder="nama@email.com">
+              </div>
+
+              <div class="form-group">
+                <label for="inputPhone">Nomor Telepon / WhatsApp</label>
+                <input type="tel" id="inputPhone" class="input-control" placeholder="08xxxxxxxxxx">
+              </div>
+
+              <div class="form-group">
+                <label for="inputRole">Jabatan / Role</label>
+                <input type="text" id="inputRole" class="input-control" placeholder="Administrator, Developer, Manager">
+              </div>
+
+              <div class="form-group full-width">
+                <label for="inputBio">Bio / Catatan Singkat</label>
+                <textarea id="inputBio" class="input-control" placeholder="Tuliskan deskripsi singkat profil Anda..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Keamanan -->
+          <div class="card">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+              Keamanan Kata Sandi
+            </h2>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="inputCurrentPass">Kata Sandi Saat Ini</label>
+                <input type="password" id="inputCurrentPass" class="input-control" placeholder="••••••••">
+              </div>
+              <div class="form-group">
+                <label for="inputNewPass">Kata Sandi Baru</label>
+                <input type="password" id="inputNewPass" class="input-control" placeholder="••••••••">
+              </div>
+              <div class="form-group">
+                <label for="inputConfirmPass">Konfirmasi Kata Sandi Baru</label>
+                <input type="password" id="inputConfirmPass" class="input-control" placeholder="••••••••">
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Preferensi & Tampilan -->
+          <div class="card">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+              Preferensi Aplikasi
+            </h2>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Notifikasi Sistem</span>
+                <span class="setting-desc">Terima pemberitahuan dan pembaruan penting.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="toggleNotifications" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-title">Mode Gelap (Dark Mode)</span>
+                <span class="setting-desc">Aktifkan tampilan tema gelap yang nyaman di mata.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="toggleTheme">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Tombol Simpan -->
+          <div class="btn-group">
+            <button type="button" id="btnResetProfile" class="btn btn-secondary">Batal / Reset</button>
+            <button type="submit" class="btn">
+              <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: currentColor;"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+              Simpan Perubahan
+            </button>
+          </div>
+
+        </form>
+      </section>
+
     </main>
   </div>
 
-  <!-- ========================================== -->
-  <!-- 2. JAVASCRIPT / LOGIKA APLIKASI            -->
-  <!-- ========================================== -->
+  <!-- Container Custom Toast Notification -->
+  <div class="toast-container" id="toastContainer"></div>
+
   <script>
-    // A. Logika Buka / Tutup Sidebar
+    // Data Default Profil
+    const DEFAULT_PROFILE = {
+      fullName: 'Ahmad Subagja',
+      username: 'ahmad9930',
+      email: 'ahmad@bg9930.com',
+      phone: '081234567890',
+      role: 'Administrator',
+      bio: 'Pengembang sistem BG 9930 dan manajer platform PWA.',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      notifications: true,
+      theme: 'light'
+    };
+
+    // Global State
+    let userProfile = { ...DEFAULT_PROFILE };
+
+    // DOM Elements
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
     const btnToggleSidebar = document.getElementById('btnToggleSidebar');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pageSections = document.querySelectorAll('.page-section');
+    
+    // Form Elements
+    const profileForm = document.getElementById('profileForm');
+    const fileInput = document.getElementById('fileInput');
+    const displayAvatar = document.getElementById('displayAvatar');
+    const navAvatar = document.getElementById('navAvatar');
+    const navName = document.getElementById('navName');
+    const navRole = document.getElementById('navRole');
+    const displayFullName = document.getElementById('displayFullName');
+    const displayEmail = document.getElementById('displayEmail');
+    const displayRoleBadge = document.getElementById('displayRoleBadge');
+
+    const inputFullName = document.getElementById('inputFullName');
+    const inputUsername = document.getElementById('inputUsername');
+    const inputEmail = document.getElementById('inputEmail');
+    const inputPhone = document.getElementById('inputPhone');
+    const inputRole = document.getElementById('inputRole');
+    const inputBio = document.getElementById('inputBio');
+    
+    const inputCurrentPass = document.getElementById('inputCurrentPass');
+    const inputNewPass = document.getElementById('inputNewPass');
+    const inputConfirmPass = document.getElementById('inputConfirmPass');
+
+    const toggleNotifications = document.getElementById('toggleNotifications');
+    const toggleTheme = document.getElementById('toggleTheme');
+    const btnResetProfile = document.getElementById('btnResetProfile');
+    const btnQuickProfile = document.getElementById('btnQuickProfile');
+    const navProfileTrigger = document.getElementById('navProfileTrigger');
+
+    // A. LocalStorage Load & UI Sync
+    function loadProfile() {
+      const savedData = localStorage.getItem('bg9930_user_profile');
+      if (savedData) {
+        try {
+          userProfile = { ...DEFAULT_PROFILE, ...JSON.parse(savedData) };
+        } catch (e) {
+          console.error("Gagal membaca profil dari localStorage", e);
+        }
+      }
+      applyProfileToUI();
+    }
+
+    function applyProfileToUI() {
+      // Set Form Inputs
+      inputFullName.value = userProfile.fullName;
+      inputUsername.value = userProfile.username;
+      inputEmail.value = userProfile.email;
+      inputPhone.value = userProfile.phone;
+      inputRole.value = userProfile.role;
+      inputBio.value = userProfile.bio;
+      toggleNotifications.checked = userProfile.notifications;
+
+      // Header Preview Display
+      displayFullName.textContent = userProfile.fullName;
+      displayEmail.textContent = userProfile.email;
+      displayRoleBadge.textContent = userProfile.role;
+      displayAvatar.src = userProfile.avatar;
+
+      // Navbar Display
+      navName.textContent = userProfile.fullName;
+      navRole.textContent = userProfile.role;
+      navAvatar.src = userProfile.avatar;
+
+      // Theme Toggle
+      const isDark = userProfile.theme === 'dark';
+      toggleTheme.checked = isDark;
+      applyTheme(isDark ? 'dark' : 'light');
+    }
+
+    // B. Tema Tampilan (Dark / Light)
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+    }
+
+    toggleTheme.addEventListener('change', (e) => {
+      const isDark = e.target.checked;
+      userProfile.theme = isDark ? 'dark' : 'light';
+      applyTheme(userProfile.theme);
+      showToast(isDark ? 'Mode Gelap diaktifkan' : 'Mode Terang diaktifkan', 'info', 'Tema Diubah');
+    });
+
+    // C. SPA Navigation Logic
+    function navigateToPage(pageId) {
+      navLinks.forEach(link => {
+        if (link.dataset.page === pageId) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      pageSections.forEach(section => {
+        if (section.id === `page-${pageId}`) {
+          section.classList.add('active');
+        } else {
+          section.classList.remove('active');
+        }
+      });
+
+      if (window.innerWidth <= 768) {
+        closeSidebar();
+      }
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigateToPage(link.dataset.page);
+      });
+    });
+
+    btnQuickProfile.addEventListener('click', () => navigateToPage('settings'));
+    navProfileTrigger.addEventListener('click', () => navigateToPage('settings'));
+
+    // D. Sidebar Toggle & Mobile Overlay
+    function openSidebar() {
+      sidebar.classList.add('active');
+      overlay.classList.add('active');
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    }
 
     function toggleSidebar() {
-      sidebar.classList.toggle('active');
-      overlay.classList.toggle('active');
+      if (sidebar.classList.contains('active')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
     }
 
     btnToggleSidebar.addEventListener('click', toggleSidebar);
-    overlay.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', closeSidebar);
 
-    // B. Registrasi Service Worker PWA
+    // E. Upload Foto Profil Preview (Base64)
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        if (file.size > 2 * 1024 * 1024) { // Max 2MB
+          showToast('Ukuran berkas gambar maksimal 2MB!', 'error', 'Upload Gagal');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const newAvatar = evt.target.result;
+          userProfile.avatar = newAvatar;
+          displayAvatar.src = newAvatar;
+          navAvatar.src = newAvatar;
+          showToast('Foto profil berhasil diperbarui', 'success', 'Berhasil');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // F. Form Save Profile Handler (Validasi Kustom & Toast Notification)
+    profileForm.addEventListener('submit', (e) => {
+      e.preventDefault(); // Menghentikan kirim form & mematikan validasi HTML5 bawaan
+
+      const fullNameVal = inputFullName.value.trim();
+      const emailVal = inputEmail.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // 1. Validasi Nama Lengkap
+      if (!fullNameVal) {
+        showToast('Nama Lengkap wajib diisi!', 'error', 'Validasi Gagal');
+        inputFullName.focus();
+        return;
+      }
+
+      // 2. Validasi Email / Surel
+      if (!emailVal) {
+        showToast('Masukkan alamat surel!', 'error', 'Validasi Gagal');
+        inputEmail.focus();
+        return;
+      }
+
+      if (!emailRegex.test(emailVal)) {
+        showToast('Format alamat surel tidak valid (contoh: nama@email.com)!', 'error', 'Validasi Gagal');
+        inputEmail.focus();
+        return;
+      }
+
+      // 3. Validasi Password (jika ada yang diisi)
+      const currentPass = inputCurrentPass.value.trim();
+      const newPass = inputNewPass.value.trim();
+      const confirmPass = inputConfirmPass.value.trim();
+
+      if (currentPass || newPass || confirmPass) {
+        if (!currentPass) {
+          showToast('Masukkan kata sandi saat ini untuk konfirmasi!', 'warning', 'Perhatian');
+          inputCurrentPass.focus();
+          return;
+        }
+        if (newPass.length < 6) {
+          showToast('Kata sandi baru minimal 6 karakter!', 'error', 'Keamanan');
+          inputNewPass.focus();
+          return;
+        }
+        if (newPass !== confirmPass) {
+          showToast('Kata sandi baru dan konfirmasi tidak cocok!', 'error', 'Validasi Gagal');
+          inputConfirmPass.focus();
+          return;
+        }
+        // Reset password fields setelah validasi sukses
+        inputCurrentPass.value = '';
+        inputNewPass.value = '';
+        inputConfirmPass.value = '';
+      }
+
+      // 4. Update data profil jika semua validasi lolos
+      userProfile.fullName = fullNameVal;
+      userProfile.username = inputUsername.value.trim() || userProfile.username;
+      userProfile.email = emailVal;
+      userProfile.phone = inputPhone.value.trim();
+      userProfile.role = inputRole.value.trim() || userProfile.role;
+      userProfile.bio = inputBio.value.trim();
+      userProfile.notifications = toggleNotifications.checked;
+
+      // Permanenkan ke LocalStorage
+      localStorage.setItem('bg9930_user_profile', JSON.stringify(userProfile));
+
+      // Refresh UI display
+      applyProfileToUI();
+
+      showToast('Profil pengguna berhasil disimpan permanen!', 'success', 'Pembaruan Sukses');
+    });
+
+    // Reset Form
+    btnResetProfile.addEventListener('click', () => {
+      loadProfile();
+      showToast('Formulir telah dikembalikan ke data awal.', 'info', 'Formulir Direset');
+    });
+
+    // G. Custom Toast Notification Engine
+    function showToast(message, type = 'success', title = '') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+
+      // Tentukan Ikon & Title berdasarkan type
+      let iconSVG = '';
+      let defaultTitle = '';
+
+      if (type === 'success') {
+        defaultTitle = title || 'Berhasil';
+        iconSVG = `<svg class="toast-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
+      } else if (type === 'error') {
+        defaultTitle = title || 'Kesalahan';
+        iconSVG = `<svg class="toast-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`;
+      } else if (type === 'warning') {
+        defaultTitle = title || 'Peringatan';
+        iconSVG = `<svg class="toast-icon" viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>`;
+      } else {
+        defaultTitle = title || 'Informasi';
+        iconSVG = `<svg class="toast-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>`;
+      }
+
+      toast.innerHTML = `
+        ${iconSVG}
+        <div class="toast-content">
+          <span class="toast-title">${defaultTitle}</span>
+          <span class="toast-text">${message}</span>
+        </div>
+        <button class="toast-close" aria-label="Tutup">&times;</button>
+      `;
+
+      toastContainer.appendChild(toast);
+
+      // Animation in
+      setTimeout(() => toast.classList.add('show'), 10);
+
+      // Close handler
+      const closeBtn = toast.querySelector('.toast-close');
+      const dismissToast = () => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 350);
+      };
+
+      closeBtn.addEventListener('click', dismissToast);
+
+      // Auto dismiss after 3.5 seconds
+      setTimeout(dismissToast, 3500);
+    }
+
+    // H. Service Worker & PWA Install Button Logic
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
@@ -305,14 +1280,13 @@
       });
     }
 
-    // C. Logika Tombol Install PWA
     let deferredPrompt;
     const btnInstall = document.getElementById('btnInstall');
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      btnInstall.style.display = 'block';
+      btnInstall.style.display = 'inline-flex';
     });
 
     btnInstall.addEventListener('click', () => {
@@ -320,7 +1294,7 @@
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
-            console.log('Pengguna menyetujui instalasi PWA');
+            showToast('Aplikasi berhasil dipasang di perangkat Anda', 'success');
           }
           deferredPrompt = null;
           btnInstall.style.display = 'none';
@@ -328,9 +1302,9 @@
       }
     });
 
-    // D. Logika Uji Tombol
-    document.getElementById('btnKlik').addEventListener('click', () => {
-      alert('Aplikasi BG 9930 berjalan dengan baik!');
+    // Inisialisasi saat halaman selesai dimuat
+    window.addEventListener('DOMContentLoaded', () => {
+      loadProfile();
     });
   </script>
 </body>
