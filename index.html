@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BG 9930 - Sistem Aplikasi PWA</title>
+  <title>BG 9930 - Digital Management Control</title>
 
   <!-- PWA Web Manifest & Theme Color -->
   <link rel="manifest" href="manifest.json">
@@ -27,7 +27,7 @@
       --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
       --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
       --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --radius: 12px;
+      --radius: 16px;
     }
 
     [data-theme="dark"] {
@@ -317,7 +317,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Layout Dasbor Multi-Kolom (Kiri Main, Kanan Side Panel) */
+    /* Layout Dasbor Multi-Kolom */
     .dashboard-grid {
       display: grid;
       grid-template-columns: 1fr 320px;
@@ -337,7 +337,117 @@
       gap: 1.5rem;
     }
 
-    /* Cards & Components */
+    /* =========================================================
+       WELCOME HERO BANNER 3D (DIGITAL CONTROL TEAM)
+       ========================================================= */
+    .hero-3d-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e1b4b 100%);
+      border-radius: var(--radius);
+      padding: 2.25rem 2rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 30px -10px rgba(37, 99, 235, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-3d-card::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.4) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      flex: 1;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(37, 99, 235, 0.25);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      padding: 0.35rem 0.85rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #60a5fa;
+      width: fit-content;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .hero-badge-pill::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .hero-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .hero-3d-image-wrapper {
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+      perspective: 1000px;
+    }
+
+    .hero-3d-image {
+      width: 260px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
+      transform: rotateY(-12deg) rotateX(6deg);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-3d-image-wrapper:hover .hero-3d-image {
+      transform: rotateY(0deg) rotateX(0deg) scale(1.04);
+      box-shadow: 0 25px 40px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Card Styling */
     .card {
       background: var(--card-bg);
       padding: 1.5rem;
@@ -374,9 +484,7 @@
       background: linear-gradient(135deg, var(--primary-color) 0%, #020617 100%);
     }
 
-    .auth-wrapper.hidden {
-      display: none !important;
-    }
+    .auth-wrapper.hidden { display: none !important; }
 
     .auth-card {
       background: var(--card-bg);
@@ -389,23 +497,9 @@
       animation: fadeIn 0.4s ease-out;
     }
 
-    .auth-header {
-      text-align: center;
-      margin-bottom: 1.75rem;
-    }
-
-    .auth-logo {
-      font-size: 1.75rem;
-      font-weight: 900;
-      color: var(--accent-color);
-      letter-spacing: 1px;
-      margin-bottom: 0.25rem;
-    }
-
-    .auth-subtitle {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
+    .auth-header { text-align: center; margin-bottom: 1.75rem; }
+    .auth-logo { font-size: 1.75rem; font-weight: 900; color: var(--accent-color); letter-spacing: 1px; margin-bottom: 0.25rem; }
+    .auth-subtitle { color: var(--text-muted); font-size: 0.9rem; }
 
     .auth-tabs {
       display: flex;
@@ -429,31 +523,12 @@
       transition: all 0.2s;
     }
 
-    .auth-tab.active {
-      background: var(--card-bg);
-      color: var(--accent-color);
-      box-shadow: var(--shadow-sm);
-    }
+    .auth-tab.active { background: var(--card-bg); color: var(--accent-color); box-shadow: var(--shadow-sm); }
+    .auth-form { display: none; flex-direction: column; gap: 1.1rem; }
+    .auth-form.active { display: flex; }
 
-    .auth-form {
-      display: none;
-      flex-direction: column;
-      gap: 1.1rem;
-    }
-
-    .auth-form.active {
-      display: flex;
-    }
-
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .input-wrapper .input-control {
-      padding-right: 2.75rem;
-    }
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .input-wrapper .input-control { padding-right: 2.75rem; }
 
     .btn-toggle-password {
       position: absolute;
@@ -468,11 +543,7 @@
       padding: 0.25rem;
     }
 
-    .btn-toggle-password svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-    }
+    .btn-toggle-password svg { width: 20px; height: 20px; fill: currentColor; }
 
     /* Form Controls */
     .form-grid {
@@ -481,26 +552,11 @@
       gap: 1.25rem;
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group.full-width { grid-column: 1 / -1; }
 
-    .form-group.full-width {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-color);
-    }
-
-    .required-star {
-      color: #ef4444;
-      margin-left: 2px;
-    }
+    label { font-size: 0.875rem; font-weight: 600; color: var(--text-color); }
+    .required-star { color: #ef4444; margin-left: 2px; }
 
     .input-control {
       width: 100%;
@@ -519,10 +575,7 @@
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
-    textarea.input-control {
-      resize: vertical;
-      min-height: 90px;
-    }
+    textarea.input-control { resize: vertical; min-height: 90px; }
 
     /* Profile Header Styling */
     .profile-header-card {
@@ -536,36 +589,15 @@
       margin-bottom: 1.5rem;
     }
 
-    .avatar-wrapper {
-      position: relative;
-      width: 110px;
-      height: 110px;
-      flex-shrink: 0;
-    }
-
-    .profile-avatar-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid var(--card-bg);
-      box-shadow: var(--shadow-md);
-    }
+    .avatar-wrapper { position: relative; width: 110px; height: 110px; flex-shrink: 0; }
+    .profile-avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid var(--card-bg); box-shadow: var(--shadow-md); }
 
     .avatar-upload-btn {
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      background: var(--accent-color);
-      color: white;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
+      position: absolute; bottom: 2px; right: 2px;
+      background: var(--accent-color); color: white;
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: var(--shadow-sm);
     }
 
     .avatar-upload-btn svg { width: 18px; height: 18px; fill: white; }
@@ -576,244 +608,80 @@
     .profile-email { color: var(--text-muted); font-size: 0.95rem; }
 
     .role-badge {
-      display: inline-flex;
-      align-items: center;
-      align-self: flex-start;
-      gap: 0.4rem;
-      padding: 0.25rem 0.75rem;
-      background-color: rgba(37, 99, 235, 0.12);
-      color: var(--accent-color);
-      font-weight: 700;
-      font-size: 0.8rem;
-      border-radius: 20px;
-      margin-top: 0.4rem;
+      display: inline-flex; align-items: center; align-self: flex-start;
+      gap: 0.4rem; padding: 0.25rem 0.75rem;
+      background-color: rgba(37, 99, 235, 0.12); color: var(--accent-color);
+      font-weight: 700; font-size: 0.8rem; border-radius: 20px; margin-top: 0.4rem;
     }
 
     .role-badge::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background-color: var(--accent-color);
-      border-radius: 50%;
+      content: ''; width: 8px; height: 8px;
+      background-color: var(--accent-color); border-radius: 50%;
     }
 
     /* Buttons */
-    .btn-group {
-      display: flex;
-      gap: 1rem;
-      justify-content: flex-end;
-      margin-top: 1.5rem;
-    }
+    .btn-group { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem; }
 
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      background-color: var(--accent-color);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 0.5rem; padding: 0.75rem 1.5rem;
+      background-color: var(--accent-color); color: white;
+      border: none; border-radius: 8px; font-size: 0.95rem;
+      font-weight: 600; cursor: pointer; transition: all 0.2s ease;
       box-shadow: var(--shadow-sm);
     }
 
-    .btn:hover {
-      background-color: var(--accent-hover);
-      box-shadow: var(--shadow-md);
-    }
-
+    .btn:hover { background-color: var(--accent-hover); box-shadow: var(--shadow-md); }
     .btn-full { width: 100%; }
 
-    .btn-secondary {
-      background-color: transparent;
-      color: var(--text-color);
-      border: 1px solid var(--input-border);
-    }
-
+    .btn-secondary { background-color: transparent; color: var(--text-color); border: 1px solid var(--input-border); }
     .btn-secondary:hover { background-color: rgba(0,0,0,0.05); }
 
     #btnInstall { display: none; background-color: #059669; }
     #btnInstall:hover { background-color: #047857; }
 
     /* Widgets Panel Kanan */
-    .quick-actions-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-    }
+    .quick-actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
     .action-card {
-      background: var(--bg-color);
-      border: 1px solid var(--card-border);
-      padding: 0.85rem;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-align: center;
-      transition: transform 0.2s, border-color 0.2s;
+      background: var(--bg-color); border: 1px solid var(--card-border);
+      padding: 0.85rem; border-radius: 8px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.4rem; cursor: pointer; font-size: 0.8rem;
+      font-weight: 600; text-align: center; transition: transform 0.2s, border-color 0.2s;
     }
 
-    .action-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--accent-color);
-      color: var(--accent-color);
-    }
-
+    .action-card:hover { transform: translateY(-2px); border-color: var(--accent-color); color: var(--accent-color); }
     .action-card svg { width: 22px; height: 22px; fill: var(--accent-color); }
 
-    .metric-progress {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 0.85rem;
-    }
-
-    .metric-info {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.825rem;
-      font-weight: 600;
-    }
-
-    .progress-bar {
-      height: 7px;
-      background: var(--card-border);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--accent-color);
-      border-radius: 10px;
-    }
-
-    .activity-feed {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-
-    .activity-item {
-      display: flex;
-      gap: 0.75rem;
-      font-size: 0.825rem;
-      line-height: 1.3;
-    }
-
-    .activity-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--accent-color);
-      margin-top: 4px;
-      flex-shrink: 0;
-    }
-
-    .todo-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .todo-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.85rem;
-      background: var(--bg-color);
-      padding: 0.6rem 0.75rem;
-      border-radius: 6px;
-      border: 1px solid var(--card-border);
-    }
-
-    .todo-item.done span {
-      text-decoration: line-through;
-      color: var(--text-muted);
-    }
+    .metric-progress { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.85rem; }
+    .metric-info { display: flex; justify-content: space-between; font-size: 0.825rem; font-weight: 600; }
+    .progress-bar { height: 7px; background: var(--card-border); border-radius: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent-color); border-radius: 10px; }
 
     /* Switch Component */
-    .setting-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 48px;
-      height: 26px;
-      flex-shrink: 0;
-    }
-
+    .setting-item { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 0; border-bottom: 1px solid var(--card-border); }
+    .switch { position: relative; display: inline-block; width: 48px; height: 26px; flex-shrink: 0; }
     .switch input { opacity: 0; width: 0; height: 0; }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #cbd5e1;
-      transition: .3s;
-      border-radius: 34px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 20px; width: 20px;
-      left: 3px; bottom: 3px;
-      background-color: white;
-      transition: .3s;
-      border-radius: 50%;
-    }
-
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 34px; }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
     input:checked + .slider { background-color: var(--accent-color); }
     input:checked + .slider:before { transform: translateX(22px); }
 
     /* Toast Notification */
     .toast-container {
-      position: fixed;
-      top: 1.5rem;
-      right: 1.5rem;
-      z-index: 3000;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      pointer-events: none;
-      max-width: 380px;
-      width: calc(100% - 3rem);
+      position: fixed; top: 1.5rem; right: 1.5rem; z-index: 3000;
+      display: flex; flex-direction: column; gap: 0.75rem;
+      pointer-events: none; max-width: 380px; width: calc(100% - 3rem);
     }
 
     .toast {
-      background-color: var(--card-bg);
-      color: var(--text-color);
-      padding: 0.9rem 1.1rem;
-      border-radius: 10px;
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      pointer-events: auto;
-      transform: translateX(120%);
-      opacity: 0;
+      background-color: var(--card-bg); color: var(--text-color);
+      padding: 0.9rem 1.1rem; border-radius: 10px; box-shadow: var(--shadow-lg);
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      pointer-events: auto; transform: translateX(120%); opacity: 0;
       transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s ease;
-      border: 1px solid var(--card-border);
-      border-left: 5px solid #2563eb;
+      border: 1px solid var(--card-border); border-left: 5px solid #2563eb;
     }
 
     .toast.show { transform: translateX(0); opacity: 1; }
@@ -822,7 +690,6 @@
     .toast.toast-warning { border-left-color: #f59e0b; }
     .toast.toast-info { border-left-color: #3b82f6; }
 
-    .toast-icon { width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px; }
     .toast-content { flex: 1; display: flex; flex-direction: column; gap: 2px; }
     .toast-title { font-weight: 700; font-size: 0.875rem; }
     .toast-text { font-size: 0.825rem; color: var(--text-muted); line-height: 1.4; }
@@ -836,6 +703,10 @@
       .sidebar { transform: translateX(-100%); }
       .sidebar.active { transform: translateX(0); }
       .main-wrapper { margin-left: 0; width: 100%; }
+      .hero-3d-card { flex-direction: column; text-align: center; }
+      .hero-badge-pill { align-self: center; }
+      .hero-actions { justify-content: center; }
+      .hero-3d-image { width: 100%; height: 180px; transform: none !important; }
       .profile-header-card { flex-direction: column; text-align: center; align-items: center; }
       .role-badge { align-self: center; }
       .btn-group { flex-direction: column; }
@@ -979,7 +850,7 @@
           <span>Keluar (Logout)</span>
         </button>
         <div style="text-align: center; color: var(--text-muted); font-size: 0.75rem;">
-          &copy; 2026 BG 9930 System v2.5
+          &copy; 2026 BG 9930 System v2.6
         </div>
       </div>
     </aside>
@@ -1006,36 +877,48 @@
 
       <main class="container">
         
-        <!-- 1. HALAMAN HOME / DASBOR (Multi-Kolom Layout) -->
+        <!-- 1. HALAMAN HOME / DASBOR (Welcome 3D Hero + Dashboard Grid) -->
         <section id="page-home" class="page-section active">
+          
+          <!-- WELCOME HERO BANNER 3D -->
+          <div class="hero-3d-card">
+            <div class="hero-content">
+              <div class="hero-badge-pill">Digital Management Control Center</div>
+              <h1 class="hero-title" id="welcomeUserTitle">Welcome Back, Pengguna!</h1>
+              <p class="hero-desc">
+                Sistem PWA Manajemen Kontrol Digital terintegrasi. Anda berada di pusat kendali operasional, performa tim, dan aksesibilitas data waktu-nyata.
+              </p>
+              <div class="hero-actions">
+                <button id="btnQuickProfile" class="btn">Pengaturan Profil</button>
+                <button id="btnQuickAdmin" class="btn btn-secondary" style="color: white; border-color: rgba(255,255,255,0.25); display: none;">Panel Kontrol Developer</button>
+                <button id="btnInstall" class="btn">Install PWA di HP</button>
+              </div>
+            </div>
+
+            <div class="hero-3d-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80" alt="Digital Management Control 3D" class="hero-3d-image">
+            </div>
+          </div>
+
+          <!-- DASHBOARD MULTI-KOLOM -->
           <div class="dashboard-grid">
             
             <!-- Kolom Utama (Kiri) -->
             <div class="dashboard-main">
               <div class="card">
-                <h2 class="card-title">
-                  <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                  Selamat Datang di BG 9930
-                </h2>
-                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem;">
-                  Aplikasi PWA Pemasaran & Operasional Modern. Seluruh perubahan script di GitHub/Vercel tidak akan menghapus data akun login Anda di HP.
-                </p>
-                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                  <button id="btnQuickProfile" class="btn">Buka Pengaturan Profil</button>
-                  <button id="btnInstall" class="btn">Install Aplikasi ke HP</button>
-                </div>
-              </div>
-
-              <div class="card">
-                <h3 class="card-title">Ringkasan Statistik</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                  <div style="background: var(--bg-color); padding: 1rem; border-radius: 8px; border: 1px solid var(--card-border);">
-                    <small style="color: var(--text-muted);">Total Pengguna</small>
-                    <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-color);" id="statTotalUsers">1</div>
+                <h3 class="card-title">Ringkasan Operasional & Statistik</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
+                  <div style="background: var(--bg-color); padding: 1rem; border-radius: 12px; border: 1px solid var(--card-border);">
+                    <small style="color: var(--text-muted);">Total User Terdaftar</small>
+                    <div style="font-size: 1.6rem; font-weight: 800; color: var(--accent-color);" id="statTotalUsers">1</div>
                   </div>
-                  <div style="background: var(--bg-color); padding: 1rem; border-radius: 8px; border: 1px solid var(--card-border);">
-                    <small style="color: var(--text-muted);">Status PWA</small>
-                    <div style="font-size: 1.1rem; font-weight: 700; color: #10b981;">Aktif / Online</div>
+                  <div style="background: var(--bg-color); padding: 1rem; border-radius: 12px; border: 1px solid var(--card-border);">
+                    <small style="color: var(--text-muted);">Status PWA Engine</small>
+                    <div style="font-size: 1.1rem; font-weight: 700; color: #10b981;">Online & Synced</div>
+                  </div>
+                  <div style="background: var(--bg-color); padding: 1rem; border-radius: 12px; border: 1px solid var(--card-border);">
+                    <small style="color: var(--text-muted);">Database Local</small>
+                    <div style="font-size: 1.1rem; font-weight: 700; color: #3b82f6;">Safe / Persistent</div>
                   </div>
                 </div>
               </div>
@@ -1046,7 +929,7 @@
               
               <!-- Widget Akses Cepat -->
               <div class="card">
-                <h3 class="card-title">Menu Pintas</h3>
+                <h3 class="card-title">Akses Pintas Cepat</h3>
                 <div class="quick-actions-grid">
                   <div class="action-card" onclick="showToast('Fitur Tambah Produk Cepat', 'info')">
                     <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
@@ -1067,9 +950,9 @@
                 </div>
               </div>
 
-              <!-- Widget Metric Kapasitas & Status -->
+              <!-- Widget Metric Kapasitas -->
               <div class="card">
-                <h3 class="card-title">Metric Sistem</h3>
+                <h3 class="card-title">Kapasitas Digital</h3>
                 <div class="metric-progress">
                   <div class="metric-info">
                     <span>Penyimpanan Lokal</span>
@@ -1081,19 +964,19 @@
                 </div>
                 <div class="metric-progress">
                   <div class="metric-info">
-                    <span>Keamanan Akun</span>
-                    <span>Tinggi</span>
+                    <span>Proteksi Akun</span>
+                    <span>Aktif</span>
                   </div>
                   <div class="progress-bar">
-                    <div class="progress-fill" style="width: 90%; background: #10b981;"></div>
+                    <div class="progress-fill" style="width: 95%; background: #10b981;"></div>
                   </div>
                 </div>
               </div>
 
-              <!-- Widget Agenda / Catatan Cepat -->
+              <!-- Widget Catatan Cepat -->
               <div class="card">
-                <h3 class="card-title">Catatan Cepat</h3>
-                <textarea id="quickNotes" class="input-control" style="min-height: 80px;" placeholder="Tuliskan catatan sementara Anda..."></textarea>
+                <h3 class="card-title">Catatan Cepat Tim</h3>
+                <textarea id="quickNotes" class="input-control" style="min-height: 80px;" placeholder="Tuliskan catatan kerja sementara Anda..."></textarea>
               </div>
 
             </div>
@@ -1155,7 +1038,6 @@
 
         <!-- 6. HALAMAN PENGATURAN -->
         <section id="page-settings" class="page-section">
-          <!-- Profile Header Card -->
           <div class="profile-header-card">
             <div class="avatar-wrapper">
               <img id="displayAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Foto Profil" class="profile-avatar-img">
@@ -1172,7 +1054,6 @@
             </div>
           </div>
 
-          <!-- Form Settings -->
           <form id="profileForm" novalidate>
             <div class="card">
               <h2 class="card-title">Data Diri Pengguna</h2>
@@ -1247,17 +1128,15 @@
     </div>
   </div>
 
-  <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
     // =========================================================
-    // 1. KUNCI LOCALSTORAGE KONSISTEN & TAHAN-UPDATE
+    // 1. KUNCI LOCALSTORAGE & DEFAULT ACCOUNT RECOVERY
     // =========================================================
     const USERS_KEY = 'bg9930_users_db';
     const CURRENT_USER_KEY = 'bg9930_active_session';
 
-    // Skema Default User
     const DEFAULT_USER_SCHEMA = {
       fullName: '',
       username: '',
@@ -1271,7 +1150,6 @@
       theme: 'light'
     };
 
-    // Akun Administrator Utama (Pengembang)
     const DEFAULT_ADMIN = {
       fullName: 'Ahmad Subagja (Developer)',
       username: 'admin',
@@ -1279,7 +1157,7 @@
       password: 'password123',
       phone: '081234567890',
       role: 'Administrator',
-      bio: 'Pengembang dan Administrator Sistem Utama BG 9930.',
+      bio: 'Pengembang dan Administrator Utama Sistem BG 9930.',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       notifications: true,
       theme: 'light'
@@ -1288,7 +1166,7 @@
     let usersDatabase = [];
     let currentUser = null;
 
-    // DOM Elements Selector
+    // DOM Selectors
     const authContainer = document.getElementById('authContainer');
     const appContainer = document.getElementById('appContainer');
     const tabLogin = document.getElementById('tabLogin');
@@ -1326,11 +1204,12 @@
     const toggleTheme = document.getElementById('toggleTheme');
     const btnResetProfile = document.getElementById('btnResetProfile');
     const btnQuickProfile = document.getElementById('btnQuickProfile');
+    const btnQuickAdmin = document.getElementById('btnQuickAdmin');
     const navProfileTrigger = document.getElementById('navProfileTrigger');
     const quickNotes = document.getElementById('quickNotes');
 
     // =========================================================
-    // 2. LOGIKA SAFE-INIT (TIDAK MENGHAPUS USER SAAT UPDATE)
+    // 2. SAFE INITIALIZATION (AUTO RECOVER ADMIN PASSWORD)
     // =========================================================
     function initDatabaseSafe() {
       try {
@@ -1339,15 +1218,19 @@
         if (storedUsersRaw) {
           const parsedUsers = JSON.parse(storedUsersRaw);
           if (Array.isArray(parsedUsers) && parsedUsers.length > 0) {
-            // Gabungkan properti baru tanpa merusak akun user lama
             usersDatabase = parsedUsers.map(user => ({
               ...DEFAULT_USER_SCHEMA,
               ...user
             }));
 
-            // Pastikan akun Admin Utama Pengembang tetap tersedia
-            const hasAdmin = usersDatabase.some(u => u.username === DEFAULT_ADMIN.username);
-            if (!hasAdmin) usersDatabase.push(DEFAULT_ADMIN);
+            // Paksa pemulihan password & role admin utama
+            const adminIdx = usersDatabase.findIndex(u => u.username === DEFAULT_ADMIN.username);
+            if (adminIdx !== -1) {
+              usersDatabase[adminIdx].password = DEFAULT_ADMIN.password; // 'password123'
+              usersDatabase[adminIdx].role = 'Administrator';
+            } else {
+              usersDatabase.push(DEFAULT_ADMIN);
+            }
           } else {
             usersDatabase = [DEFAULT_ADMIN];
           }
@@ -1359,7 +1242,7 @@
         restoreUserSession();
 
       } catch (error) {
-        console.error("Gagal membaca database user:", error);
+        console.error("Database recover:", error);
         usersDatabase = [DEFAULT_ADMIN];
         saveUsersDB();
         showAuthLayout();
@@ -1410,7 +1293,7 @@
     }
 
     // =========================================================
-    // 3. AUTHENTICATION (LOGIN & REGISTER USER UMUM)
+    // 3. AUTHENTICATION (LOGIN & REGISTER)
     // =========================================================
     function showAuthLayout() {
       authContainer.classList.remove('hidden');
@@ -1450,7 +1333,7 @@
       });
     });
 
-    // Submit Login
+    // Login Form Submit
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const userVal = document.getElementById('loginUser').value.trim();
@@ -1476,7 +1359,7 @@
       }
     });
 
-    // Submit Register (User Umum Otomatis Mendapatkan Role: 'Pengguna')
+    // Register Form Submit
     registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const fullNameVal = document.getElementById('regFullName').value.trim();
@@ -1510,14 +1393,13 @@
         return;
       }
 
-      // Buat akun baru pengguna umum
       const newUser = {
         ...DEFAULT_USER_SCHEMA,
         fullName: fullNameVal,
         username: usernameVal,
         email: emailVal,
         password: passVal,
-        role: 'Pengguna' // Role default umum
+        role: 'Pengguna'
       };
 
       usersDatabase.push(newUser);
@@ -1538,18 +1420,16 @@
     });
 
     // =========================================================
-    // 4. CONTROL HAK AKSES PENGEMBANG (MANAJEMEN USER)
+    // 4. KONTROL MANAJEMEN USER (ADMIN ONLY)
     // =========================================================
     function checkAdminAccess() {
       const menuAdmin = document.getElementById('menuAdmin');
       if (!menuAdmin) return;
 
-      // HANYA jika Role = Administrator atau Username = admin
-      if (currentUser && (currentUser.role === 'Administrator' || currentUser.username === 'admin')) {
-        menuAdmin.style.display = 'block';
-      } else {
-        menuAdmin.style.display = 'none';
-      }
+      const isAdmin = currentUser && (currentUser.role === 'Administrator' || currentUser.username === 'admin');
+      
+      menuAdmin.style.display = isAdmin ? 'block' : 'none';
+      if (btnQuickAdmin) btnQuickAdmin.style.display = isAdmin ? 'inline-flex' : 'none';
     }
 
     function renderUserManagementTable() {
@@ -1580,29 +1460,27 @@
       });
     }
 
-    // Ubah Hak Akses Pengguna
     window.toggleUserRole = function(username) {
       const targetUser = usersDatabase.find(u => u.username === username);
       if (targetUser) {
         targetUser.role = (targetUser.role === 'Administrator') ? 'Pengguna' : 'Administrator';
         saveUsersDB();
         renderUserManagementTable();
-        showToast(`Role ${targetUser.fullName} berhasil diubah ke ${targetUser.role}`, 'info');
+        showToast(`Role ${targetUser.fullName} diubah ke ${targetUser.role}`, 'info');
       }
     };
 
-    // Menghapus Akun Pengguna
     window.deleteUserAccount = function(username) {
       if (confirm(`Apakah Anda yakin ingin menghapus akun ${username}?`)) {
         usersDatabase = usersDatabase.filter(u => u.username !== username);
         saveUsersDB();
         renderUserManagementTable();
-        showToast(`Akun ${username} telah dihapus dari sistem!`, 'warning');
+        showToast(`Akun ${username} telah dihapus!`, 'warning');
       }
     };
 
     // =========================================================
-    // 5. UPDATE PROFIL & TEMA
+    // 5. UPDATE PROFIL UI
     // =========================================================
     function applyProfileToUI() {
       if (!currentUser) return;
@@ -1621,6 +1499,12 @@
       navName.textContent = currentUser.fullName;
       navRole.textContent = currentUser.role || 'Pengguna';
       navAvatar.src = currentUser.avatar;
+
+      // Update Header Greeting 3D
+      const welcomeTitle = document.getElementById('welcomeUserTitle');
+      if (welcomeTitle) {
+        welcomeTitle.textContent = `Welcome Back, ${currentUser.fullName}!`;
+      }
 
       const isDark = currentUser.theme === 'dark';
       toggleTheme.checked = isDark;
@@ -1655,7 +1539,6 @@
         return;
       }
 
-      // Ubah Kata Sandi jika diisi
       const currentPass = inputCurrentPass.value.trim();
       const newPass = inputNewPass.value.trim();
       const confirmPass = inputConfirmPass.value.trim();
@@ -1666,7 +1549,7 @@
           return;
         }
         if (newPass.length < 6 || newPass !== confirmPass) {
-          showToast('Kata sandi baru tidak valid atau tidak cocok!', 'error');
+          showToast('Kata sandi baru tidak cocok!', 'error');
           return;
         }
         currentUser.password = newPass;
@@ -1706,7 +1589,6 @@
       }
     });
 
-    // Catatan Cepat tersimpan otomatis
     if (quickNotes) {
       quickNotes.value = localStorage.getItem('bg9930_quick_notes') || '';
       quickNotes.addEventListener('input', (e) => {
@@ -1740,6 +1622,7 @@
     });
 
     btnQuickProfile?.addEventListener('click', () => navigateToPage('settings'));
+    btnQuickAdmin?.addEventListener('click', () => navigateToPage('admin'));
     navProfileTrigger?.addEventListener('click', () => navigateToPage('settings'));
 
     function openSidebar() { sidebar.classList.add('active'); overlay.classList.add('active'); }
@@ -1777,7 +1660,6 @@
       setTimeout(dismissToast, 3500);
     }
 
-    // PWA Service Worker & Install Prompt
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
@@ -1808,7 +1690,6 @@
       }
     });
 
-    // Inisialisasi Aplikasi Pertama Kali
     window.addEventListener('DOMContentLoaded', () => {
       initDatabaseSafe();
     });
