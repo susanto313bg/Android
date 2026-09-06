@@ -526,7 +526,6 @@
           </a>
         </li>
 
-        <!-- Menu Pesan / Percakapan -->
         <li>
           <a href="#messages" class="nav-link" data-page="messages">
             <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
@@ -547,7 +546,6 @@
           </a>
         </li>
 
-        <!-- Menu Khusus Admin (Hidden untuk Pengguna Umum) -->
         <li id="menuAdmin" style="display: none;">
           <a href="#admin" class="nav-link" data-page="admin">
             <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8s0 0 0 0z"/></svg>
@@ -569,7 +567,7 @@
           <span>Keluar (Logout)</span>
         </button>
         <div style="text-align: center; color: var(--text-muted); font-size: 0.75rem;">
-          &copy; 2026 BG 9930 System v3.0
+          &copy; 2026 BG 9930 System v3.1
         </div>
       </div>
     </aside>
@@ -586,7 +584,6 @@
         </div>
 
         <div class="navbar-right-items">
-          <!-- Tombol Lonceng Notifikasi -->
           <button class="notif-btn" id="btnNotifBell" title="Notifikasi Pesan">
             <svg viewBox="0 0 24 24" style="width: 22px; height: 22px; fill: currentColor;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
             <span id="notifBadge" class="notif-badge">0</span>
@@ -604,10 +601,10 @@
 
       <main class="container">
         
-        <!-- 1. HALAMAN HOME / DASBOR DUA TAMPILAN (ADMIN & USER) -->
+        <!-- 1. HALAMAN HOME / DASBOR -->
         <section id="page-home" class="page-section active">
           
-          <!-- TAMPILAN SPECIAL DASBOR ADMINISTRATOR / DEVELOPER -->
+          <!-- DASBOR ADMIN -->
           <div id="adminDashboardView" style="display: none;">
             <div class="hero-3d-card" style="margin-bottom: 1.5rem;">
               <div class="hero-content">
@@ -660,7 +657,7 @@
             </div>
           </div>
 
-          <!-- TAMPILAN KHUSUS DASBOR PENGGUNA UMUM (MULTIFUNGSI USER WORKSPACE) -->
+          <!-- DASBOR USER -->
           <div id="userDashboardView" style="display: none;">
             <div class="hero-3d-card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, #1e293b 0%, #2563eb 100%);">
               <div class="hero-content">
@@ -714,40 +711,24 @@
 
         </section>
 
-        <!-- 2. HALAMAN PESAN & PERCAKAPAN (ADMIN <-> USER) -->
+        <!-- 2. HALAMAN PESAN -->
         <section id="page-messages" class="page-section">
           <div class="card">
-            <h2 class="card-title">
-              <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-              Pusat Pesan & Dukungan Admin
-            </h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">
-              Kirimkan pesan atau konsultasi langsung dengan Administrator sistem.
-            </p>
-
+            <h2 class="card-title">Pusat Pesan & Dukungan Admin</h2>
             <div class="chat-box">
-              <div class="chat-messages" id="chatMessagesBody">
-                <!-- Pesan akan dirender via JS -->
-              </div>
+              <div class="chat-messages" id="chatMessagesBody"></div>
               <form id="chatForm" class="chat-input-row">
-                <input type="text" id="chatInput" class="input-control" placeholder="Tuliskan pesan Anda di sini..." required>
+                <input type="text" id="chatInput" class="input-control" placeholder="Tuliskan pesan Anda..." required>
                 <button type="submit" class="btn" style="padding: 0.75rem 1.25rem;">Kirim</button>
               </form>
             </div>
           </div>
         </section>
 
-        <!-- 3. HALAMAN INTEGRASI GOOGLE SPREADSHEET -->
+        <!-- 3. HALAMAN GOOGLE SPREADSHEET -->
         <section id="page-sheets" class="page-section">
           <div class="card">
-            <h2 class="card-title">
-              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>
-              Integrasi Google Spreadsheet Database
-            </h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.9rem;">
-              Formulir terintegrasi langsung dengan database Google Spreadsheet melalui API Web App / Apps Script.
-            </p>
-
+            <h2 class="card-title">Integrasi Google Spreadsheet Database</h2>
             <form id="sheetEntryForm" style="display: flex; flex-direction: column; gap: 1rem;">
               <div class="form-group">
                 <label for="sheetDataTitle">Judul / Kategori Input Data</label>
@@ -770,14 +751,10 @@
           </div>
         </section>
 
-        <!-- 5. HALAMAN KELOLA PENGGUNA (Khusus Administrator) -->
+        <!-- 5. HALAMAN KELOLA PENGGUNA -->
         <section id="page-admin" class="page-section">
           <div class="card">
             <h2 class="card-title">Panel Kontrol Pengembang (Manajemen User)</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.9rem;">
-              Sebagai Developer/Administrator, Anda memiliki kontrol penuh untuk mengubah role hak akses pengguna atau menghapus akun dari aplikasi ini.
-            </p>
-
             <div style="overflow-x: auto;">
               <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;" id="tableUsers">
                 <thead>
@@ -889,9 +866,6 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
-    // =========================================================
-    // 1. LOCALSTORAGE KEYS
-    // =========================================================
     const USERS_KEY = 'bg9930_users_db';
     const CURRENT_USER_KEY = 'bg9930_active_session';
     const MESSAGES_KEY = 'bg9930_messages_db';
@@ -915,7 +889,7 @@
     let currentUser = null;
     let messagesDatabase = [];
 
-    // Selectors
+    // DOM References
     const authContainer = document.getElementById('authContainer');
     const appContainer = document.getElementById('appContainer');
     const tabLogin = document.getElementById('tabLogin');
@@ -963,9 +937,15 @@
     const chatInput = document.getElementById('chatInput');
     const sheetEntryForm = document.getElementById('sheetEntryForm');
 
-    // =========================================================
-    // 2. SAFE INIT & USER RECOVERY
-    // =========================================================
+    // SAFE EXECUTE RUNTIME WRAPPER
+    function safeExecute(fn, fnName) {
+      try {
+        if (typeof fn === 'function') fn();
+      } catch (err) {
+        console.warn(`Safe-Execute Warning [${fnName}]:`, err);
+      }
+    }
+
     function initDatabaseSafe() {
       try {
         const storedUsersRaw = localStorage.getItem(USERS_KEY);
@@ -985,7 +965,6 @@
 
         saveUsersDB();
 
-        // Init Messages DB
         const storedMsgs = localStorage.getItem(MESSAGES_KEY);
         messagesDatabase = storedMsgs ? JSON.parse(storedMsgs) : [
           { sender: 'admin', recipient: 'all', text: 'Selamat datang di Sistem PWA BG 9930! Silakan hubungi kami jika ada kendala.', time: '09:00', read: false }
@@ -1020,7 +999,7 @@
 
     function saveMessagesDB() {
       localStorage.setItem(MESSAGES_KEY, JSON.stringify(messagesDatabase));
-      updateNotificationBadge();
+      safeExecute(updateNotificationBadge, "updateNotificationBadge");
     }
 
     function restoreUserSession() {
@@ -1042,23 +1021,23 @@
       } catch (e) { showAuthLayout(); }
     }
 
-    // =========================================================
-    // 3. DIFERENSIASI DASBOR ADMIN VS USER
-    // =========================================================
     function showAuthLayout() {
-      authContainer.classList.remove('hidden');
-      appContainer.classList.add('hidden');
+      if (authContainer) authContainer.classList.remove('hidden');
+      if (appContainer) appContainer.classList.add('hidden');
     }
 
     function showAppLayout() {
-      authContainer.classList.add('hidden');
-      appContainer.classList.remove('hidden');
-      applyProfileToUI();
-      checkAdminAccess();
-      renderUserManagementTable();
-      renderDashboardViews();
-      renderChatMessages();
-      updateNotificationBadge();
+      if (authContainer) authContainer.classList.add('hidden');
+      if (appContainer) appContainer.classList.remove('hidden');
+
+      safeExecute(applyProfileToUI, "applyProfileToUI");
+      safeExecute(checkAdminAccess, "checkAdminAccess");
+      safeExecute(renderUserManagementTable, "renderUserManagementTable");
+      safeExecute(renderDashboardViews, "renderDashboardViews");
+      safeExecute(renderChatMessages, "renderChatMessages");
+      safeExecute(updateNotificationBadge, "updateNotificationBadge");
+
+      navigateToPage('home');
     }
 
     function renderDashboardViews() {
@@ -1066,27 +1045,24 @@
 
       const isAdmin = currentUser.role === 'Administrator' || currentUser.username === 'admin';
 
-      if (isAdmin) {
-        adminDashboardView.style.display = 'block';
-        userDashboardView.style.display = 'none';
-        const welcomeAdminTitle = document.getElementById('welcomeAdminTitle');
-        if (welcomeAdminTitle) welcomeAdminTitle.textContent = `Welcome Back, ${currentUser.fullName}!`;
-      } else {
-        adminDashboardView.style.display = 'none';
-        userDashboardView.style.display = 'block';
-        const welcomeUserTitle = document.getElementById('welcomeUserTitle');
-        if (welcomeUserTitle) welcomeUserTitle.textContent = `Selamat Datang, ${currentUser.fullName}!`;
+      if (adminDashboardView && userDashboardView) {
+        if (isAdmin) {
+          adminDashboardView.style.display = 'block';
+          userDashboardView.style.display = 'none';
+          const welcomeAdminTitle = document.getElementById('welcomeAdminTitle');
+          if (welcomeAdminTitle) welcomeAdminTitle.textContent = `Welcome Back, ${currentUser.fullName}!`;
+        } else {
+          adminDashboardView.style.display = 'none';
+          userDashboardView.style.display = 'block';
+          const welcomeUserTitle = document.getElementById('welcomeUserTitle');
+          if (welcomeUserTitle) welcomeUserTitle.textContent = `Selamat Datang, ${currentUser.fullName}!`;
+        }
       }
     }
 
-    // =========================================================
-    // 4. PESAN & PERCAKAPAN (CHAT SYSTEM)
-    // =========================================================
     function renderChatMessages() {
       if (!chatMessagesBody || !currentUser) return;
       chatMessagesBody.innerHTML = '';
-
-      const isAdmin = currentUser.role === 'Administrator' || currentUser.username === 'admin';
 
       messagesDatabase.forEach(msg => {
         const isMyMsg = msg.sender === currentUser.username;
@@ -1143,13 +1119,10 @@
       navigateToPage('messages');
     });
 
-    // =========================================================
-    // 5. GOOGLE SPREADSHEET ENTRY SIMULATION
-    // =========================================================
     sheetEntryForm?.addEventListener('submit', (e) => {
       e.preventDefault();
-      const title = document.getElementById('sheetDataTitle').value.trim();
-      const desc = document.getElementById('sheetDataValue').value.trim();
+      const title = document.getElementById('sheetDataTitle')?.value.trim();
+      const desc = document.getElementById('sheetDataValue')?.value.trim();
 
       if (!title || !desc) return;
 
@@ -1157,15 +1130,12 @@
       sheetEntryForm.reset();
     });
 
-    // =========================================================
-    // 6. AUTHENTICATION & PROFILE HANDLERS
-    // =========================================================
-    tabLogin.addEventListener('click', () => {
+    tabLogin?.addEventListener('click', () => {
       tabLogin.classList.add('active'); tabRegister.classList.remove('active');
       loginForm.classList.add('active'); registerForm.classList.remove('active');
     });
 
-    tabRegister.addEventListener('click', () => {
+    tabRegister?.addEventListener('click', () => {
       tabRegister.classList.add('active'); tabLogin.classList.remove('active');
       registerForm.classList.add('active'); loginForm.classList.remove('active');
     });
@@ -1178,10 +1148,15 @@
       });
     });
 
-    loginForm.addEventListener('submit', (e) => {
+    loginForm?.addEventListener('submit', (e) => {
       e.preventDefault();
-      const userVal = document.getElementById('loginUser').value.trim();
-      const passVal = document.getElementById('loginPass').value.trim();
+      const userVal = document.getElementById('loginUser')?.value.trim();
+      const passVal = document.getElementById('loginPass')?.value.trim();
+
+      if (!userVal || !passVal) {
+        showToast('Isi username/email dan kata sandi!', 'error', 'Login Gagal');
+        return;
+      }
 
       const matchUser = usersDatabase.find(u => 
         (u.username.toLowerCase() === userVal.toLowerCase() || u.email.toLowerCase() === userVal.toLowerCase()) && 
@@ -1198,12 +1173,12 @@
       }
     });
 
-    registerForm.addEventListener('submit', (e) => {
+    registerForm?.addEventListener('submit', (e) => {
       e.preventDefault();
-      const fullNameVal = document.getElementById('regFullName').value.trim();
-      const usernameVal = document.getElementById('regUsername').value.trim();
-      const emailVal = document.getElementById('regEmail').value.trim();
-      const passVal = document.getElementById('regPass').value.trim();
+      const fullNameVal = document.getElementById('regFullName')?.value.trim();
+      const usernameVal = document.getElementById('regUsername')?.value.trim();
+      const emailVal = document.getElementById('regEmail')?.value.trim();
+      const passVal = document.getElementById('regPass')?.value.trim();
 
       if (!fullNameVal || !usernameVal || !emailVal || passVal.length < 6) {
         showToast('Lengkapi formulir dengan benar!', 'error'); return;
@@ -1218,7 +1193,7 @@
       showToast('Akun berhasil didaftarkan!', 'success');
     });
 
-    btnLogoutSidebar.addEventListener('click', () => {
+    btnLogoutSidebar?.addEventListener('click', () => {
       localStorage.removeItem(CURRENT_USER_KEY);
       currentUser = null;
       showAuthLayout();
@@ -1274,23 +1249,24 @@
 
     function applyProfileToUI() {
       if (!currentUser) return;
-      inputFullName.value = currentUser.fullName;
-      inputUsername.value = currentUser.username;
-      inputEmail.value = currentUser.email;
-      inputPhone.value = currentUser.phone || '';
-      inputBio.value = currentUser.bio || '';
 
-      displayFullName.textContent = currentUser.fullName;
-      displayEmail.textContent = currentUser.email;
-      displayRoleBadge.textContent = currentUser.role || 'Pengguna';
-      displayAvatar.src = currentUser.avatar;
+      if (inputFullName) inputFullName.value = currentUser.fullName || '';
+      if (inputUsername) inputUsername.value = currentUser.username || '';
+      if (inputEmail) inputEmail.value = currentUser.email || '';
+      if (inputPhone) inputPhone.value = currentUser.phone || '';
+      if (inputBio) inputBio.value = currentUser.bio || '';
 
-      navName.textContent = currentUser.fullName;
-      navRole.textContent = currentUser.role || 'Pengguna';
-      navAvatar.src = currentUser.avatar;
+      if (displayFullName) displayFullName.textContent = currentUser.fullName;
+      if (displayEmail) displayEmail.textContent = currentUser.email;
+      if (displayRoleBadge) displayRoleBadge.textContent = currentUser.role || 'Pengguna';
+      if (displayAvatar && currentUser.avatar) displayAvatar.src = currentUser.avatar;
+
+      if (navName) navName.textContent = currentUser.fullName;
+      if (navRole) navRole.textContent = currentUser.role || 'Pengguna';
+      if (navAvatar && currentUser.avatar) navAvatar.src = currentUser.avatar;
 
       const isDark = currentUser.theme === 'dark';
-      toggleTheme.checked = isDark;
+      if (toggleTheme) toggleTheme.checked = isDark;
       applyTheme(isDark ? 'dark' : 'light');
     }
 
@@ -1299,13 +1275,13 @@
       else document.documentElement.removeAttribute('data-theme');
     }
 
-    toggleTheme.addEventListener('change', (e) => {
+    toggleTheme?.addEventListener('change', (e) => {
       if (!currentUser) return;
       currentUser.theme = e.target.checked ? 'dark' : 'light';
       applyTheme(currentUser.theme); saveActiveSession();
     });
 
-    profileForm.addEventListener('submit', (e) => {
+    profileForm?.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!currentUser) return;
       currentUser.fullName = inputFullName.value.trim();
@@ -1316,9 +1292,9 @@
       showToast('Profil pengguna berhasil disimpan!', 'success');
     });
 
-    btnResetProfile.addEventListener('click', applyProfileToUI);
+    btnResetProfile?.addEventListener('click', applyProfileToUI);
 
-    fileInput.addEventListener('change', (e) => {
+    fileInput?.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
@@ -1331,7 +1307,6 @@
       }
     });
 
-    // Navigation
     function navigateToPage(pageId) {
       navLinks.forEach(link => link.classList.toggle('active', link.dataset.page === pageId));
       pageSections.forEach(section => section.classList.toggle('active', section.id === `page-${pageId}`));
@@ -1342,17 +1317,18 @@
     navLinks.forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); navigateToPage(link.dataset.page); }));
     navProfileTrigger?.addEventListener('click', () => navigateToPage('settings'));
 
-    function openSidebar() { sidebar.classList.add('active'); overlay.classList.add('active'); }
-    function closeSidebar() { sidebar.classList.remove('active'); overlay.classList.remove('active'); }
+    function openSidebar() { sidebar?.classList.add('active'); overlay?.classList.add('active'); }
+    function closeSidebar() { sidebar?.classList.remove('active'); overlay?.classList.remove('active'); }
 
-    btnToggleSidebar.addEventListener('click', () => {
-      if (sidebar.classList.contains('active')) closeSidebar();
+    btnToggleSidebar?.addEventListener('click', () => {
+      if (sidebar?.classList.contains('active')) closeSidebar();
       else openSidebar();
     });
-    overlay.addEventListener('click', closeSidebar);
+    overlay?.addEventListener('click', closeSidebar);
 
     function showToast(message, type = 'success', title = '') {
       const toastContainer = document.getElementById('toastContainer');
+      if (!toastContainer) return;
       const toast = document.createElement('div');
       toast.className = `toast toast-${type}`;
       toast.innerHTML = `
@@ -1365,7 +1341,7 @@
       toastContainer.appendChild(toast);
       setTimeout(() => toast.classList.add('show'), 10);
       const dismiss = () => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 350); };
-      toast.querySelector('.toast-close').addEventListener('click', dismiss);
+      toast.querySelector('.toast-close')?.addEventListener('click', dismiss);
       setTimeout(dismiss, 3500);
     }
 
