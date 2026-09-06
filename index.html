@@ -48,19 +48,21 @@
     body.wallpaper-ocean { --bg-color: #0f172a; }
     body.wallpaper-emerald { --bg-color: #064e3b; }
 
+    /* MENCEGAH REFRESH OTOMATIS SAAT SCREEN DIPAKSA SCROLL KE ATAS */
+    html, body {
+      overscroll-behavior-y: contain;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
       transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      min-height: 100vh;
-      overflow-x: hidden;
     }
 
     /* Tampilan Login vs Aplikasi */
@@ -443,7 +445,7 @@
       </div>
 
       <!-- Form Login -->
-      <form id="loginForm" class="auth-form active" novalidate>
+      <form id="loginForm" class="auth-form active" novalidate autocomplete="off">
         <div class="form-group">
           <label for="loginUser">Username atau Email <span class="required-star">*</span></label>
           <input type="text" id="loginUser" class="input-control" placeholder="Masukkan username / email">
@@ -463,7 +465,7 @@
       </form>
 
       <!-- Form Register -->
-      <form id="registerForm" class="auth-form" novalidate>
+      <form id="registerForm" class="auth-form" novalidate autocomplete="off">
         <div class="form-group">
           <label for="regFullName">Nama Lengkap <span class="required-star">*</span></label>
           <input type="text" id="regFullName" class="input-control" placeholder="Nama lengkap Anda">
@@ -979,7 +981,7 @@ function doPost(e) {<br>
     const sheetStatusText = document.getElementById('sheetStatusText');
     const sheetEntryForm = document.getElementById('sheetEntryForm');
 
-    /* FUNGSI SUARA NOTIFIKASI SINTETIS (TANPA FILE MP3 EKSTERNAL) */
+    /* FUNGSI SUARA NOTIFIKASI SINTETIS */
     function playNotifSound() {
       try {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -990,9 +992,8 @@ function doPost(e) {<br>
         const gain = audioCtx.createGain();
 
         osc.type = 'sine';
-        // Frekuensi nada "ting"
-        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
-        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12); // A5
+        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12);
 
         gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
@@ -1053,6 +1054,8 @@ function doPost(e) {<br>
       } catch (error) {
         usersDatabase = [DEFAULT_ADMIN];
         saveUsersDB();
+        sessionStorage.removeItem(CURRENT_USER_KEY);
+        currentUser = null;
         showAuthLayout();
       }
     }
@@ -1062,8 +1065,8 @@ function doPost(e) {<br>
     }
 
     function saveActiveSession() {
-      if (currentUser) {
-        sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
+      if (currentUser && currentUser.username) {
+        sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ username: currentUser.username }));
         const idx = usersDatabase.findIndex(u => u.username === currentUser.username);
         if (idx !== -1) {
           usersDatabase[idx] = currentUser;
@@ -1082,26 +1085,47 @@ function doPost(e) {<br>
       updateSpreadsheetUI();
     }
 
+    /* RESTORE USER SESSION KETAT UNTUK MENCEGAH OTOMATIS PINDAH AKUN */
     function restoreUserSession() {
       const activeSessionRaw = sessionStorage.getItem(CURRENT_USER_KEY);
-      if (!activeSessionRaw) { showAuthLayout(); return; }
+      if (!activeSessionRaw) { 
+        currentUser = null;
+        showAuthLayout(); 
+        return; 
+      }
 
       try {
         const sessionData = JSON.parse(activeSessionRaw);
+        if (!sessionData || !sessionData.username) {
+          sessionStorage.removeItem(CURRENT_USER_KEY);
+          currentUser = null;
+          showAuthLayout();
+          return;
+        }
+
         const matchUser = usersDatabase.find(u => 
-          (u.username && u.username.toLowerCase() === sessionData.username?.toLowerCase()) ||
-          (u.email && u.email.toLowerCase() === sessionData.email?.toLowerCase())
+          u.username && u.username.toLowerCase() === sessionData.username.toLowerCase()
         );
 
         if (matchUser) {
           currentUser = matchUser;
           saveActiveSession();
           showAppLayout();
-        } else { showAuthLayout(); }
-      } catch (e) { showAuthLayout(); }
+        } else { 
+          sessionStorage.removeItem(CURRENT_USER_KEY);
+          currentUser = null;
+          showAuthLayout(); 
+        }
+      } catch (e) { 
+        sessionStorage.removeItem(CURRENT_USER_KEY);
+        currentUser = null;
+        showAuthLayout(); 
+      }
     }
 
     function showAuthLayout() {
+      currentUser = null;
+      sessionStorage.removeItem(CURRENT_USER_KEY);
       if (authContainer) {
         authContainer.classList.remove('hidden');
         authContainer.style.setProperty('display', 'flex', 'important');
@@ -1371,7 +1395,6 @@ function doPost(e) {<br>
       }
     });
 
-    /* REGISTRASI USER: Wajib Login ulang setelah pendaftaran, role SELALU 'Pengguna' */
     registerForm?.addEventListener('submit', (e) => {
       e.preventDefault();
       const fullNameVal = document.getElementById('regFullName')?.value.trim();
@@ -1555,11 +1578,10 @@ function doPost(e) {<br>
     });
     overlay?.addEventListener('click', closeSidebar);
 
-    /* FUNGSI TOAST NOTIFIKASI + MEMUTAR SUARA */
+    /* TOAST NOTIFIKASI */
     function showToast(message, type = 'success', title = '') {
       if (currentUser && currentUser.notifications === false) return;
       
-      // Memutar suara notifikasi jika fitur notifikasi aktif
       playNotifSound();
 
       const toastContainer = document.getElementById('toastContainer');
