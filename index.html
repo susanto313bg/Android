@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BG 9930 - Pengaturan Profil</title>
+  <title>BG 9930 - Sistem Aplikasi PWA</title>
 
-  <!-- Hubungkan ke PWA Manifest & Warna Tema -->
+  <!-- PWA Web Manifest & Theme Color -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1e293b">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -30,7 +30,6 @@
       --radius: 12px;
     }
 
-    /* Dark Mode variables */
     [data-theme="dark"] {
       --primary-color: #0f172a;
       --primary-hover: #020617;
@@ -56,12 +55,19 @@
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
-      display: flex;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* --- Sidebar (Bilah Kiri) --- */
+    .app-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .app-layout.hidden {
+      display: none !important;
+    }
+
     .sidebar {
       width: var(--sidebar-width);
       background-color: var(--primary-color);
@@ -86,7 +92,7 @@
       color: #f1f5f9;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      justify-content: space-between;
     }
 
     .sidebar-brand-badge {
@@ -143,12 +149,33 @@
     .sidebar-footer {
       padding: 1rem 1.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 0.8rem;
-      color: #64748b;
-      text-align: center;
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
-    /* Overlay latar belakang untuk layar HP */
+    .btn-logout-sidebar {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: background 0.2s;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-logout-sidebar:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+
     .overlay {
       display: none;
       position: fixed;
@@ -165,7 +192,6 @@
       opacity: 1;
     }
 
-    /* --- Area Utama --- */
     .main-wrapper {
       flex: 1;
       margin-left: var(--sidebar-width);
@@ -176,7 +202,6 @@
       transition: margin-left 0.3s ease, width 0.3s ease;
     }
 
-    /* --- Navbar Atas --- */
     .navbar {
       background-color: var(--card-bg);
       height: 65px;
@@ -266,7 +291,6 @@
       color: var(--text-muted);
     }
 
-    /* --- Container Konten --- */
     .container {
       padding: 1.75rem;
       max-width: 960px;
@@ -289,7 +313,129 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* --- Card & Section Styling --- */
+    .auth-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #020617 100%);
+    }
+
+    .auth-wrapper.hidden {
+      display: none !important;
+    }
+
+    .auth-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 440px;
+      padding: 2rem;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .auth-logo {
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: var(--accent-color);
+      letter-spacing: 1px;
+      margin-bottom: 0.25rem;
+    }
+
+    .auth-subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .auth-tabs {
+      display: flex;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 4px;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 0.6rem;
+      text-align: center;
+      background: none;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .auth-tab.active {
+      background: var(--card-bg);
+      color: var(--accent-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .auth-form {
+      display: none;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .auth-form.active {
+      display: flex;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper .input-control {
+      padding-right: 2.75rem;
+    }
+
+    .btn-toggle-password {
+      position: absolute;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+    }
+
+    .btn-toggle-password svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .remember-forgot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+
     .card {
       background: var(--card-bg);
       padding: 1.75rem;
@@ -317,7 +463,6 @@
       fill: var(--accent-color);
     }
 
-    /* Profile Header Box */
     .profile-header-card {
       display: flex;
       align-items: center;
@@ -327,7 +472,6 @@
       padding: 1.75rem;
       border-radius: var(--radius);
       margin-bottom: 1.5rem;
-      position: relative;
     }
 
     .avatar-wrapper {
@@ -417,7 +561,6 @@
       border-radius: 50%;
     }
 
-    /* Form Grids */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -467,7 +610,6 @@
       min-height: 90px;
     }
 
-    /* Switch / Toggle Preference */
     .setting-item {
       display: flex;
       align-items: center;
@@ -496,7 +638,6 @@
       color: var(--text-muted);
     }
 
-    /* Custom Toggle Switch */
     .switch {
       position: relative;
       display: inline-block;
@@ -540,7 +681,6 @@
       transform: translateX(22px);
     }
 
-    /* Action Buttons */
     .btn-group {
       display: flex;
       gap: 1rem;
@@ -570,6 +710,10 @@
       box-shadow: var(--shadow-md);
     }
 
+    .btn-full {
+      width: 100%;
+    }
+
     .btn-secondary {
       background-color: transparent;
       color: var(--text-color);
@@ -589,7 +733,6 @@
       background-color: #047857;
     }
 
-    /* --- STREAMING_CHUNK: Styling Custom Toast Notification System --- */
     .toast-container {
       position: fixed;
       top: 1.5rem;
@@ -625,34 +768,17 @@
       opacity: 1;
     }
 
-    /* Variants */
-    .toast.toast-success {
-      border-left-color: #10b981;
-    }
-    .toast.toast-success .toast-icon {
-      fill: #10b981;
-    }
+    .toast.toast-success { border-left-color: #10b981; }
+    .toast.toast-success .toast-icon { fill: #10b981; }
 
-    .toast.toast-error {
-      border-left-color: #ef4444;
-    }
-    .toast.toast-error .toast-icon {
-      fill: #ef4444;
-    }
+    .toast.toast-error { border-left-color: #ef4444; }
+    .toast.toast-error .toast-icon { fill: #ef4444; }
 
-    .toast.toast-warning {
-      border-left-color: #f59e0b;
-    }
-    .toast.toast-warning .toast-icon {
-      fill: #f59e0b;
-    }
+    .toast.toast-warning { border-left-color: #f59e0b; }
+    .toast.toast-warning .toast-icon { fill: #f59e0b; }
 
-    .toast.toast-info {
-      border-left-color: #3b82f6;
-    }
-    .toast.toast-info .toast-icon {
-      fill: #3b82f6;
-    }
+    .toast.toast-info { border-left-color: #3b82f6; }
+    .toast.toast-info .toast-icon { fill: #3b82f6; }
 
     .toast-icon {
       width: 22px;
@@ -688,279 +814,317 @@
       line-height: 1;
       padding: 2px;
       border-radius: 4px;
-      transition: color 0.2s;
     }
 
-    .toast-close:hover {
-      color: var(--text-color);
-    }
-
-    /* --- Responsif Layar HP (Mobile) --- */
     @media (max-width: 768px) {
-      .sidebar {
-        transform: translateX(-100%);
-      }
-
-      .sidebar.active {
-        transform: translateX(0);
-      }
-
-      .main-wrapper {
-        margin-left: 0;
-        width: 100%;
-      }
-
-      .profile-header-card {
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-      }
-
-      .role-badge {
-        align-self: center;
-      }
-
-      .btn-group {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .toast-container {
-        top: 1rem;
-        right: 1rem;
-        left: 1rem;
-        width: auto;
-      }
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.active { transform: translateX(0); }
+      .main-wrapper { margin-left: 0; width: 100%; }
+      .profile-header-card { flex-direction: column; text-align: center; align-items: center; }
+      .role-badge { align-self: center; }
+      .btn-group { flex-direction: column; }
+      .btn { width: 100%; }
+      .toast-container { top: 1rem; right: 1rem; left: 1rem; width: auto; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 1. Sidebar (Bilah Kiri) -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      BG 9930
-      <span class="sidebar-brand-badge">PRO</span>
-    </div>
-
-    <ul class="sidebar-menu">
-      <li>
-        <a href="#home" class="nav-link active" data-page="home">
-          <!-- Ikon Home (SVG) -->
-          <svg viewBox="0 0 24 24">
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-          </svg>
-          <span>Home</span>
-        </a>
-      </li>
-      <li>
-        <a href="#settings" class="nav-link" data-page="settings">
-          <!-- Ikon Roda Gigi / Settings (Gear SVG) -->
-          <svg viewBox="0 0 24 24">
-            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-          </svg>
-          <span>Pengaturan</span>
-        </a>
-      </li>
-    </ul>
-
-    <div class="sidebar-footer">
-      &copy; 2026 BG 9930 System v2.0
-    </div>
-  </aside>
-
-  <!-- Overlay transparan untuk HP saat sidebar terbuka -->
-  <div class="overlay" id="overlay"></div>
-
-  <!-- 2. Area Utama & Navbar -->
-  <div class="main-wrapper">
-    <header class="navbar">
-      <div class="navbar-left">
-        <button class="toggle-btn" id="btnToggleSidebar" aria-label="Toggle Navigation">
-          <!-- Ikon Menu Hamburger -->
-          <svg viewBox="0 0 24 24">
-            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-          </svg>
-        </button>
-        <div class="app-title">BG 9930</div>
+  <div id="authContainer" class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">BG 9930</div>
+        <div class="auth-subtitle">Masuk atau buat akun untuk mengakses sistem</div>
       </div>
 
-      <!-- Quick User Profile Info in Navbar -->
-      <div class="navbar-user-preview" id="navProfileTrigger" title="Buka Profil">
-        <img id="navAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Avatar" class="navbar-avatar">
-        <div class="navbar-user-info">
-          <span id="navName" class="navbar-user-name">Ahmad Subagja</span>
-          <span id="navRole" class="navbar-user-role">Administrator</span>
-        </div>
+      <div class="auth-tabs">
+        <button id="tabLogin" class="auth-tab active">Masuk</button>
+        <button id="tabRegister" class="auth-tab">Daftar Akun</button>
       </div>
-    </header>
 
-    <!-- Konten Utama -->
-    <main class="container">
-      
-      <!-- Halaman HOME -->
-      <section id="page-home" class="page-section active">
-        <div class="card">
-          <h2 class="card-title">
-            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            Selamat Datang di BG 9930
-          </h2>
-          <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem;">
-            Aplikasi PWA modern dengan fitur pengelolaan profil pengguna yang interaktif. Anda dapat mengakses menu <strong>Pengaturan</strong> di sidebar kiri untuk memperbarui data diri, keamanan, dan tema aplikasi.
-          </p>
-          
-          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-            <button id="btnQuickProfile" class="btn">
-              <span>Buka Pengaturan Profil</span>
-            </button>
-            <button id="btnInstall" class="btn">Install Aplikasi ke HP</button>
-          </div>
+      <!-- Form Login -->
+      <form id="loginForm" class="auth-form active" novalidate>
+        <div class="form-group">
+          <label for="loginUser">Username atau Email <span class="required-star">*</span></label>
+          <input type="text" id="loginUser" class="input-control" placeholder="Masukkan username / email">
         </div>
-      </section>
 
-      <!-- Halaman PENGATURAN / SETTINGS -->
-      <section id="page-settings" class="page-section">
-        
-        <!-- Header Profile Card -->
-        <div class="profile-header-card">
-          <div class="avatar-wrapper">
-            <img id="displayAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Foto Profil" class="profile-avatar-img">
-            <label for="fileInput" class="avatar-upload-btn" title="Ganti Foto Profil">
-              <svg viewBox="0 0 24 24">
-                <path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>
-              </svg>
-            </label>
-            <input type="file" id="fileInput" accept="image/*">
-          </div>
-
-          <div class="profile-details-head">
-            <h1 id="displayFullName" class="profile-name">Ahmad Subagja</h1>
-            <p id="displayEmail" class="profile-email">ahmad@bg9930.com</p>
-            <span id="displayRoleBadge" class="role-badge">Administrator</span>
+        <div class="form-group">
+          <label for="loginPass">Kata Sandi <span class="required-star">*</span></label>
+          <div class="input-wrapper">
+            <input type="password" id="loginPass" class="input-control" placeholder="••••••••">
+            <button type="button" class="btn-toggle-password" data-target="loginPass">
+              <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </button>
           </div>
         </div>
 
-        <!-- Form Pengaturan Profil (novalidate mematikan tooltip bawaan browser) -->
-        <form id="profileForm" novalidate>
-          
-          <!-- Card Data Diri -->
-          <div class="card">
-            <h2 class="card-title">
-              <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-              Data Diri Pengguna
-            </h2>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="inputFullName">Nama Lengkap <span class="required-star">*</span></label>
-                <input type="text" id="inputFullName" class="input-control" placeholder="Masukkan nama lengkap">
-              </div>
+        <div class="remember-forgot">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberMe">
+            <span>Ingat Saya</span>
+          </label>
+        </div>
 
-              <div class="form-group">
-                <label for="inputUsername">Username</label>
-                <input type="text" id="inputUsername" class="input-control" placeholder="Masukkan username">
-              </div>
+        <button type="submit" class="btn btn-full">Masuk ke Sistem</button>
+      </form>
 
-              <div class="form-group">
-                <label for="inputEmail">Email / Surel <span class="required-star">*</span></label>
-                <input type="email" id="inputEmail" class="input-control" placeholder="nama@email.com">
-              </div>
+      <!-- Form Register -->
+      <form id="registerForm" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="regFullName">Nama Lengkap <span class="required-star">*</span></label>
+          <input type="text" id="regFullName" class="input-control" placeholder="Nama lengkap Anda">
+        </div>
 
-              <div class="form-group">
-                <label for="inputPhone">Nomor Telepon / WhatsApp</label>
-                <input type="tel" id="inputPhone" class="input-control" placeholder="08xxxxxxxxxx">
-              </div>
+        <div class="form-group">
+          <label for="regUsername">Username <span class="required-star">*</span></label>
+          <input type="text" id="regUsername" class="input-control" placeholder="Buat username unik">
+        </div>
 
-              <div class="form-group">
-                <label for="inputRole">Jabatan / Role</label>
-                <input type="text" id="inputRole" class="input-control" placeholder="Administrator, Developer, Manager">
-              </div>
+        <div class="form-group">
+          <label for="regEmail">Email / Surel <span class="required-star">*</span></label>
+          <input type="email" id="regEmail" class="input-control" placeholder="nama@email.com">
+        </div>
 
-              <div class="form-group full-width">
-                <label for="inputBio">Bio / Catatan Singkat</label>
-                <textarea id="inputBio" class="input-control" placeholder="Tuliskan deskripsi singkat profil Anda..."></textarea>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card Keamanan -->
-          <div class="card">
-            <h2 class="card-title">
-              <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-              Keamanan Kata Sandi
-            </h2>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="inputCurrentPass">Kata Sandi Saat Ini</label>
-                <input type="password" id="inputCurrentPass" class="input-control" placeholder="••••••••">
-              </div>
-              <div class="form-group">
-                <label for="inputNewPass">Kata Sandi Baru</label>
-                <input type="password" id="inputNewPass" class="input-control" placeholder="••••••••">
-              </div>
-              <div class="form-group">
-                <label for="inputConfirmPass">Konfirmasi Kata Sandi Baru</label>
-                <input type="password" id="inputConfirmPass" class="input-control" placeholder="••••••••">
-              </div>
-            </div>
-          </div>
-
-          <!-- Card Preferensi & Tampilan -->
-          <div class="card">
-            <h2 class="card-title">
-              <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
-              Preferensi Aplikasi
-            </h2>
-
-            <div class="setting-item">
-              <div class="setting-info">
-                <span class="setting-title">Notifikasi Sistem</span>
-                <span class="setting-desc">Terima pemberitahuan dan pembaruan penting.</span>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="toggleNotifications" checked>
-                <span class="slider"></span>
-              </label>
-            </div>
-
-            <div class="setting-item">
-              <div class="setting-info">
-                <span class="setting-title">Mode Gelap (Dark Mode)</span>
-                <span class="setting-desc">Aktifkan tampilan tema gelap yang nyaman di mata.</span>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="toggleTheme">
-                <span class="slider"></span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Tombol Simpan -->
-          <div class="btn-group">
-            <button type="button" id="btnResetProfile" class="btn btn-secondary">Batal / Reset</button>
-            <button type="submit" class="btn">
-              <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: currentColor;"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
-              Simpan Perubahan
+        <div class="form-group">
+          <label for="regPass">Kata Sandi <span class="required-star">*</span></label>
+          <div class="input-wrapper">
+            <input type="password" id="regPass" class="input-control" placeholder="Minimal 6 karakter">
+            <button type="button" class="btn-toggle-password" data-target="regPass">
+              <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
             </button>
           </div>
+        </div>
 
-        </form>
-      </section>
+        <div class="form-group">
+          <label for="regConfirmPass">Konfirmasi Kata Sandi <span class="required-star">*</span></label>
+          <div class="input-wrapper">
+            <input type="password" id="regConfirmPass" class="input-control" placeholder="Ulangi kata sandi">
+            <button type="button" class="btn-toggle-password" data-target="regConfirmPass">
+              <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </button>
+          </div>
+        </div>
 
-    </main>
+        <button type="submit" class="btn btn-full">Daftar Akun Baru</button>
+      </form>
+    </div>
   </div>
 
-  <!-- Container Custom Toast Notification -->
+  <div id="appContainer" class="app-layout hidden">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span>BG 9930</span>
+        <span class="sidebar-brand-badge">PRO</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#home" class="nav-link active" data-page="home">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="#settings" class="nav-link" data-page="settings">
+            <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+            <span>Pengaturan</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button id="btnLogoutSidebar" class="btn-logout-sidebar">
+          <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: currentColor;"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+          <span>Keluar (Logout)</span>
+        </button>
+        <div style="text-align: center; color: var(--text-muted); font-size: 0.75rem;">
+          &copy; 2026 BG 9930 System v2.0
+        </div>
+      </div>
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="main-wrapper">
+      <header class="navbar">
+        <div class="navbar-left">
+          <button class="toggle-btn" id="btnToggleSidebar" aria-label="Toggle Navigation">
+            <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+          </button>
+          <div class="app-title">BG 9930</div>
+        </div>
+
+        <div class="navbar-user-preview" id="navProfileTrigger" title="Buka Profil">
+          <img id="navAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Avatar" class="navbar-avatar">
+          <div class="navbar-user-info">
+            <span id="navName" class="navbar-user-name">Pengguna BG9930</span>
+            <span id="navRole" class="navbar-user-role">Administrator</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- Halaman HOME -->
+        <section id="page-home" class="page-section active">
+          <div class="card">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+              Selamat Datang di BG 9930
+            </h2>
+            <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem;">
+              Aplikasi PWA modern dengan pengelolaan profil pengguna interaktif, otentikasi login/register multi-user, serta penyimpanan lokal otomatis. Anda dapat membuka menu <strong>Pengaturan</strong> untuk mengelola data diri dan tema aplikasi.
+            </p>
+            
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <button id="btnQuickProfile" class="btn">
+                <span>Buka Pengaturan Profil</span>
+              </button>
+              <button id="btnInstall" class="btn">Install Aplikasi ke HP</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Halaman PENGATURAN -->
+        <section id="page-settings" class="page-section">
+          <!-- Header Profile Card -->
+          <div class="profile-header-card">
+            <div class="avatar-wrapper">
+              <img id="displayAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Foto Profil" class="profile-avatar-img">
+              <label for="fileInput" class="avatar-upload-btn" title="Ganti Foto Profil">
+                <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+              </label>
+              <input type="file" id="fileInput" accept="image/*">
+            </div>
+
+            <div class="profile-details-head">
+              <h1 id="displayFullName" class="profile-name">Pengguna BG9930</h1>
+              <p id="displayEmail" class="profile-email">user@bg9930.com</p>
+              <span id="displayRoleBadge" class="role-badge">Administrator</span>
+            </div>
+          </div>
+
+          <!-- Form Settings -->
+          <form id="profileForm" novalidate>
+            <div class="card">
+              <h2 class="card-title">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                Data Diri Pengguna
+              </h2>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="inputFullName">Nama Lengkap <span class="required-star">*</span></label>
+                  <input type="text" id="inputFullName" class="input-control" placeholder="Masukkan nama lengkap">
+                </div>
+
+                <div class="form-group">
+                  <label for="inputUsername">Username</label>
+                  <input type="text" id="inputUsername" class="input-control" placeholder="Masukkan username" disabled style="opacity: 0.7; cursor: not-allowed;">
+                </div>
+
+                <div class="form-group">
+                  <label for="inputEmail">Email / Surel <span class="required-star">*</span></label>
+                  <input type="email" id="inputEmail" class="input-control" placeholder="nama@email.com">
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPhone">Nomor Telepon / WhatsApp</label>
+                  <input type="tel" id="inputPhone" class="input-control" placeholder="08xxxxxxxxxx">
+                </div>
+
+                <div class="form-group">
+                  <label for="inputRole">Jabatan / Role</label>
+                  <input type="text" id="inputRole" class="input-control" placeholder="Administrator, Developer, Manager">
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="inputBio">Bio / Catatan Singkat</label>
+                  <textarea id="inputBio" class="input-control" placeholder="Tuliskan deskripsi singkat profil Anda..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Keamanan -->
+            <div class="card">
+              <h2 class="card-title">
+                <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                Keamanan Kata Sandi
+              </h2>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="inputCurrentPass">Kata Sandi Saat Ini</label>
+                  <input type="password" id="inputCurrentPass" class="input-control" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                  <label for="inputNewPass">Kata Sandi Baru</label>
+                  <input type="password" id="inputNewPass" class="input-control" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                  <label for="inputConfirmPass">Konfirmasi Kata Sandi Baru</label>
+                  <input type="password" id="inputConfirmPass" class="input-control" placeholder="••••••••">
+                </div>
+              </div>
+            </div>
+
+            <!-- Preferensi -->
+            <div class="card">
+              <h2 class="card-title">
+                <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+                Preferensi Aplikasi
+              </h2>
+
+              <div class="setting-item">
+                <div class="setting-info">
+                  <span class="setting-title">Notifikasi Sistem</span>
+                  <span class="setting-desc">Terima pemberitahuan dan pembaruan penting.</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="toggleNotifications" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="setting-item">
+                <div class="setting-info">
+                  <span class="setting-title">Mode Gelap (Dark Mode)</span>
+                  <span class="setting-desc">Aktifkan tampilan tema gelap yang nyaman di mata.</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="toggleTheme">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="btn-group">
+              <button type="button" id="btnResetProfile" class="btn btn-secondary">Batal / Reset</button>
+              <button type="submit" class="btn">
+                <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: currentColor;"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+                Simpan Perubahan
+              </button>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
-    // Data Default Profil
-    const DEFAULT_PROFILE = {
+    // LocalStorage Keys
+    const USERS_KEY = 'bg9930_users_db';
+    const CURRENT_USER_KEY = 'bg9930_active_session';
+
+    // Default Demo Account
+    const DEFAULT_ADMIN = {
       fullName: 'Ahmad Subagja',
-      username: 'ahmad9930',
+      username: 'admin',
       email: 'ahmad@bg9930.com',
+      password: 'password123',
       phone: '081234567890',
       role: 'Administrator',
       bio: 'Pengembang sistem BG 9930 dan manajer platform PWA.',
@@ -969,17 +1133,25 @@
       theme: 'light'
     };
 
-    // Global State
-    let userProfile = { ...DEFAULT_PROFILE };
+    // State Variables
+    let usersDatabase = [];
+    let currentUser = null;
 
-    // DOM Elements
+    // DOM Selectors
+    const authContainer = document.getElementById('authContainer');
+    const appContainer = document.getElementById('appContainer');
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
     const btnToggleSidebar = document.getElementById('btnToggleSidebar');
     const navLinks = document.querySelectorAll('.nav-link');
     const pageSections = document.querySelectorAll('.page-section');
-    
-    // Form Elements
+    const btnLogoutSidebar = document.getElementById('btnLogoutSidebar');
+
     const profileForm = document.getElementById('profileForm');
     const fileInput = document.getElementById('fileInput');
     const displayAvatar = document.getElementById('displayAvatar');
@@ -996,7 +1168,7 @@
     const inputPhone = document.getElementById('inputPhone');
     const inputRole = document.getElementById('inputRole');
     const inputBio = document.getElementById('inputBio');
-    
+
     const inputCurrentPass = document.getElementById('inputCurrentPass');
     const inputNewPass = document.getElementById('inputNewPass');
     const inputConfirmPass = document.getElementById('inputConfirmPass');
@@ -1007,47 +1179,232 @@
     const btnQuickProfile = document.getElementById('btnQuickProfile');
     const navProfileTrigger = document.getElementById('navProfileTrigger');
 
-    // A. LocalStorage Load & UI Sync
-    function loadProfile() {
-      const savedData = localStorage.getItem('bg9930_user_profile');
-      if (savedData) {
+    function initDatabase() {
+      const storedUsers = localStorage.getItem(USERS_KEY);
+      if (storedUsers) {
         try {
-          userProfile = { ...DEFAULT_PROFILE, ...JSON.parse(savedData) };
+          usersDatabase = JSON.parse(storedUsers);
         } catch (e) {
-          console.error("Gagal membaca profil dari localStorage", e);
+          usersDatabase = [DEFAULT_ADMIN];
+        }
+      } else {
+        usersDatabase = [DEFAULT_ADMIN];
+        saveUsersDB();
+      }
+
+      const activeSession = localStorage.getItem(CURRENT_USER_KEY);
+      if (activeSession) {
+        try {
+          const sessionUser = JSON.parse(activeSession);
+          const found = usersDatabase.find(u => u.username === sessionUser.username);
+          if (found) {
+            currentUser = found;
+            showAppLayout();
+          } else {
+            showAuthLayout();
+          }
+        } catch (e) {
+          showAuthLayout();
+        }
+      } else {
+        showAuthLayout();
+      }
+    }
+
+    function saveUsersDB() {
+      localStorage.setItem(USERS_KEY, JSON.stringify(usersDatabase));
+    }
+
+    function saveActiveSession() {
+      if (currentUser) {
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
+        // Sinkronisasi ke DB
+        const idx = usersDatabase.findIndex(u => u.username === currentUser.username);
+        if (idx !== -1) {
+          usersDatabase[idx] = currentUser;
+          saveUsersDB();
         }
       }
+    }
+
+    // Auth Switchers
+    function showAuthLayout() {
+      authContainer.classList.remove('hidden');
+      appContainer.classList.add('hidden');
+    }
+
+    function showAppLayout() {
+      authContainer.classList.add('hidden');
+      appContainer.classList.remove('hidden');
       applyProfileToUI();
     }
 
+    // Tabs Switcher Login/Register
+    tabLogin.addEventListener('click', () => {
+      tabLogin.classList.add('active');
+      tabRegister.classList.remove('active');
+      loginForm.classList.add('active');
+      registerForm.classList.remove('active');
+    });
+
+    tabRegister.addEventListener('click', () => {
+      tabRegister.classList.add('active');
+      tabLogin.classList.remove('active');
+      registerForm.classList.add('active');
+      loginForm.classList.remove('active');
+    });
+
+    // Show/Hide Password Toggle
+    document.querySelectorAll('.btn-toggle-password').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        if (input) {
+          if (input.type === 'password') {
+            input.type = 'text';
+            btn.style.color = 'var(--accent-color)';
+          } else {
+            input.type = 'password';
+            btn.style.color = 'var(--text-muted)';
+          }
+        }
+      });
+    });
+
+    // Form Login Submit
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const userVal = document.getElementById('loginUser').value.trim();
+      const passVal = document.getElementById('loginPass').value.trim();
+
+      if (!userVal || !passVal) {
+        showToast('Isi username/email dan kata sandi!', 'error', 'Login Gagal');
+        return;
+      }
+
+      const matchUser = usersDatabase.find(u => 
+        (u.username === userVal || u.email.toLowerCase() === userVal.toLowerCase()) && 
+        u.password === passVal
+      );
+
+      if (matchUser) {
+        currentUser = matchUser;
+        saveActiveSession();
+        showAppLayout();
+        showToast(`Selamat datang kembali, ${currentUser.fullName}!`, 'success', 'Login Berhasil');
+      } else {
+        showToast('Username/email atau kata sandi tidak cocok!', 'error', 'Autentikasi Gagal');
+      }
+    });
+
+    // Form Register Submit
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fullNameVal = document.getElementById('regFullName').value.trim();
+      const usernameVal = document.getElementById('regUsername').value.trim();
+      const emailVal = document.getElementById('regEmail').value.trim();
+      const passVal = document.getElementById('regPass').value.trim();
+      const confirmPassVal = document.getElementById('regConfirmPass').value.trim();
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!fullNameVal) {
+        showToast('Nama Lengkap wajib diisi!', 'error', 'Registrasi Gagal');
+        return;
+      }
+
+      if (!usernameVal) {
+        showToast('Username wajib diisi!', 'error', 'Registrasi Gagal');
+        return;
+      }
+
+      if (!emailVal || !emailRegex.test(emailVal)) {
+        showToast('Masukkan alamat email yang valid!', 'error', 'Registrasi Gagal');
+        return;
+      }
+
+      if (!passVal || passVal.length < 6) {
+        showToast('Kata sandi minimal 6 karakter!', 'error', 'Registrasi Gagal');
+        return;
+      }
+
+      if (passVal !== confirmPassVal) {
+        showToast('Konfirmasi kata sandi tidak cocok!', 'error', 'Registrasi Gagal');
+        return;
+      }
+
+      // Check Duplicates
+      const exists = usersDatabase.some(u => 
+        u.username.toLowerCase() === usernameVal.toLowerCase() || 
+        u.email.toLowerCase() === emailVal.toLowerCase()
+      );
+
+      if (exists) {
+        showToast('Username atau Email sudah terdaftar!', 'warning', 'Peringatan');
+        return;
+      }
+
+      // Create New User
+      const newUser = {
+        fullName: fullNameVal,
+        username: usernameVal,
+        email: emailVal,
+        password: passVal,
+        phone: '',
+        role: 'Pengguna',
+        bio: 'Pengguna baru BG 9930.',
+        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
+        notifications: true,
+        theme: 'light'
+      };
+
+      usersDatabase.push(newUser);
+      saveUsersDB();
+
+      currentUser = newUser;
+      saveActiveSession();
+      showAppLayout();
+
+      showToast('Akun berhasil dibuat!', 'success', 'Registrasi Sukses');
+    });
+
+    // Logout Handler
+    btnLogoutSidebar.addEventListener('click', () => {
+      localStorage.removeItem(CURRENT_USER_KEY);
+      currentUser = null;
+      showAuthLayout();
+      showToast('Anda telah keluar dari aplikasi.', 'info', 'Logout');
+    });
+
     function applyProfileToUI() {
-      // Set Form Inputs
-      inputFullName.value = userProfile.fullName;
-      inputUsername.value = userProfile.username;
-      inputEmail.value = userProfile.email;
-      inputPhone.value = userProfile.phone;
-      inputRole.value = userProfile.role;
-      inputBio.value = userProfile.bio;
-      toggleNotifications.checked = userProfile.notifications;
+      if (!currentUser) return;
 
-      // Header Preview Display
-      displayFullName.textContent = userProfile.fullName;
-      displayEmail.textContent = userProfile.email;
-      displayRoleBadge.textContent = userProfile.role;
-      displayAvatar.src = userProfile.avatar;
+      // Inputs
+      inputFullName.value = currentUser.fullName;
+      inputUsername.value = currentUser.username;
+      inputEmail.value = currentUser.email;
+      inputPhone.value = currentUser.phone || '';
+      inputRole.value = currentUser.role || 'Pengguna';
+      inputBio.value = currentUser.bio || '';
+      toggleNotifications.checked = currentUser.notifications;
 
-      // Navbar Display
-      navName.textContent = userProfile.fullName;
-      navRole.textContent = userProfile.role;
-      navAvatar.src = userProfile.avatar;
+      // Profile Header Card
+      displayFullName.textContent = currentUser.fullName;
+      displayEmail.textContent = currentUser.email;
+      displayRoleBadge.textContent = currentUser.role || 'Pengguna';
+      displayAvatar.src = currentUser.avatar;
 
-      // Theme Toggle
-      const isDark = userProfile.theme === 'dark';
+      // Navbar Header
+      navName.textContent = currentUser.fullName;
+      navRole.textContent = currentUser.role || 'Pengguna';
+      navAvatar.src = currentUser.avatar;
+
+      // Theme
+      const isDark = currentUser.theme === 'dark';
       toggleTheme.checked = isDark;
       applyTheme(isDark ? 'dark' : 'light');
     }
 
-    // B. Tema Tampilan (Dark / Light)
     function applyTheme(theme) {
       if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
@@ -1057,34 +1414,26 @@
     }
 
     toggleTheme.addEventListener('change', (e) => {
+      if (!currentUser) return;
       const isDark = e.target.checked;
-      userProfile.theme = isDark ? 'dark' : 'light';
-      applyTheme(userProfile.theme);
+      currentUser.theme = isDark ? 'dark' : 'light';
+      applyTheme(currentUser.theme);
+      saveActiveSession();
       showToast(isDark ? 'Mode Gelap diaktifkan' : 'Mode Terang diaktifkan', 'info', 'Tema Diubah');
     });
 
-    // C. SPA Navigation Logic
     function navigateToPage(pageId) {
       navLinks.forEach(link => {
-        if (link.dataset.page === pageId) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
+        if (link.dataset.page === pageId) link.classList.add('active');
+        else link.classList.remove('active');
       });
 
       pageSections.forEach(section => {
-        if (section.id === `page-${pageId}`) {
-          section.classList.add('active');
-        } else {
-          section.classList.remove('active');
-        }
+        if (section.id === `page-${pageId}`) section.classList.add('active');
+        else section.classList.remove('active');
       });
 
-      if (window.innerWidth <= 768) {
-        closeSidebar();
-      }
-      
+      if (window.innerWidth <= 768) closeSidebar();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1098,33 +1447,20 @@
     btnQuickProfile.addEventListener('click', () => navigateToPage('settings'));
     navProfileTrigger.addEventListener('click', () => navigateToPage('settings'));
 
-    // D. Sidebar Toggle & Mobile Overlay
-    function openSidebar() {
-      sidebar.classList.add('active');
-      overlay.classList.add('active');
-    }
+    function openSidebar() { sidebar.classList.add('active'); overlay.classList.add('active'); }
+    function closeSidebar() { sidebar.classList.remove('active'); overlay.classList.remove('active'); }
 
-    function closeSidebar() {
-      sidebar.classList.remove('active');
-      overlay.classList.remove('active');
-    }
-
-    function toggleSidebar() {
-      if (sidebar.classList.contains('active')) {
-        closeSidebar();
-      } else {
-        openSidebar();
-      }
-    }
-
-    btnToggleSidebar.addEventListener('click', toggleSidebar);
+    btnToggleSidebar.addEventListener('click', () => {
+      if (sidebar.classList.contains('active')) closeSidebar();
+      else openSidebar();
+    });
     overlay.addEventListener('click', closeSidebar);
 
-    // E. Upload Foto Profil Preview (Base64)
+    // Upload Image Base64
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
-        if (file.size > 2 * 1024 * 1024) { // Max 2MB
+        if (file.size > 2 * 1024 * 1024) {
           showToast('Ukuran berkas gambar maksimal 2MB!', 'error', 'Upload Gagal');
           return;
         }
@@ -1132,51 +1468,45 @@
         const reader = new FileReader();
         reader.onload = function(evt) {
           const newAvatar = evt.target.result;
-          userProfile.avatar = newAvatar;
+          currentUser.avatar = newAvatar;
           displayAvatar.src = newAvatar;
           navAvatar.src = newAvatar;
-          showToast('Foto profil berhasil diperbarui', 'success', 'Berhasil');
+          saveActiveSession();
+          showToast('Foto profil diperbarui', 'success', 'Berhasil');
         };
         reader.readAsDataURL(file);
       }
     });
 
-    // F. Form Save Profile Handler (Validasi Kustom & Toast Notification)
+    // Profile Form Save
     profileForm.addEventListener('submit', (e) => {
-      e.preventDefault(); // Menghentikan kirim form & mematikan validasi HTML5 bawaan
+      e.preventDefault();
+      if (!currentUser) return;
 
       const fullNameVal = inputFullName.value.trim();
       const emailVal = inputEmail.value.trim();
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      // 1. Validasi Nama Lengkap
       if (!fullNameVal) {
         showToast('Nama Lengkap wajib diisi!', 'error', 'Validasi Gagal');
         inputFullName.focus();
         return;
       }
 
-      // 2. Validasi Email / Surel
-      if (!emailVal) {
-        showToast('Masukkan alamat surel!', 'error', 'Validasi Gagal');
+      if (!emailVal || !emailRegex.test(emailVal)) {
+        showToast('Masukkan alamat email yang valid!', 'error', 'Validasi Gagal');
         inputEmail.focus();
         return;
       }
 
-      if (!emailRegex.test(emailVal)) {
-        showToast('Format alamat surel tidak valid (contoh: nama@email.com)!', 'error', 'Validasi Gagal');
-        inputEmail.focus();
-        return;
-      }
-
-      // 3. Validasi Password (jika ada yang diisi)
+      // Password Changes
       const currentPass = inputCurrentPass.value.trim();
       const newPass = inputNewPass.value.trim();
       const confirmPass = inputConfirmPass.value.trim();
 
       if (currentPass || newPass || confirmPass) {
-        if (!currentPass) {
-          showToast('Masukkan kata sandi saat ini untuk konfirmasi!', 'warning', 'Perhatian');
+        if (currentPass !== currentUser.password) {
+          showToast('Kata sandi saat ini tidak cocok!', 'error', 'Keamanan');
           inputCurrentPass.focus();
           return;
         }
@@ -1190,57 +1520,49 @@
           inputConfirmPass.focus();
           return;
         }
-        // Reset password fields setelah validasi sukses
+        currentUser.password = newPass;
         inputCurrentPass.value = '';
         inputNewPass.value = '';
         inputConfirmPass.value = '';
       }
 
-      // 4. Update data profil jika semua validasi lolos
-      userProfile.fullName = fullNameVal;
-      userProfile.username = inputUsername.value.trim() || userProfile.username;
-      userProfile.email = emailVal;
-      userProfile.phone = inputPhone.value.trim();
-      userProfile.role = inputRole.value.trim() || userProfile.role;
-      userProfile.bio = inputBio.value.trim();
-      userProfile.notifications = toggleNotifications.checked;
+      currentUser.fullName = fullNameVal;
+      currentUser.email = emailVal;
+      currentUser.phone = inputPhone.value.trim();
+      currentUser.role = inputRole.value.trim() || currentUser.role;
+      currentUser.bio = inputBio.value.trim();
+      currentUser.notifications = toggleNotifications.checked;
 
-      // Permanenkan ke LocalStorage
-      localStorage.setItem('bg9930_user_profile', JSON.stringify(userProfile));
-
-      // Refresh UI display
+      saveActiveSession();
       applyProfileToUI();
 
-      showToast('Profil pengguna berhasil disimpan permanen!', 'success', 'Pembaruan Sukses');
+      showToast('Profil pengguna berhasil disimpan!', 'success', 'Pembaruan Sukses');
     });
 
-    // Reset Form
     btnResetProfile.addEventListener('click', () => {
-      loadProfile();
-      showToast('Formulir telah dikembalikan ke data awal.', 'info', 'Formulir Direset');
+      applyProfileToUI();
+      showToast('Formulir dikembalikan ke data awal.', 'info', 'Reset');
     });
 
-    // G. Custom Toast Notification Engine
     function showToast(message, type = 'success', title = '') {
       const toastContainer = document.getElementById('toastContainer');
       const toast = document.createElement('div');
       toast.className = `toast toast-${type}`;
 
-      // Tentukan Ikon & Title berdasarkan type
       let iconSVG = '';
-      let defaultTitle = '';
+      let defaultTitle = title;
 
       if (type === 'success') {
-        defaultTitle = title || 'Berhasil';
+        defaultTitle = defaultTitle || 'Berhasil';
         iconSVG = `<svg class="toast-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
       } else if (type === 'error') {
-        defaultTitle = title || 'Kesalahan';
+        defaultTitle = defaultTitle || 'Kesalahan';
         iconSVG = `<svg class="toast-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`;
       } else if (type === 'warning') {
-        defaultTitle = title || 'Peringatan';
+        defaultTitle = defaultTitle || 'Peringatan';
         iconSVG = `<svg class="toast-icon" viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>`;
       } else {
-        defaultTitle = title || 'Informasi';
+        defaultTitle = defaultTitle || 'Informasi';
         iconSVG = `<svg class="toast-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>`;
       }
 
@@ -1254,24 +1576,17 @@
       `;
 
       toastContainer.appendChild(toast);
-
-      // Animation in
       setTimeout(() => toast.classList.add('show'), 10);
 
-      // Close handler
-      const closeBtn = toast.querySelector('.toast-close');
       const dismissToast = () => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 350);
       };
 
-      closeBtn.addEventListener('click', dismissToast);
-
-      // Auto dismiss after 3.5 seconds
+      toast.querySelector('.toast-close').addEventListener('click', dismissToast);
       setTimeout(dismissToast, 3500);
     }
 
-    // H. Service Worker & PWA Install Button Logic
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
@@ -1294,7 +1609,7 @@
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
-            showToast('Aplikasi berhasil dipasang di perangkat Anda', 'success');
+            showToast('Aplikasi berhasil dipasang di HP', 'success');
           }
           deferredPrompt = null;
           btnInstall.style.display = 'none';
@@ -1302,9 +1617,9 @@
       }
     });
 
-    // Inisialisasi saat halaman selesai dimuat
+    // App Initialization
     window.addEventListener('DOMContentLoaded', () => {
-      loadProfile();
+      initDatabase();
     });
   </script>
 </body>
