@@ -762,7 +762,7 @@ function doPost(e) {<br>
             <div class="profile-details-head">
               <h1 id="displayFullName" class="profile-name">Pengguna</h1>
               <p id="displayEmail" class="profile-email">user@bekasi9930.com</p>
-              <span id="displayRoleBadge" class="role-badge">Administrator</span>
+              <span id="displayRoleBadge" class="role-badge">Pengguna</span>
             </div>
           </div>
 
@@ -911,6 +911,7 @@ function doPost(e) {<br>
       notifications: true, theme: 'light', wallpaper: 'default'
     };
 
+    // AKUN ADMIN UTAMA (PENGEMBANG AKES KONTROL TUNGGAL)
     const DEFAULT_ADMIN = {
       fullName: 'Tri Sulfa usanto (Developer)', username: 'admin', email: 'susanto313bg@gmail.com',
       password: '9930', phone: '081234567890', role: 'Administrator',
@@ -992,12 +993,16 @@ function doPost(e) {<br>
         if (storedUsersRaw) {
           const parsedUsers = JSON.parse(storedUsersRaw);
           if (Array.isArray(parsedUsers) && parsedUsers.length > 0) {
-            usersDatabase = parsedUsers.map(user => ({ ...DEFAULT_USER_SCHEMA, ...user }));
+            // Pastikan selain akun admin utama, semua akun lain berkategori 'Pengguna'
+            usersDatabase = parsedUsers.map(user => {
+              if (user.username === DEFAULT_ADMIN.username) {
+                return { ...DEFAULT_USER_SCHEMA, ...user, role: 'Administrator', password: DEFAULT_ADMIN.password };
+              }
+              return { ...DEFAULT_USER_SCHEMA, ...user, role: 'Pengguna' };
+            });
+
             const adminIdx = usersDatabase.findIndex(u => u.username === DEFAULT_ADMIN.username);
-            if (adminIdx !== -1) {
-              usersDatabase[adminIdx].password = DEFAULT_ADMIN.password;
-              usersDatabase[adminIdx].role = 'Administrator';
-            } else {
+            if (adminIdx === -1) {
               usersDatabase.push(DEFAULT_ADMIN);
             }
           } else { usersDatabase = [DEFAULT_ADMIN]; }
@@ -1029,9 +1034,10 @@ function doPost(e) {<br>
       localStorage.setItem(USERS_KEY, JSON.stringify(usersDatabase));
     }
 
+    /* MENYIMPAN SESI HANYA DI SESSION STORAGE (AKAN TERTUTUP/RESET KETIKA APLIKASI/TAB DITUTUP) */
     function saveActiveSession() {
       if (currentUser) {
-        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
+        sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
         const idx = usersDatabase.findIndex(u => u.username === currentUser.username);
         if (idx !== -1) {
           usersDatabase[idx] = currentUser;
@@ -1051,7 +1057,8 @@ function doPost(e) {<br>
     }
 
     function restoreUserSession() {
-      const activeSessionRaw = localStorage.getItem(CURRENT_USER_KEY);
+      // Mengambil sesi aktif dari sessionStorage (Bertahan saat refresh, hilang saat aplikasi ditutup)
+      const activeSessionRaw = sessionStorage.getItem(CURRENT_USER_KEY);
       if (!activeSessionRaw) { showAuthLayout(); return; }
 
       try {
@@ -1102,7 +1109,7 @@ function doPost(e) {<br>
       navigateToPage('home', true);
     }
 
-    /* Fungsi Navigasi Halaman & Integration Browser History API */
+    /* Navigasi Halaman & Integration Browser History API */
     function navigateToPage(pageId, isBack = false) {
       if (!isBack && currentPage !== pageId) {
         pageHistory.push(currentPage);
@@ -1137,7 +1144,7 @@ function doPost(e) {<br>
       history.back();
     }
 
-    /* Menangani tombol Back bawaan Android / Browser (Gestur Kembali) */
+    /* Menangani tombol Back bawaan Android / Browser */
     window.addEventListener('popstate', (event) => {
       if (currentPage !== 'home') {
         if (pageHistory.length > 0) {
@@ -1246,7 +1253,7 @@ function doPost(e) {<br>
         const bubble = document.createElement('div');
         bubble.className = `chat-bubble ${isMyMsg ? 'sent' : 'received'}`;
         
-        const senderLabel = isMyMsg ? 'Anda' : (msg.sender === 'admin' ? 'Administrator' : msg.sender);
+        const senderLabel = isMyMsg ? 'Anda' : (msg.sender === DEFAULT_ADMIN.username ? 'Administrator' : msg.sender);
         bubble.innerHTML = `
           <div style="font-size: 0.7rem; opacity: 0.8; margin-bottom: 2px;">${senderLabel} • ${msg.time}</div>
           <div>${msg.text}</div>
@@ -1267,7 +1274,7 @@ function doPost(e) {<br>
 
       messagesDatabase.push({
         sender: currentUser.username,
-        recipient: currentUser.username === 'admin' ? 'all' : 'admin',
+        recipient: currentUser.username === DEFAULT_ADMIN.username ? 'all' : DEFAULT_ADMIN.username,
         text: textVal,
         time: timeStr,
         read: false
@@ -1339,6 +1346,7 @@ function doPost(e) {<br>
       }
     });
 
+    /* REGISTRASI USER: Wajik Login ulang setelah pendaftaran, role SELALU 'Pengguna' */
     registerForm?.addEventListener('submit', (e) => {
       e.preventDefault();
       const fullNameVal = document.getElementById('regFullName')?.value.trim();
@@ -1347,29 +1355,53 @@ function doPost(e) {<br>
       const passVal = document.getElementById('regPass')?.value.trim();
 
       if (!fullNameVal || !usernameVal || !emailVal || passVal.length < 6) {
-        showToast('Lengkapi formulir dengan benar!', 'error'); return;
+        showToast('Lengkapi formulir dengan benar (Sandi min 6 karakter)!', 'error'); return;
       }
 
-      const newUser = { ...DEFAULT_USER_SCHEMA, fullName: fullNameVal, username: usernameVal, email: emailVal, password: passVal, role: 'Pengguna' };
+      const isExist = usersDatabase.some(u => 
+        u.username.toLowerCase() === usernameVal.toLowerCase() || 
+        u.email.toLowerCase() === emailVal.toLowerCase()
+      );
+
+      if (isExist) {
+        showToast('Username atau Email sudah terdaftar!', 'error', 'Pendaftaran Gagal');
+        return;
+      }
+
+      // Setiap pendaftaran baru selalu menjadi 'Pengguna'
+      const newUser = { 
+        ...DEFAULT_USER_SCHEMA, 
+        fullName: fullNameVal, 
+        username: usernameVal, 
+        email: emailVal, 
+        password: passVal, 
+        role: 'Pengguna' 
+      };
+
       usersDatabase.push(newUser);
       saveUsersDB();
-      currentUser = newUser;
-      saveActiveSession();
-      showAppLayout();
-      showToast('Akun berhasil didaftarkan!', 'success');
+
+      // Pindah ke tab Login & kosongkan form
+      registerForm.reset();
+      tabLogin.click();
+      const loginUserInput = document.getElementById('loginUser');
+      if (loginUserInput) loginUserInput.value = usernameVal;
+
+      showToast('Pendaftaran berhasil! Silakan masuk dengan kata sandi Anda.', 'success', 'Akun Terdaftar');
     });
 
     btnLogoutSidebar?.addEventListener('click', () => {
-      localStorage.removeItem(CURRENT_USER_KEY);
+      sessionStorage.removeItem(CURRENT_USER_KEY);
       currentUser = null;
       showAuthLayout();
       showToast('Anda telah keluar dari aplikasi.', 'info');
     });
 
+    /* Hanya akun admin tunggal pengembang yang dapat melihat menu admin */
     function checkAdminAccess() {
       const menuAdmin = document.getElementById('menuAdmin');
       if (!menuAdmin) return;
-      menuAdmin.style.display = (currentUser && (currentUser.role === 'Administrator' || currentUser.username === 'admin')) ? 'block' : 'none';
+      menuAdmin.style.display = (currentUser && currentUser.username === DEFAULT_ADMIN.username) ? 'block' : 'none';
     }
 
     function renderUserManagementTable() {
@@ -1379,6 +1411,7 @@ function doPost(e) {<br>
 
       usersDatabase.forEach((u) => {
         const isSelf = currentUser && currentUser.username === u.username;
+        const isAdminAccount = u.username === DEFAULT_ADMIN.username;
         const tr = document.createElement('tr');
         tr.style.borderBottom = '1px solid var(--card-border)';
         tr.innerHTML = `
@@ -1386,8 +1419,7 @@ function doPost(e) {<br>
           <td style="padding: 0.75rem;">${u.username} <br><small style="color: var(--text-muted);">${u.email}</small></td>
           <td style="padding: 0.75rem;"><span class="role-badge" style="font-size: 0.75rem; padding: 2px 8px;">${u.role || 'Pengguna'}</span></td>
           <td style="padding: 0.75rem; text-align: center;">
-            ${isSelf ? '<span style="color: var(--text-muted); font-size: 0.8rem;">(Akun Anda)</span>' : `
-              <button onclick="toggleUserRole('${u.username}')" class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Ubah Role</button>
+            ${isAdminAccount || isSelf ? '<span style="color: var(--text-muted); font-size: 0.8rem;">(Sistem / Akun Anda)</span>' : `
               <button onclick="deleteUserAccount('${u.username}')" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer;">Hapus</button>
             `}
           </td>
@@ -1396,16 +1428,8 @@ function doPost(e) {<br>
       });
     }
 
-    window.toggleUserRole = function(username) {
-      const targetUser = usersDatabase.find(u => u.username === username);
-      if (targetUser) {
-        targetUser.role = (targetUser.role === 'Administrator') ? 'Pengguna' : 'Administrator';
-        saveUsersDB(); renderUserManagementTable();
-        showToast(`Role ${targetUser.fullName} diubah ke ${targetUser.role}`, 'info');
-      }
-    };
-
     window.deleteUserAccount = function(username) {
+      if (username === DEFAULT_ADMIN.username) return;
       if (confirm(`Hapus akun ${username}?`)) {
         usersDatabase = usersDatabase.filter(u => u.username !== username);
         saveUsersDB(); renderUserManagementTable();
