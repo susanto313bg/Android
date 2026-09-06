@@ -3,6 +3,630 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9930 BG BEKASI - Management Kunci</title>
+
+  <!-- PWA Web Manifest & Theme Color -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#080c16">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <style>
+    :root {
+      --sidebar-width: 270px;
+      --header-bg: #080c1b;
+      --subbar-bg: #0f172a;
+      --sidebar-bg: #0d1222;
+      --main-bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --accent-purple: #2e1065;
+      --hero-gradient: linear-gradient(135deg, #1e1b4b 0%, #2e1065 50%, #0f172a 100%);
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--main-bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ================= 1. HEADER UTAMA ================= */
+    .top-header {
+      background-color: var(--header-bg);
+      color: white;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-logo-badge {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-logo-badge span {
+      color: #38bdf8;
+      font-size: 1rem;
+    }
+
+    .header-main-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #facc15;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ================= 2. SUB-BAR CONTROL (STATUS BAR) ================= */
+    .sub-control-bar {
+      background-color: var(--subbar-bg);
+      color: #94a3b8;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      border-bottom: 1px solid #1e293b;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .sub-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .version-tag {
+      background: #1e293b;
+      color: #cbd5e1;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    .sync-pill {
+      background: #059669;
+      color: white;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.725rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .sub-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-control {
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: white;
+    }
+
+    .btn-orange { background: #ea580c; }
+    .btn-indigo { background: #4f46e5; }
+    .btn-green { background: #16a34a; }
+    .btn-blue { background: #2563eb; }
+
+    /* ================= LAYOUT CONTAINER ================= */
+    .app-body {
+      display: flex;
+      flex: 1;
+      position: relative;
+    }
+
+    /* ================= 3. SIDEBAR KIRI ================= */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--sidebar-bg);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex-shrink: 0;
+      border-right: 1px solid #1e293b;
+    }
+
+    /* Widget Supervisor Info */
+    .supervisor-card {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid #334155;
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      color: #facc15;
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .info-widget-box {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.75rem;
+      color: #e2e8f0;
+    }
+
+    .info-widget-label {
+      font-size: 0.65rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .info-widget-val {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* Navigation Menu Buttons (Colorful Pills) */
+    .nav-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-top: 0.25rem;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      opacity: 0.9;
+      transform: translateX(2px);
+    }
+
+    .nav-btn .tag-badge {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.2);
+    }
+
+    /* Warna Tombol Navigasi Sesuai Gambar */
+    .nav-purple { background: #d8b4fe; color: #581c87; }
+    .nav-yellow { background: #fef08a; color: #713f12; }
+    .nav-teal { background: #99f6e4; color: #115e59; }
+    .nav-blue { background: #bae6fd; color: #075985; }
+    .nav-green { background: #bbf7d0; color: #166534; }
+    .nav-mint { background: #a7f3d0; color: #065f46; }
+    .nav-sky { background: #e0f2fe; color: #0369a1; }
+    .nav-cyan { background: #ccfbf1; color: #0f766e; }
+    .nav-red { background: #fecaca; color: #991b1b; margin-top: 0.5rem; }
+
+    /* ================= 4. UTAMA / MAIN CONTENT ================= */
+    .main-content {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      overflow-y: auto;
+    }
+
+    /* HERO BANNER GRADIENT PURPLE */
+    .hero-banner {
+      background: var(--hero-gradient);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      color: white;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.5rem;
+      box-shadow: 0 10px 25px -5px rgba(46, 16, 101, 0.4);
+      position: relative;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 750px;
+    }
+
+    .hero-badge {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #d8b4fe;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      width: fit-content;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 1.75rem;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+    }
+
+    .hero-subtitle {
+      color: #cbd5e1;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .btn-refresh-data {
+      background: #facc15;
+      color: #0f172a;
+      border: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    /* GRID CARDS (2x2) */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    .menu-card {
+      background: var(--card-bg);
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      position: relative;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+      border-color: #cbd5e1;
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .icon-orange { background: #ffedd5; color: #ea580c; }
+    .icon-green { background: #dcfce7; color: #16a34a; }
+    .icon-blue { background: #dbeafe; color: #2563eb; }
+
+    .card-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+
+    .tag-yellow { background: #fef9c3; color: #854d0e; }
+    .tag-green { background: #dcfce7; color: #166534; }
+    .tag-blue { background: #e0f2fe; color: #075985; }
+    .tag-orange { background: #ffedd5; color: #9a3412; }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .card-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Mobile Toggle Floating Bar */
+    .mobile-nav-toggle {
+      display: none;
+      background: #0f172a;
+      color: white;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ================= 5. ADAPTASI MOBILE (HP) ================= */
+    @media (max-width: 900px) {
+      .app-body {
+        flex-direction: column;
+      }
+
+      .mobile-nav-toggle {
+        display: flex;
+      }
+
+      .sidebar {
+        width: 100%;
+        display: none; /* Didefinisikan toggle via JS */
+      }
+
+      .sidebar.open {
+        display: flex;
+      }
+
+      .hero-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .btn-refresh-data {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr; /* Tumpuk 1 Kolom untuk HP */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. HEADER UTAMA ATAS -->
+  <header class="top-header">
+    <div class="brand-section">
+      <div class="brand-logo-badge">
+        <span>∞</span> app <small style="color: #94a3b8; font-weight: 400;">Management Kunci BG BEKASI</small>
+      </div>
+    </div>
+    <div class="header-main-title">9930 BG BEKASI</div>
+  </header>
+
+  <!-- 2. SUB-CONTROL BAR -->
+  <div class="sub-control-bar">
+    <div class="sub-bar-left">
+      <span class="version-tag">NEWCRO_PHP_V7 (WEB VERSION)</span>
+      <span class="sync-pill">● Syncing to Cloud...</span>
+    </div>
+    <div class="sub-bar-actions">
+      <button class="btn-control btn-orange">Refresh Dashboard</button>
+      <button class="btn-control btn-indigo">Live Cloud Connected</button>
+      <button class="btn-control btn-green">Download Masterdata (Excel)</button>
+      <button class="btn-control btn-blue">Restore Data (Json)</button>
+    </div>
+  </div>
+
+  <!-- BUTTON TOGGLE KHUSUS HP -->
+  <button class="mobile-nav-toggle" id="btnToggleMobileSidebar">
+    <span>☰ Menu Supervisor & Navigasi</span>
+  </button>
+
+  <!-- APP BODY LAYOUT -->
+  <div class="app-body">
+
+    <!-- 3. SIDEBAR KIRI -->
+    <aside class="sidebar" id="sidebarMenu">
+      <div class="supervisor-card">
+        SUPERVISOR BG BEKASI
+      </div>
+
+      <!-- Live Clock Widget -->
+      <div class="info-widget-box">
+        <div class="info-widget-label">JAM</div>
+        <div class="info-widget-val" id="liveClock">01:16:05</div>
+      </div>
+
+      <!-- Live Date Widget -->
+      <div class="info-widget-box">
+        <div class="info-widget-label">TANGGAL, BULAN, TAHUN</div>
+        <div class="info-widget-val" id="liveDate">7 Sep 2026</div>
+      </div>
+
+      <!-- Location Widget -->
+      <div class="info-widget-box">
+        <div class="info-widget-label">LOKASI LOGIN</div>
+        <div class="info-widget-val">BG BEKASI</div>
+      </div>
+
+      <!-- User Info Widget -->
+      <div class="info-widget-box">
+        <div class="info-widget-label">USER ID / NAMA</div>
+        <div class="info-widget-val">SUPERVISOR - SUPERVISOR UTA...</div>
+      </div>
+
+      <!-- Nav Menu Buttons -->
+      <div class="nav-menu-list">
+        <button class="nav-btn nav-purple">DASHBOARD SUPERVISOR</button>
+        <button class="nav-btn nav-yellow">MASTER DATA</button>
+        <button class="nav-btn nav-teal">
+          <span>MENU CEK KUNCI</span>
+          <span class="tag-badge">ACUAN</span>
+        </button>
+        <button class="nav-btn nav-blue">CETAK KUNCI RPL</button>
+        <button class="nav-btn nav-green">CETAK BARCODE KUNCI</button>
+        <button class="nav-btn nav-yellow">MANAJEMEN USER ADMIN</button>
+        <button class="nav-btn nav-mint">USER SEDANG ONLINE</button>
+        <button class="nav-btn nav-sky">MONITORING SISTEM</button>
+        <button class="nav-btn nav-cyan">MAINTENANCE & BACKUP</button>
+        <button class="nav-btn nav-red">Logout</button>
+      </div>
+    </aside>
+
+    <!-- 4. UTAMA / MAIN DASHBOARD CONTENT -->
+    <main class="main-content">
+
+      <!-- HERO BANNER GRADIENT PURPLE -->
+      <section class="hero-banner">
+        <div class="hero-left">
+          <div class="hero-badge">👑 KASTA TINGGI SUPERVISOR</div>
+          <h1 class="hero-title">BG BEKASI SIAP MELESAT</h1>
+          <p class="hero-subtitle">
+            Anda adalah pemegang hak akses Supervisor tertinggi. Anda dapat mengontrol Master Data, Cetak Kunci RPL, menambah akun Admin tanpa batas, mengelola User ID & password akun Admin, serta memantau status sesi operasional cabang BG BEKASI.
+          </p>
+        </div>
+        <button class="btn-refresh-data">
+          <span>🔄</span> REFRESH DATA
+        </button>
+      </section>
+
+      <!-- 4 KARTU MENU UTAMA (2x2 GRID) -->
+      <section class="cards-grid">
+
+        <!-- Kartu 1: Master Data -->
+        <div class="menu-card">
+          <div class="card-top-row">
+            <div class="card-icon-box icon-orange">📊</div>
+            <span class="card-tag tag-yellow">Akses Utama</span>
+          </div>
+          <div class="card-title">Master Data</div>
+          <div class="card-desc">
+            Kelola data kunci, lokasi ATM, cluster mark ATM, barcode, rak, baris, & kolom.
+          </div>
+        </div>
+
+        <!-- Kartu 2: Pengecekan Kunci -->
+        <div class="menu-card">
+          <div class="card-top-row">
+            <div class="card-icon-box icon-green">📋</div>
+            <span class="card-tag tag-green">Audit & Opname</span>
+          </div>
+          <div class="card-title">Pengecekan Kunci</div>
+          <div class="card-desc">
+            Cek Kunci RPL per RAK/Cluster serta Cek Kunci FLM per Cluster.
+          </div>
+        </div>
+
+        <!-- Kartu 3: Cetak Kunci RPL -->
+        <div class="menu-card">
+          <div class="card-top-row">
+            <div class="card-icon-box icon-blue">🌸</div>
+            <span class="card-tag tag-blue">Akses Utama</span>
+          </div>
+          <div class="card-title">Cetak Kunci RPL</div>
+          <div class="card-desc">
+            Input data shift tim operasional dan cetak lembar kunci RPL.
+          </div>
+        </div>
+
+        <!-- Kartu 4: Manajemen User ID & Password -->
+        <div class="menu-card">
+          <div class="card-top-row">
+            <div class="card-icon-box icon-orange">🔑</div>
+            <span class="card-tag tag-orange">4 Akun</span>
+          </div>
+          <div class="card-title">Manajemen User ID & Password</div>
+          <div class="card-desc">
+            Tambah Admin tanpa batas, ubah User ID/password & opsi recovery Supervisor.
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // 1. Live Ticking Clock (Jam Realtime)
+    function updateLiveClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('liveClock').textContent = `${hours}:${minutes}:${seconds}`;
+
+      // Update Date
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
+      const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+      document.getElementById('liveDate').textContent = dateStr;
+    }
+    setInterval(updateLiveClock, 1000);
+    updateLiveClock();
+
+    // 2. Mobile Nav Sidebar Toggle Logic
+    const btnToggle = document.getElementById('btnToggleMobileSidebar');
+    const sidebarMenu = document.getElementById('sidebarMenu');
+
+    btnToggle.addEventListener('click', () => {
+      sidebarMenu.classList.toggle('open');
+    });
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BEKASI 9930 - Digital Control & Management</title>
 
   <!-- PWA Web Manifest & Theme Color -->
