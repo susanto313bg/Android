@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BG 9930</title>
+
+  <!-- Hubungkan ke PWA Manifest & Warna Tema -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e293b">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <!-- ========================================== -->
+  <!-- 1. CSS / DESAIN TAMPILAN APLIKASI (BG 9930) -->
+  <!-- ========================================== -->
+  <style>
+    :root {
+      --sidebar-width: 240px;
+      --primary-color: #1e293b;
+      --accent-color: #2563eb;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* --- Sidebar (Bilah Kiri) --- */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--primary-color);
+      color: white;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 1.25rem 1.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: #f1f5f9;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 1rem 0;
+    }
+
+    .sidebar-menu li a {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.8rem 1.5rem;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-menu li a:hover,
+    .sidebar-menu li a.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .sidebar-menu svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* Overlay latar belakang untuk layar HP saat Sidebar terbuka */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 999;
+    }
+
+    /* --- Area Utama --- */
+    .main-wrapper {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      transition: margin-left 0.3s ease;
+    }
+
+    /* --- Header Atas --- */
+    .navbar {
+      background-color: var(--card-bg);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .toggle-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-right: 1rem;
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      padding: 0.3rem;
+      border-radius: 6px;
+    }
+
+    .toggle-btn:hover {
+      background-color: #f1f5f9;
+    }
+
+    .toggle-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .app-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      letter-spacing: 0.5px;
+    }
+
+    /* --- Container Konten --- */
+    .container {
+      padding: 1.5rem;
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 1rem;
+    }
+
+    .card h2 {
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      color: #1e293b;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #1d4ed8;
+    }
+
+    #btnInstall {
+      display: none;
+      background-color: #059669;
+    }
+
+    #btnInstall:hover {
+      background-color: #047857;
+    }
+
+    /* --- Responsif Layar HP (Mobile) --- */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .overlay.active {
+        display: block;
+      }
+
+      .main-wrapper {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Sidebar (Bilah Kiri) -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      MENU
+    </div>
+    <ul class="sidebar-menu">
+      <li>
+        <a href="#" class="active">
+          <!-- Ikon Home (SVG) -->
+          <svg viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+          </svg>
+          <span>Home</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Overlay hitam transparan untuk HP saat sidebar terbuka -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- 2. Area Utama & Header -->
+  <div class="main-wrapper">
+    <!-- Header Atas -->
+    <header class="navbar">
+      <button class="toggle-btn" id="btnToggleSidebar" aria-label="Toggle Navigation">
+        <!-- Ikon Menu Hamburger -->
+        <svg viewBox="0 0 24 24">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+        </svg>
+      </button>
+      <div class="app-title">BG 9930</div>
+    </header>
+
+    <!-- Konten Utama -->
+    <main class="container">
+      <section class="card">
+        <h2>Selamat Datang di BG 9930</h2>
+        <p>Aplikasi telah diperbarui dengan bilah navigasi kiri dan header atas yang modern.</p>
+        
+        <button id="btnKlik" class="btn">Uji Tombol</button>
+        <button id="btnInstall" class="btn">Install Aplikasi ke HP</button>
+      </section>
+    </main>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. JAVASCRIPT / LOGIKA APLIKASI            -->
+  <!-- ========================================== -->
+  <script>
+    // A. Logika Buka / Tutup Sidebar
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const btnToggleSidebar = document.getElementById('btnToggleSidebar');
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    }
+
+    btnToggleSidebar.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+
+    // B. Registrasi Service Worker PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then((reg) => console.log('Service Worker terdaftar:', reg.scope))
+          .catch((err) => console.error('Gagal Service Worker:', err));
+      });
+    }
+
+    // C. Logika Tombol Install PWA
+    let deferredPrompt;
+    const btnInstall = document.getElementById('btnInstall');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      btnInstall.style.display = 'block';
+    });
+
+    btnInstall.addEventListener('click', () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('Pengguna menyetujui instalasi PWA');
+          }
+          deferredPrompt = null;
+          btnInstall.style.display = 'none';
+        });
+      }
+    });
+
+    // D. Logika Uji Tombol
+    document.getElementById('btnKlik').addEventListener('click', () => {
+      alert('Aplikasi BG 9930 berjalan dengan baik!');
+    });
+  </script>
+</body>
+</html>
