@@ -157,7 +157,6 @@
 
     .navbar-right-items { display: flex; align-items: center; gap: 1rem; }
 
-    /* Lonceng Notifikasi */
     .notif-btn {
       position: relative; background: none; border: none; cursor: pointer;
       color: var(--text-color); display: flex; align-items: center;
@@ -190,7 +189,7 @@
     /* Layout Containers */
     .container { padding: 1.75rem; max-width: 1280px; width: 100%; margin: 0 auto; flex: 1; }
     .page-section { display: none; animation: fadeIn 0.3s ease-in-out; }
-    .page-section.active { display: block; }
+    .page-section.active { display: block !important; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
@@ -237,7 +236,7 @@
     }
     .hero-3d-image-wrapper:hover .hero-3d-image { transform: rotateY(0deg) rotateX(0deg) scale(1.04); }
 
-    /* Menu Grid Tombol Pengguna (User Dashboard) */
+    /* Menu Grid Tombol Pengguna */
     .user-menu-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem;
     }
@@ -372,20 +371,6 @@
     }
     .action-card:hover { border-color: var(--accent-color); color: var(--accent-color); }
     .action-card svg { width: 22px; height: 22px; fill: var(--accent-color); }
-
-    .metric-progress { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.85rem; }
-    .metric-info { display: flex; justify-content: space-between; font-size: 0.825rem; font-weight: 600; }
-    .progress-bar { height: 7px; background: var(--card-border); border-radius: 10px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--accent-color); border-radius: 10px; }
-
-    /* Switch Component */
-    .setting-item { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 0; border-bottom: 1px solid var(--card-border); }
-    .switch { position: relative; display: inline-block; width: 48px; height: 26px; flex-shrink: 0; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 34px; }
-    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
-    input:checked + .slider { background-color: var(--accent-color); }
-    input:checked + .slider:before { transform: translateX(22px); }
 
     /* Chat Layout */
     .chat-box {
@@ -567,7 +552,7 @@
           <span>Keluar (Logout)</span>
         </button>
         <div style="text-align: center; color: var(--text-muted); font-size: 0.75rem;">
-          &copy; 2026 BG 9930 System v3.1
+          &copy; 2026 BG 9930 System v3.2
         </div>
       </div>
     </aside>
@@ -866,6 +851,17 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
+    // =========================================================
+    // HAPUS SERVICE WORKER LAMA AGAR MEMORI UN-CACHE
+    // =========================================================
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+
     const USERS_KEY = 'bg9930_users_db';
     const CURRENT_USER_KEY = 'bg9930_active_session';
     const MESSAGES_KEY = 'bg9930_messages_db';
@@ -879,7 +875,7 @@
 
     const DEFAULT_ADMIN = {
       fullName: 'Ahmad Subagja (Developer)', username: 'admin', email: 'admin@bg9930.com',
-      password: 'password123', phone: '081234567890', role: 'Administrator',
+      password: 'Bekasi9930', phone: '081234567890', role: 'Administrator',
       bio: 'Pengembang dan Administrator Utama Sistem BG 9930.',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       notifications: true, theme: 'light'
@@ -937,12 +933,11 @@
     const chatInput = document.getElementById('chatInput');
     const sheetEntryForm = document.getElementById('sheetEntryForm');
 
-    // SAFE EXECUTE RUNTIME WRAPPER
     function safeExecute(fn, fnName) {
       try {
         if (typeof fn === 'function') fn();
       } catch (err) {
-        console.warn(`Safe-Execute Warning [${fnName}]:`, err);
+        console.warn(`SafeExecute Warning [${fnName}]:`, err);
       }
     }
 
@@ -1021,14 +1016,32 @@
       } catch (e) { showAuthLayout(); }
     }
 
+    /* PENGATURAN PAKSA DIPLAY DISPLAY (DIRECT CSS INJECTION) */
     function showAuthLayout() {
-      if (authContainer) authContainer.classList.remove('hidden');
-      if (appContainer) appContainer.classList.add('hidden');
+      const auth = document.getElementById('authContainer');
+      const app = document.getElementById('appContainer');
+      if (auth) {
+        auth.classList.remove('hidden');
+        auth.style.setProperty('display', 'flex', 'important');
+      }
+      if (app) {
+        app.classList.add('hidden');
+        app.style.setProperty('display', 'none', 'important');
+      }
     }
 
     function showAppLayout() {
-      if (authContainer) authContainer.classList.add('hidden');
-      if (appContainer) appContainer.classList.remove('hidden');
+      const auth = document.getElementById('authContainer');
+      const app = document.getElementById('appContainer');
+      
+      if (auth) {
+        auth.classList.add('hidden');
+        auth.style.setProperty('display', 'none', 'important');
+      }
+      if (app) {
+        app.classList.remove('hidden');
+        app.style.setProperty('display', 'flex', 'important');
+      }
 
       safeExecute(applyProfileToUI, "applyProfileToUI");
       safeExecute(checkAdminAccess, "checkAdminAccess");
@@ -1309,7 +1322,15 @@
 
     function navigateToPage(pageId) {
       navLinks.forEach(link => link.classList.toggle('active', link.dataset.page === pageId));
-      pageSections.forEach(section => section.classList.toggle('active', section.id === `page-${pageId}`));
+      pageSections.forEach(section => {
+        const isMatch = section.id === `page-${pageId}`;
+        section.classList.toggle('active', isMatch);
+        if (isMatch) {
+          section.style.setProperty('display', 'block', 'important');
+        } else {
+          section.style.setProperty('display', 'none', 'important');
+        }
+      });
       if (window.innerWidth <= 768) closeSidebar();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
