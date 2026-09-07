@@ -12,7 +12,7 @@
 
   <style>
     :root {
-      --sidebar-width: 260px;
+      --sidebar-width: 240px;
       --primary-color: #1e293b;
       --primary-hover: #0f172a;
       --accent-color: #2563eb;
@@ -25,9 +25,9 @@
       --input-bg: #ffffff;
       --input-border: #cbd5e1;
       --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --radius: 16px;
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --radius: 12px;
     }
 
     [data-theme="dark"] {
@@ -60,7 +60,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
 
     .auth-wrapper {
@@ -68,7 +68,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1rem;
       background: linear-gradient(135deg, var(--primary-color) 0%, #020617 100%);
     }
 
@@ -79,6 +79,7 @@
 
     .hidden { display: none !important; }
 
+    /* Sidebar Navigation Compact */
     .sidebar {
       width: var(--sidebar-width);
       background-color: var(--primary-color);
@@ -86,31 +87,31 @@
       position: fixed;
       top: 0; bottom: 0; left: 0;
       z-index: 1000;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.25s ease;
       display: flex; flex-direction: column;
-      box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
     }
 
     .sidebar-header {
-      padding: 1.25rem 1.5rem;
-      font-size: 1.2rem; font-weight: 800; letter-spacing: 1px;
+      padding: 1rem 1.25rem;
+      font-size: 1.05rem; font-weight: 800; letter-spacing: 0.5px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       color: #f1f5f9; display: flex; align-items: center; justify-content: space-between;
     }
 
     .sidebar-brand-badge {
       background: var(--accent-color); color: white;
-      font-size: 0.75rem; padding: 2px 8px; border-radius: 20px; font-weight: 600;
+      font-size: 0.7rem; padding: 2px 6px; border-radius: 12px; font-weight: 600;
     }
 
-    .sidebar-menu { list-style: none; padding: 1rem 0; flex: 1; overflow-y: auto; }
-    .sidebar-menu li { margin-bottom: 0.25rem; }
+    .sidebar-menu { list-style: none; padding: 0.5rem 0; flex: 1; overflow-y: auto; }
+    .sidebar-menu li { margin-bottom: 0.15rem; }
 
     .sidebar-menu li a {
-      display: flex; align-items: center; gap: 0.85rem;
-      padding: 0.85rem 1.5rem; color: #94a3b8; text-decoration: none;
-      font-size: 0.95rem; font-weight: 500; transition: all 0.2s ease;
-      border-left: 4px solid transparent; cursor: pointer; position: relative;
+      display: flex; align-items: center; gap: 0.65rem;
+      padding: 0.65rem 1.25rem; color: #94a3b8; text-decoration: none;
+      font-size: 0.85rem; font-weight: 500; transition: all 0.2s ease;
+      border-left: 3px solid transparent; cursor: pointer;
     }
 
     .sidebar-menu li a:hover { background-color: rgba(255, 255, 255, 0.05); color: #ffffff; }
@@ -118,27 +119,24 @@
       background-color: rgba(37, 99, 235, 0.15); color: #ffffff; border-left-color: var(--accent-color);
     }
 
-    .sidebar-menu svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
+    .sidebar-menu svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
 
     .sidebar-footer {
-      padding: 1rem 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.75rem;
+      padding: 0.75rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;
     }
 
     .btn-logout-sidebar {
-      display: flex; align-items: center; gap: 0.6rem; color: #ef4444;
+      display: flex; align-items: center; gap: 0.5rem; color: #ef4444;
       background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2);
-      padding: 0.65rem 1rem; border-radius: 8px; cursor: pointer;
-      font-size: 0.875rem; font-weight: 600; transition: background 0.2s;
-      width: 100%; justify-content: center;
+      padding: 0.45rem 0.75rem; border-radius: 6px; cursor: pointer;
+      font-size: 0.8rem; font-weight: 600; width: 100%; justify-content: center;
     }
-
-    .btn-logout-sidebar:hover { background: rgba(239, 68, 68, 0.2); }
 
     .overlay {
       display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(2px);
-      z-index: 999; opacity: 0; transition: opacity 0.3s ease;
+      z-index: 999; opacity: 0; transition: opacity 0.25s ease;
     }
     .overlay.active { display: block; opacity: 1; }
 
@@ -146,106 +144,106 @@
       flex: 1; margin-left: var(--sidebar-width); display: flex;
       flex-direction: column; min-height: 100vh;
       width: calc(100% - var(--sidebar-width));
-      transition: margin-left 0.3s ease, width 0.3s ease;
+      transition: margin-left 0.25s ease, width 0.25s ease;
     }
 
     .navbar {
-      background-color: var(--card-bg); height: 65px; display: flex;
-      align-items: center; justify-content: space-between; padding: 0 1.5rem;
+      background-color: var(--card-bg); height: 52px; display: flex;
+      align-items: center; justify-content: space-between; padding: 0 1.25rem;
       box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 100;
       border-bottom: 1px solid var(--card-border);
     }
 
-    .navbar-left { display: flex; align-items: center; gap: 0.75rem; }
+    .navbar-left { display: flex; align-items: center; gap: 0.5rem; }
 
     .toggle-btn {
       background: none; border: none; cursor: pointer; color: var(--text-color);
       display: flex; align-items: center; justify-content: center;
-      padding: 0.5rem; border-radius: 8px;
+      padding: 0.35rem; border-radius: 6px;
     }
 
     .btn-back {
-      display: inline-flex; align-items: center; gap: 0.4rem;
+      display: inline-flex; align-items: center; gap: 0.3rem;
       background: rgba(37, 99, 235, 0.1); color: var(--accent-color);
-      border: 1px solid rgba(37, 99, 235, 0.2); padding: 0.45rem 0.85rem;
-      border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      border: 1px solid rgba(37, 99, 235, 0.2); padding: 0.3rem 0.65rem;
+      border-radius: 6px; font-size: 0.78rem; font-weight: 600; cursor: pointer;
     }
 
-    .navbar-right-container { display: flex; align-items: center; gap: 1.25rem; margin-left: auto; }
-    .header-app-title { font-size: 1.25rem; font-weight: 900; color: var(--accent-color); letter-spacing: 0.5px; text-transform: uppercase; }
+    .navbar-right-container { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
+    .header-app-title { font-size: 1.05rem; font-weight: 900; color: var(--accent-color); letter-spacing: 0.5px; }
 
     .notif-btn {
       position: relative; background: none; border: none; cursor: pointer;
       color: var(--text-color); display: flex; align-items: center; justify-content: center;
-      padding: 0.5rem; border-radius: 50%;
+      padding: 0.35rem; border-radius: 50%;
     }
 
     .notif-badge {
-      position: absolute; top: 2px; right: 2px; background: #ef4444;
-      color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px;
-      font-weight: 800; display: none; box-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+      position: absolute; top: 0px; right: 0px; background: #ef4444;
+      color: white; font-size: 0.6rem; padding: 1px 5px; border-radius: 8px;
+      font-weight: 800; display: none; box-shadow: 0 0 4px rgba(239, 68, 68, 0.5);
     }
 
     .navbar-user-preview {
-      display: flex; align-items: center; gap: 0.75rem; padding: 0.25rem 0.75rem;
-      border-radius: 30px; background: rgba(0,0,0,0.03); cursor: pointer;
+      display: flex; align-items: center; gap: 0.5rem; padding: 0.2rem 0.5rem;
+      border-radius: 20px; background: rgba(0,0,0,0.03); cursor: pointer;
     }
 
-    .navbar-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-color); }
-    .navbar-user-info { display: flex; flex-direction: column; line-height: 1.2; }
-    .navbar-user-name { font-size: 0.875rem; font-weight: 600; }
-    .navbar-user-role { font-size: 0.75rem; color: var(--text-muted); }
+    .navbar-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--accent-color); }
+    .navbar-user-info { display: flex; flex-direction: column; line-height: 1.1; }
+    .navbar-user-name { font-size: 0.8rem; font-weight: 600; }
+    .navbar-user-role { font-size: 0.68rem; color: var(--text-muted); }
 
-    .container { padding: 1.75rem; max-width: 1280px; width: 100%; margin: 0 auto; flex: 1; }
-    .page-section { display: none; animation: fadeIn 0.3s ease-in-out; }
+    .container { padding: 1.25rem; max-width: 1200px; width: 100%; margin: 0 auto; flex: 1; }
+    .page-section { display: none; animation: fadeIn 0.2s ease-in-out; }
     .page-section.active { display: block !important; }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Dasbor Grid Usermode */
+    /* Grid Dasbor Ringkas (Fit Banyak Menu) */
     .feature-menu-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.85rem;
     }
 
     .feature-card {
       background: var(--card-bg); border: 1px solid var(--card-border);
-      padding: 1.5rem; border-radius: var(--radius); display: flex;
-      flex-direction: column; align-items: flex-start; gap: 0.85rem;
-      cursor: pointer; transition: all 0.25s ease; box-shadow: var(--shadow-sm);
+      padding: 1rem; border-radius: var(--radius); display: flex;
+      flex-direction: column; align-items: flex-start; gap: 0.5rem;
+      cursor: pointer; transition: all 0.2s ease; box-shadow: var(--shadow-sm);
     }
 
     .feature-card:hover {
-      transform: translateY(-4px); border-color: var(--accent-color); box-shadow: var(--shadow-md);
+      transform: translateY(-2px); border-color: var(--accent-color); box-shadow: var(--shadow-md);
     }
 
     .feature-icon {
-      width: 48px; height: 48px; border-radius: 12px;
+      width: 38px; height: 38px; border-radius: 8px;
       background: rgba(37, 99, 235, 0.1); color: var(--accent-color);
       display: flex; align-items: center; justify-content: center;
     }
 
-    .feature-icon svg { width: 26px; height: 26px; fill: currentColor; }
-    .feature-title { font-size: 1.05rem; font-weight: 700; color: var(--text-color); }
-    .feature-desc { font-size: 0.825rem; color: var(--text-muted); line-height: 1.4; }
+    .feature-icon svg { width: 20px; height: 20px; fill: currentColor; }
+    .feature-title { font-size: 0.9rem; font-weight: 700; color: var(--text-color); }
+    .feature-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.3; }
 
     .card {
-      background: var(--card-bg); padding: 1.5rem; border-radius: var(--radius);
-      box-shadow: var(--shadow-sm); border: 1px solid var(--card-border); margin-bottom: 1.5rem;
+      background: var(--card-bg); padding: 1rem 1.25rem; border-radius: var(--radius);
+      box-shadow: var(--shadow-sm); border: 1px solid var(--card-border); margin-bottom: 1rem;
     }
 
     .card-title {
-      font-size: 1.1rem; font-weight: 700; color: var(--text-color);
-      margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
-      border-bottom: 1px solid var(--card-border); padding-bottom: 0.75rem;
+      font-size: 0.98rem; font-weight: 700; color: var(--text-color);
+      margin-bottom: 0.85rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+      border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem;
     }
 
-    /* Indikator Status Tiket */
+    /* Badges Status Tiket */
     .ticket-badge {
-      display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.75rem;
-      border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.55rem;
+      border-radius: 12px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
     }
     .ticket-badge.yellow { background: rgba(245, 158, 11, 0.18); color: #b45309; border: 1px solid rgba(245, 158, 11, 0.4); }
     .ticket-badge.green { background: rgba(16, 185, 129, 0.18); color: #047857; border: 1px solid rgba(16, 185, 129, 0.4); }
@@ -254,89 +252,85 @@
     .auth-card {
       background: var(--card-bg); border: 1px solid var(--card-border);
       border-radius: var(--radius); box-shadow: var(--shadow-lg);
-      width: 100%; max-width: 440px; padding: 2rem; animation: fadeIn 0.4s ease-out;
+      width: 100%; max-width: 380px; padding: 1.5rem; animation: fadeIn 0.3s ease-out;
     }
 
-    .auth-header { text-align: center; margin-bottom: 1.75rem; }
-    .auth-logo { font-size: 1.75rem; font-weight: 900; color: var(--accent-color); letter-spacing: 1px; }
-    .auth-subtitle { color: var(--text-muted); font-size: 0.9rem; }
+    .auth-header { text-align: center; margin-bottom: 1.25rem; }
+    .auth-logo { font-size: 1.5rem; font-weight: 900; color: var(--accent-color); }
+    .auth-subtitle { color: var(--text-muted); font-size: 0.825rem; }
 
     .auth-tabs {
-      display: flex; background: rgba(0, 0, 0, 0.05); padding: 4px;
-      border-radius: 8px; margin-bottom: 1.5rem;
+      display: flex; background: rgba(0, 0, 0, 0.05); padding: 3px;
+      border-radius: 6px; margin-bottom: 1rem;
     }
 
     .auth-tab {
-      flex: 1; padding: 0.6rem; text-align: center; background: none;
-      border: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem;
+      flex: 1; padding: 0.45rem; text-align: center; background: none;
+      border: none; border-radius: 4px; font-weight: 600; font-size: 0.825rem;
       color: var(--text-muted); cursor: pointer;
     }
     .auth-tab.active { background: var(--card-bg); color: var(--accent-color); box-shadow: var(--shadow-sm); }
-    .auth-form { display: none; flex-direction: column; gap: 1.1rem; }
+    .auth-form { display: none; flex-direction: column; gap: 0.85rem; }
     .auth-form.active { display: flex; }
 
     .input-wrapper { position: relative; display: flex; align-items: center; }
-    .input-wrapper .input-control { padding-right: 2.75rem; }
-    .btn-toggle-password { position: absolute; right: 0.75rem; background: none; border: none; color: var(--text-muted); cursor: pointer; }
-    .btn-toggle-password svg { width: 20px; height: 20px; fill: currentColor; }
+    .input-wrapper .input-control { padding-right: 2.25rem; }
+    .btn-toggle-password { position: absolute; right: 0.5rem; background: none; border: none; color: var(--text-muted); cursor: pointer; }
 
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group.full-width { grid-column: 1 / -1; }
-    label { font-size: 0.875rem; font-weight: 600; color: var(--text-color); }
-    .required-star { color: #ef4444; margin-left: 2px; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.85rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+    label { font-size: 0.8rem; font-weight: 600; color: var(--text-color); }
+    .required-star { color: #ef4444; }
 
     .input-control {
-      width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--input-border);
-      border-radius: 8px; background-color: var(--input-bg); color: var(--text-color);
-      font-size: 0.95rem; outline: none; transition: border-color 0.2s;
+      width: 100%; padding: 0.55rem 0.75rem; border: 1px solid var(--input-border);
+      border-radius: 6px; background-color: var(--input-bg); color: var(--text-color);
+      font-size: 0.85rem; outline: none; transition: border-color 0.2s;
     }
-    .input-control:focus { border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
-    textarea.input-control { resize: vertical; min-height: 90px; }
+    .input-control:focus { border-color: var(--accent-color); }
+    textarea.input-control { resize: vertical; min-height: 70px; }
 
     /* Galeri Pratinjau Foto Bukti */
     .image-preview-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.75rem; margin-top: 0.75rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 0.5rem; margin-top: 0.5rem;
     }
     .preview-thumb-box {
-      position: relative; width: 100%; height: 90px; border-radius: 8px;
+      position: relative; width: 100%; height: 70px; border-radius: 6px;
       overflow: hidden; border: 1px solid var(--card-border); background: #000;
     }
     .preview-thumb-box img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
     .btn-remove-thumb {
       position: absolute; top: 2px; right: 2px; background: rgba(239, 68, 68, 0.85); color: white;
-      border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 0.75rem; cursor: pointer;
+      border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 0.65rem; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
     }
 
     .profile-header-card {
-      display: flex; align-items: center; gap: 1.75rem;
+      display: flex; align-items: center; gap: 1.25rem;
       background: linear-gradient(135deg, var(--card-bg) 0%, rgba(37, 99, 235, 0.05) 100%);
-      border: 1px solid var(--card-border); padding: 1.75rem; border-radius: var(--radius); margin-bottom: 1.5rem;
+      border: 1px solid var(--card-border); padding: 1.25rem; border-radius: var(--radius); margin-bottom: 1rem;
     }
 
-    .avatar-wrapper { position: relative; width: 110px; height: 110px; flex-shrink: 0; }
-    .profile-avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid var(--card-bg); box-shadow: var(--shadow-md); }
-    .avatar-upload-btn { position: absolute; bottom: 2px; right: 2px; background: var(--accent-color); color: white; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-    .avatar-upload-btn svg { width: 18px; height: 18px; fill: white; }
+    .avatar-wrapper { position: relative; width: 80px; height: 80px; flex-shrink: 0; }
+    .profile-avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid var(--card-bg); }
+    .avatar-upload-btn { position: absolute; bottom: 0px; right: 0px; background: var(--accent-color); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .avatar-upload-btn svg { width: 14px; height: 14px; fill: white; }
     #fileInput { display: none; }
 
-    .profile-details-head { display: flex; flex-direction: column; gap: 0.35rem; }
-    .profile-name { font-size: 1.5rem; font-weight: 800; color: var(--text-color); }
-    .profile-email { color: var(--text-muted); font-size: 0.95rem; }
+    .profile-name { font-size: 1.2rem; font-weight: 800; color: var(--text-color); }
+    .profile-email { color: var(--text-muted); font-size: 0.85rem; }
 
     .role-badge {
-      display: inline-flex; align-items: center; align-self: flex-start; gap: 0.4rem;
-      padding: 0.25rem 0.75rem; background-color: rgba(37, 99, 235, 0.12);
-      color: var(--accent-color); font-weight: 700; font-size: 0.8rem; border-radius: 20px; margin-top: 0.4rem;
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.15rem 0.5rem; background-color: rgba(37, 99, 235, 0.12);
+      color: var(--accent-color); font-weight: 700; font-size: 0.725rem; border-radius: 12px; margin-top: 0.25rem;
     }
-    .role-badge::before { content: ''; width: 8px; height: 8px; background-color: var(--accent-color); border-radius: 50%; }
 
-    .btn-group { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem; }
+    .btn-group { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; }
     .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-      padding: 0.75rem 1.5rem; background-color: var(--accent-color); color: white;
-      border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+      padding: 0.45rem 0.9rem; background-color: var(--accent-color); color: white;
+      border: none; border-radius: 6px; font-size: 0.825rem; font-weight: 600; cursor: pointer;
     }
     .btn:hover { background-color: var(--accent-hover); }
     .btn-full { width: 100%; }
@@ -345,35 +339,46 @@
     .btn-danger { background-color: #ef4444; color: white; }
 
     .ticket-card-item {
-      border: 1px solid var(--card-border); border-radius: 12px; padding: 1.25rem;
-      margin-bottom: 1rem; background: var(--card-bg); display: flex; flex-direction: column; gap: 0.75rem;
+      border: 1px solid var(--card-border); border-radius: 8px; padding: 0.85rem;
+      margin-bottom: 0.75rem; background: var(--card-bg); display: flex; flex-direction: column; gap: 0.5rem;
+    }
+
+    /* Modal Pop-up Pratinjau Admin */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(3px);
+      z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--card-border);
+      width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; padding: 1.25rem;
+      box-shadow: var(--shadow-lg); animation: fadeIn 0.25s ease-out;
     }
 
     .toast-container {
-      position: fixed; top: 1.5rem; right: 1.5rem; z-index: 3000;
-      display: flex; flex-direction: column; gap: 0.75rem; pointer-events: none; max-width: 380px; width: calc(100% - 3rem);
+      position: fixed; top: 1rem; right: 1rem; z-index: 3000;
+      display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none; max-width: 320px; width: calc(100% - 2rem);
     }
     .toast {
-      background-color: var(--card-bg); color: var(--text-color); padding: 0.9rem 1.1rem;
-      border-radius: 10px; box-shadow: var(--shadow-lg); display: flex; align-items: flex-start;
-      gap: 0.75rem; pointer-events: auto; transform: translateX(120%); opacity: 0;
-      transition: transform 0.35s ease, opacity 0.35s ease; border: 1px solid var(--card-border); border-left: 5px solid #2563eb;
+      background-color: var(--card-bg); color: var(--text-color); padding: 0.75rem 0.9rem;
+      border-radius: 8px; box-shadow: var(--shadow-lg); display: flex; align-items: flex-start;
+      gap: 0.5rem; pointer-events: auto; transform: translateX(120%); opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease; border: 1px solid var(--card-border); border-left: 4px solid #2563eb;
     }
     .toast.show { transform: translateX(0); opacity: 1; }
-    .toast-content { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-    .toast-title { font-weight: 700; font-size: 0.875rem; }
-    .toast-text { font-size: 0.825rem; color: var(--text-muted); }
-    .toast-close { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; }
+    .toast-content { flex: 1; display: flex; flex-direction: column; gap: 1px; }
+    .toast-title { font-weight: 700; font-size: 0.8rem; }
+    .toast-text { font-size: 0.75rem; color: var(--text-muted); }
+    .toast-close { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1rem; }
 
     @media (max-width: 768px) {
       .sidebar { transform: translateX(-100%); }
       .sidebar.active { transform: translateX(0); }
       .main-wrapper { margin-left: 0; width: 100%; }
       .profile-header-card { flex-direction: column; text-align: center; align-items: center; }
-      .role-badge { align-self: center; }
       .btn-group { flex-direction: column; } .btn { width: 100%; }
-      .toast-container { top: 1rem; right: 1rem; left: 1rem; width: auto; }
-      .header-app-title { font-size: 1rem; }
+      .toast-container { top: 0.75rem; right: 0.75rem; left: 0.75rem; width: auto; }
     }
   </style>
 </head>
@@ -384,7 +389,7 @@
     <div class="auth-card">
       <div class="auth-header">
         <div class="auth-logo">BEKASI 9930</div>
-        <div class="auth-subtitle">Masuk atau buat akun baru untuk mengakses sistem</div>
+        <div class="auth-subtitle">Sistem Pelaporan SLA & Kontrol Operasional</div>
       </div>
 
       <div class="auth-tabs">
@@ -394,8 +399,8 @@
 
       <form id="loginForm" class="auth-form active" novalidate autocomplete="off">
         <div class="form-group">
-          <label for="loginUser">Username atau Email <span class="required-star">*</span></label>
-          <input type="text" id="loginUser" class="input-control" placeholder="Masukkan username / email">
+          <label for="loginUser">Username / Email <span class="required-star">*</span></label>
+          <input type="text" id="loginUser" class="input-control" placeholder="Username / Email">
         </div>
 
         <div class="form-group">
@@ -403,12 +408,12 @@
           <div class="input-wrapper">
             <input type="password" id="loginPass" class="input-control" placeholder="••••••••">
             <button type="button" class="btn-toggle-password" data-target="loginPass">
-              <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+              <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
             </button>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-full">Masuk ke Sistem</button>
+        <button type="submit" class="btn btn-full">Masuk</button>
       </form>
 
       <form id="registerForm" class="auth-form" novalidate autocomplete="off">
@@ -419,7 +424,7 @@
 
         <div class="form-group">
           <label for="regUsername">Username <span class="required-star">*</span></label>
-          <input type="text" id="regUsername" class="input-control" placeholder="Buat username unik">
+          <input type="text" id="regUsername" class="input-control" placeholder="Username unik">
         </div>
 
         <div class="form-group">
@@ -432,7 +437,7 @@
           <div class="input-wrapper">
             <input type="password" id="regPass" class="input-control" placeholder="Minimal 6 karakter">
             <button type="button" class="btn-toggle-password" data-target="regPass">
-              <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+              <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
             </button>
           </div>
         </div>
@@ -451,47 +456,12 @@
         <span class="sidebar-brand-badge">PRO</span>
       </div>
 
-      <ul class="sidebar-menu">
-        <li>
-          <a href="#home" class="nav-link active" data-page="home">
-            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            <span>Dasbor Utama</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="#opensla" class="nav-link" data-page="opensla">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-            <span>Open SLA (Buat Tiket)</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="#tickets" class="nav-link" data-page="tickets">
-            <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
-            <span>Status Tiket</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="#account" class="nav-link" data-page="account">
-            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-            <span>Akun & Profil</span>
-          </a>
-        </li>
-
-        <li id="menuAdmin" style="display: none;">
-          <a href="#admin" class="nav-link" data-page="admin">
-            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8s0 0 0 0z"/></svg>
-            <span>Kelola Tiket Admin</span>
-          </a>
-        </li>
-      </ul>
+      <ul class="sidebar-menu" id="sidebarMenuNav"></ul>
 
       <div class="sidebar-footer">
         <button id="btnLogoutSidebar" class="btn-logout-sidebar">
-          <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: currentColor;"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
-          <span>Keluar (Logout)</span>
+          <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+          <span>Keluar</span>
         </button>
       </div>
     </aside>
@@ -501,11 +471,11 @@
     <div class="main-wrapper">
       <header class="navbar">
         <div class="navbar-left">
-          <button class="toggle-btn" id="btnToggleSidebar" aria-label="Toggle Navigation">
-            <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: currentColor;"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+          <button class="toggle-btn" id="btnToggleSidebar">
+            <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
           </button>
           <button class="btn-back hidden" id="btnBackNav" onclick="goBack()">
-            <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: currentColor;"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
             <span>Kembali</span>
           </button>
         </div>
@@ -514,7 +484,7 @@
           <div class="header-app-title">BEKASI 9930</div>
 
           <button class="notif-btn" id="btnNotifBell" title="Notifikasi Tiket">
-            <svg viewBox="0 0 24 24" style="width: 22px; height: 22px; fill: currentColor;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
             <span id="notifBadge" class="notif-badge">0</span>
           </button>
 
@@ -530,48 +500,21 @@
 
       <main class="container">
         
-        <!-- 1. DASBOR USER (MENU BARU DASBOR KANAN) -->
+        <!-- 1. DASBOR DYNAMIC BERDASARKAN ROLE -->
         <section id="page-home" class="page-section active">
-          <div class="feature-menu-grid">
-            
-            <div class="feature-card" onclick="navigateToPage('opensla')">
-              <div class="feature-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;">
-                <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-              </div>
-              <div class="feature-title">Open SLA (Buat Tiket)</div>
-              <div class="feature-desc">Kirim paket pesan / tiket laporan kendala operasional ke Administrator.</div>
-            </div>
-
-            <div class="feature-card" onclick="navigateToPage('tickets')">
-              <div class="feature-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
-                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-              </div>
-              <div class="feature-title">Status Tiket Saya</div>
-              <div class="feature-desc">Pantau status tiket Anda (Kuning: Pending, Hijau: Approved, Merah: Canceled).</div>
-            </div>
-
-            <div class="feature-card" onclick="navigateToPage('account')">
-              <div class="feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
-                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-              </div>
-              <div class="feature-title">Profil & ID Pengguna</div>
-              <div class="feature-desc">Lihat User ID unik Anda, perbarui nama, foto profil, dan kata sandi.</div>
-            </div>
-
-          </div>
+          <div id="dynamicDashboardGrid" class="feature-menu-grid"></div>
         </section>
 
-        <!-- 2. FORM OPEN SLA (BUAT TIKET) -->
+        <!-- 2. FORM OPEN SLA (KHUSUS USER BIASA) -->
         <section id="page-opensla" class="page-section">
           <div class="card">
-            <h2 class="card-title">Form Open SLA - Buat Tiket Baru</h2>
+            <h2 class="card-title">Form Open SLA - Buat Tiket Kendala</h2>
             
-            <form id="openSlaForm" style="display: flex; flex-direction: column; gap: 1.2rem;">
-              
+            <form id="openSlaForm" style="display: flex; flex-direction: column; gap: 0.85rem;">
               <div class="form-group">
-                <label for="slaOptionSelect">Kategori Masalah / Open SLA <span class="required-star">*</span></label>
+                <label for="slaOptionSelect">Kategori Masalah / SLA <span class="required-star">*</span></label>
                 <select id="slaOptionSelect" class="input-control" required>
-                  <option value="">-- Pilih Jenis Gangguan / SLA --</option>
+                  <option value="">-- Pilih Jenis Gangguan --</option>
                   <option value="Problem part">Problem part</option>
                   <option value="Pemadaman listrik">Pemadaman listrik</option>
                   <option value="Gangguan jaringan">Gangguan jaringan</option>
@@ -585,27 +528,23 @@
                 </select>
               </div>
 
-              <div class="form-group" id="manualNoteGroup">
+              <div class="form-group">
                 <label for="slaManualNote">Rincian Laporan / Catatan Manual <span class="required-star">*</span></label>
-                <textarea id="slaManualNote" class="input-control" placeholder="Tuliskan rincian kendala lokasi secara rinci..." required></textarea>
+                <textarea id="slaManualNote" class="input-control" placeholder="Tuliskan rincian kendala lokasi..." required></textarea>
               </div>
 
-              <!-- UNGGAH BANYAK FOTO BUKTI -->
               <div class="form-group">
                 <label>Foto Bukti Kondisi Lokasi (Bisa >1 foto, Ukuran Bebas)</label>
                 <input type="file" id="ticketPhotoInput" accept="image/*" multiple style="display: none;">
-                
                 <button type="button" class="btn btn-secondary" onclick="document.getElementById('ticketPhotoInput').click()" style="align-self: flex-start;">
-                  + Tambah Foto Bukti Lokasi
+                  + Tambah Foto Bukti
                 </button>
-
                 <div id="photoPreviewGrid" class="image-preview-grid"></div>
               </div>
 
-              <button type="submit" class="btn btn-success" style="align-self: flex-start; margin-top: 0.5rem;">
-                Kirim Tiket SLA ke Admin
+              <button type="submit" class="btn btn-success" style="align-self: flex-start;">
+                Kirim Tiket SLA
               </button>
-
             </form>
           </div>
         </section>
@@ -644,24 +583,20 @@
                   <label for="inputFullName">Nama Lengkap</label>
                   <input type="text" id="inputFullName" class="input-control">
                 </div>
-
                 <div class="form-group">
                   <label for="inputUserId">User ID Unik</label>
-                  <input type="text" id="inputUserId" class="input-control" disabled style="opacity: 0.7; font-weight: bold; color: var(--accent-color);">
+                  <input type="text" id="inputUserId" class="input-control" disabled style="opacity:0.7; font-weight:bold; color:var(--accent-color);">
                 </div>
-
                 <div class="form-group">
                   <label for="inputUsername">Username</label>
-                  <input type="text" id="inputUsername" class="input-control" disabled style="opacity: 0.7;">
+                  <input type="text" id="inputUsername" class="input-control" disabled style="opacity:0.7;">
                 </div>
-
                 <div class="form-group">
                   <label for="inputEmail">Email / Surel</label>
                   <input type="email" id="inputEmail" class="input-control">
                 </div>
               </div>
             </div>
-
             <div class="btn-group">
               <button type="submit" class="btn">Simpan Profil</button>
             </div>
@@ -671,12 +606,51 @@
         <!-- 5. HALAMAN KELOLA TIKET ADMIN -->
         <section id="page-admin" class="page-section">
           <div class="card">
-            <h2 class="card-title">Panel Admin - Kontrol Pembukaan Tiket SLA</h2>
+            <h2 class="card-title">Panel Kontrol Tiket SLA Masuk (Admin)</h2>
             <div id="adminTicketsList"></div>
           </div>
         </section>
 
+        <!-- 6. HALAMAN MANAJEMEN PENGGUNA (ADMIN) -->
+        <section id="page-users" class="page-section">
+          <div class="card">
+            <h2 class="card-title">Manajemen Akun Pengguna</h2>
+            <div style="overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.825rem;" id="tableUsers">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--card-border); text-align: left;">
+                    <th style="padding: 0.5rem;">User ID</th>
+                    <th style="padding: 0.5rem;">Nama Lengkap</th>
+                    <th style="padding: 0.5rem;">Username / Email</th>
+                    <th style="padding: 0.5rem;">Role</th>
+                    <th style="padding: 0.5rem; text-align: center;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="userListBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
       </main>
+    </div>
+  </div>
+
+  <!-- MODAL POP-UP PRATINJAU (PREVIEW) TIKET UNTUK ADMIN -->
+  <div id="previewModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="card-title" style="margin-bottom: 0.75rem;">
+        <span id="modalTicketTitle">Pratinjau Tiket SLA</span>
+        <button onclick="closePreviewModal()" style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;">&times;</button>
+      </div>
+
+      <div id="modalTicketDetails" style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.85rem;"></div>
+
+      <div class="btn-group" style="margin-top: 1.25rem;">
+        <button type="button" class="btn btn-secondary" onclick="closePreviewModal()">Tutup</button>
+        <button type="button" class="btn btn-danger" id="btnModalCancel">Cancel (Tolak)</button>
+        <button type="button" class="btn btn-success" id="btnModalApprove">Approve (Setujui)</button>
+      </div>
     </div>
   </div>
 
@@ -702,6 +676,7 @@
     let currentUser = null;
     let ticketsDatabase = [];
     let uploadPhotosBuffer = [];
+    let activePreviewTicketId = null;
 
     let pageHistory = [];
     let currentPage = 'home';
@@ -717,8 +692,7 @@
     const overlay = document.getElementById('overlay');
     const btnToggleSidebar = document.getElementById('btnToggleSidebar');
     const btnBackNav = document.getElementById('btnBackNav');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const pageSections = document.querySelectorAll('.page-section');
+    const sidebarMenuNav = document.getElementById('sidebarMenuNav');
     const btnLogoutSidebar = document.getElementById('btnLogoutSidebar');
 
     const accountForm = document.getElementById('accountForm');
@@ -736,6 +710,7 @@
     const inputUsername = document.getElementById('inputUsername');
     const inputEmail = document.getElementById('inputEmail');
 
+    const dynamicDashboardGrid = document.getElementById('dynamicDashboardGrid');
     const openSlaForm = document.getElementById('openSlaForm');
     const slaOptionSelect = document.getElementById('slaOptionSelect');
     const slaManualNote = document.getElementById('slaManualNote');
@@ -744,8 +719,15 @@
 
     const userTicketsList = document.getElementById('userTicketsList');
     const adminTicketsList = document.getElementById('adminTicketsList');
+    const userListBody = document.getElementById('userListBody');
     const btnNotifBell = document.getElementById('btnNotifBell');
     const notifBadge = document.getElementById('notifBadge');
+
+    const previewModal = document.getElementById('previewModal');
+    const modalTicketTitle = document.getElementById('modalTicketTitle');
+    const modalTicketDetails = document.getElementById('modalTicketDetails');
+    const btnModalApprove = document.getElementById('btnModalApprove');
+    const btnModalCancel = document.getElementById('btnModalCancel');
 
     function playNotifSound() {
       try {
@@ -757,22 +739,17 @@
         osc.type = 'sine';
         osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12);
-        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.25);
+        osc.stop(audioCtx.currentTime + 0.2);
       } catch (e) {}
     }
 
-    function generateUniqueUserId() {
-      return 'USR-' + Math.floor(1000 + Math.random() * 9000);
-    }
-
-    function generateTicketId() {
-      return 'TKT-' + Math.floor(100000 + Math.random() * 900000);
-    }
+    function generateUniqueUserId() { return 'USR-' + Math.floor(1000 + Math.random() * 9000); }
+    function generateTicketId() { return 'TKT-' + Math.floor(100000 + Math.random() * 900000); }
 
     function initDatabaseSafe() {
       try {
@@ -804,18 +781,13 @@
       }
     }
 
-    function saveUsersDB() {
-      localStorage.setItem(USERS_KEY, JSON.stringify(usersDatabase));
-    }
+    function saveUsersDB() { localStorage.setItem(USERS_KEY, JSON.stringify(usersDatabase)); }
 
     function saveActiveSession() {
       if (currentUser && currentUser.username) {
         sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ username: currentUser.username }));
         const idx = usersDatabase.findIndex(u => u.username === currentUser.username);
-        if (idx !== -1) {
-          usersDatabase[idx] = currentUser;
-          saveUsersDB();
-        }
+        if (idx !== -1) { usersDatabase[idx] = currentUser; saveUsersDB(); }
       }
     }
 
@@ -853,14 +825,120 @@
       if (appContainer) appContainer.style.setProperty('display', 'flex', 'important');
 
       applyProfileToUI();
-      checkAdminAccess();
+      renderNavigationAndDashboardByRole();
       renderUserTickets();
       renderAdminTickets();
+      renderUserManagementTable();
       updateNotificationBadge();
 
       pageHistory = [];
       history.replaceState({ page: 'home' }, '', '#home');
       navigateToPage('home', true);
+    }
+
+    /* MEMBERSIHKAN NOTIFIKASI TIKET USER KETIKA DIBUKA */
+    function clearUserNotifications() {
+      if (!currentUser || currentUser.username === DEFAULT_ADMIN.username) return;
+      
+      let updated = false;
+      ticketsDatabase.forEach(t => {
+        if (t.userId === currentUser.userId && t.status !== 'pending' && !t.readByUser) {
+          t.readByUser = true;
+          updated = true;
+        }
+      });
+
+      if (updated) {
+        localStorage.setItem(TICKETS_KEY, JSON.stringify(ticketsDatabase));
+        updateNotificationBadge();
+      }
+    }
+
+    /* RENDER DYNAMIC DASHBOARD & SIDEBAR (SANGAT BERBEDA ANTARA USER DAN ADMIN) */
+    function renderNavigationAndDashboardByRole() {
+      if (!currentUser || !sidebarMenuNav || !dynamicDashboardGrid) return;
+
+      const isAdmin = currentUser.username === DEFAULT_ADMIN.username;
+
+      if (isAdmin) {
+        // NAVIGASI SIDEBAR ADMIN
+        sidebarMenuNav.innerHTML = `
+          <li><a href="#home" class="nav-link active" data-page="home"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Dasbor Admin</span></a></li>
+          <li><a href="#admin" class="nav-link" data-page="admin"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg><span>Kelola Tiket SLA</span></a></li>
+          <li><a href="#users" class="nav-link" data-page="users"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8s0 0 0 0z"/></svg><span>Kelola Pengguna</span></a></li>
+          <li><a href="#account" class="nav-link" data-page="account"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><span>Profil System</span></a></li>
+        `;
+
+        // DASBOR UTAMA ADMIN (TANPA FITUR OPEN TIKET)
+        dynamicDashboardGrid.innerHTML = `
+          <div class="feature-card" onclick="navigateToPage('admin')">
+            <div class="feature-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            </div>
+            <div class="feature-title">Kelola Tiket SLA</div>
+            <div class="feature-desc">Pratinjau, setujui (Approve), atau tolak (Cancel) tiket kendala masuk.</div>
+          </div>
+
+          <div class="feature-card" onclick="navigateToPage('users')">
+            <div class="feature-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;">
+              <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8s0 0 0 0z"/></svg>
+            </div>
+            <div class="feature-title">Kelola Pengguna</div>
+            <div class="feature-desc">Pantau User ID dan kontrol daftar akun terdaftar dalam sistem.</div>
+          </div>
+
+          <div class="feature-card" onclick="navigateToPage('account')">
+            <div class="feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+              <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <div class="feature-title">Profil Administrator</div>
+            <div class="feature-desc">Atur identitas akun pengembang dan kata sandi admin.</div>
+          </div>
+        `;
+      } else {
+        // NAVIGASI SIDEBAR USER
+        sidebarMenuNav.innerHTML = `
+          <li><a href="#home" class="nav-link active" data-page="home"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Dasbor Utama</span></a></li>
+          <li><a href="#opensla" class="nav-link" data-page="opensla"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg><span>Open SLA (Buat Tiket)</span></a></li>
+          <li><a href="#tickets" class="nav-link" data-page="tickets"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg><span>Status Tiket Saya</span></a></li>
+          <li><a href="#account" class="nav-link" data-page="account"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><span>Akun & Profil</span></a></li>
+        `;
+
+        // DASBOR UTAMA USER
+        dynamicDashboardGrid.innerHTML = `
+          <div class="feature-card" onclick="navigateToPage('opensla')">
+            <div class="feature-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;">
+              <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            </div>
+            <div class="feature-title">Open SLA (Buat Tiket)</div>
+            <div class="feature-desc">Kirim tiket laporan kendala operasional ke Administrator.</div>
+          </div>
+
+          <div class="feature-card" onclick="navigateToPage('tickets')">
+            <div class="feature-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            </div>
+            <div class="feature-title">Status Tiket Saya</div>
+            <div class="feature-desc">Pantau status respons (Kuning, Hijau, Merah) dari Admin.</div>
+          </div>
+
+          <div class="feature-card" onclick="navigateToPage('account')">
+            <div class="feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+              <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <div class="feature-title">Profil & ID Pengguna</div>
+            <div class="feature-desc">Lihat User ID unik Anda, perbarui nama, foto profil, dan kata sandi.</div>
+          </div>
+        `;
+      }
+
+      // Pasang ulang event listener untuk tautan navigasi baru
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigateToPage(link.dataset.page);
+        });
+      });
     }
 
     function navigateToPage(pageId, isBack = false) {
@@ -870,12 +948,19 @@
       }
       currentPage = pageId;
 
-      navLinks.forEach(link => link.classList.toggle('active', link.dataset.page === pageId));
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active', link.dataset.page === pageId);
+      });
+
       pageSections.forEach(section => {
         const isMatch = section.id === `page-${pageId}`;
         section.classList.toggle('active', isMatch);
         section.style.setProperty('display', isMatch ? 'block' : 'none', 'important');
       });
+
+      if (pageId === 'tickets') {
+        clearUserNotifications();
+      }
 
       if (btnBackNav) btnBackNav.classList.toggle('hidden', currentPage === 'home');
       if (window.innerWidth <= 768) closeSidebar();
@@ -911,7 +996,7 @@
         const box = document.createElement('div');
         box.className = 'preview-thumb-box';
         box.innerHTML = `
-          <img src="${base64Img}" alt="Foto Bukti ${index + 1}" onclick="openImageModal('${base64Img}')">
+          <img src="${base64Img}" alt="Bukti ${index + 1}" onclick="openImageModal('${base64Img}')">
           <button type="button" class="btn-remove-thumb" onclick="removePhotoBuffer(${index})">&times;</button>
         `;
         photoPreviewGrid.appendChild(box);
@@ -928,7 +1013,6 @@
       w.document.write(`<img src="${src}" style="max-width:100%; height:auto;" />`);
     };
 
-    /* CEK STATUS PENDING USER (PROTEKSI TIDAK BISA KIRIM TIKET DUA KALI) */
     function hasPendingTicket(userId) {
       return ticketsDatabase.some(t => t.userId === userId && t.status === 'pending');
     }
@@ -938,9 +1022,8 @@
       e.preventDefault();
       if (!currentUser) return;
 
-      // RULE: User tidak dapat mengirim pesan jika pesan/tiket sebelumnya belum dibalas (pending)
       if (hasPendingTicket(currentUser.userId)) {
-        showToast('Pending ticket sebelumnya! Mohon tunggu tanggapan Admin.', 'warning', 'Akses Ditolak');
+        showToast('Pending ticket sebelumnya! Mohon tunggu balasan Admin.', 'warning', 'Akses Ditolak');
         return;
       }
 
@@ -962,9 +1045,10 @@
         category: category,
         note: note,
         photos: [...uploadPhotosBuffer],
-        status: 'pending', // KUNING: Belum dibuka / diproses admin
+        status: 'pending',
         cancelReason: '',
-        timestamp: timeStr
+        timestamp: timeStr,
+        readByUser: true
       };
 
       ticketsDatabase.unshift(newTicket);
@@ -986,7 +1070,7 @@
       const myTickets = ticketsDatabase.filter(t => t.userId === currentUser.userId);
 
       if (myTickets.length === 0) {
-        userTicketsList.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 2rem;">Belum ada tiket SLA yang dikirim.</p>`;
+        userTicketsList.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 1.5rem; font-size: 0.85rem;">Belum ada tiket SLA yang dikirim.</p>`;
         return;
       }
 
@@ -996,24 +1080,24 @@
 
         if (t.status === 'approved') {
           badgeClass = 'green';
-          badgeText = 'HIJAU - APPROVED / DISETUJUI';
+          badgeText = 'HIJAU - APPROVED';
         } else if (t.status === 'canceled') {
           badgeClass = 'red';
-          badgeText = 'MERAH - CANCELED / DIBATALKAN';
+          badgeText = 'MERAH - CANCELED';
         }
 
         const div = document.createElement('div');
         div.className = 'ticket-card-item';
         div.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-            <strong>${t.id} - ${t.category}</strong>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
+            <strong style="font-size:0.875rem;">${t.id} - ${t.category}</strong>
             <span class="ticket-badge ${badgeClass}">${badgeText}</span>
           </div>
-          <div style="font-size: 0.85rem; color: var(--text-muted);">Waktu: ${t.timestamp}</div>
-          <p style="font-size: 0.9rem; line-height: 1.4;">${t.note || '-'}</p>
-          ${t.status === 'canceled' ? `<div style="color: #ef4444; font-size: 0.85rem; font-weight: 600; background: rgba(239, 68, 68, 0.1); padding: 0.5rem; border-radius: 6px;">Alasan Pembatalan Admin: ${t.cancelReason}</div>` : ''}
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Waktu Kirim: ${t.timestamp}</div>
+          <p style="font-size: 0.825rem; line-height: 1.3;">${t.note || '-'}</p>
+          ${t.status === 'canceled' ? `<div style="color: #ef4444; font-size: 0.78rem; font-weight: 600; background: rgba(239, 68, 68, 0.1); padding: 0.4rem; border-radius: 4px;">Alasan Pembatalan Admin: ${t.cancelReason}</div>` : ''}
           ${t.photos && t.photos.length > 0 ? `
-            <div style="font-size: 0.8rem; font-weight: 700;">Foto Bukti Lokasi (${t.photos.length}):</div>
+            <div style="font-size: 0.75rem; font-weight: 700;">Foto Bukti Lokasi (${t.photos.length}):</div>
             <div class="image-preview-grid">
               ${t.photos.map(p => `<div class="preview-thumb-box"><img src="${p}" onclick="openImageModal('${p}')"></div>`).join('')}
             </div>
@@ -1023,13 +1107,13 @@
       });
     }
 
-    /* RENDER TIKET ADMIN */
+    /* RENDER TIKET ADMIN (DENGAN TOMBOL PRATINJAU / PREVIEW) */
     function renderAdminTickets() {
       if (!adminTicketsList) return;
       adminTicketsList.innerHTML = '';
 
       if (ticketsDatabase.length === 0) {
-        adminTicketsList.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 2rem;">Belum ada tiket dari pengguna.</p>`;
+        adminTicketsList.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 1.5rem; font-size:0.85rem;">Belum ada tiket dari pengguna.</p>`;
         return;
       }
 
@@ -1043,52 +1127,127 @@
         const div = document.createElement('div');
         div.className = 'ticket-card-item';
         div.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
             <div>
-              <strong>${t.id} - ${t.category}</strong>
-              <div style="font-size: 0.8rem; color: var(--text-muted);">Pengirim: ${t.userName} (${t.userId}) | ${t.timestamp}</div>
+              <strong style="font-size:0.875rem;">${t.id} - ${t.category}</strong>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Pengirim: ${t.userName} (${t.userId}) | ${t.timestamp}</div>
             </div>
             <span class="ticket-badge ${badgeClass}">${badgeText}</span>
           </div>
-          <p style="font-size: 0.9rem;">${t.note || '-'}</p>
-          ${t.photos && t.photos.length > 0 ? `
-            <div class="image-preview-grid">
-              ${t.photos.map(p => `<div class="preview-thumb-box"><img src="${p}" onclick="openImageModal('${p}')"></div>`).join('')}
-            </div>
-          ` : ''}
-          ${t.status === 'pending' ? `
-            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
-              <button class="btn btn-success" onclick="approveTicket('${t.id}')">Approve (Setujui)</button>
-              <button class="btn btn-danger" onclick="cancelTicket('${t.id}')">Cancel (Batalkan)</button>
-            </div>
-          ` : ''}
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+            <button class="btn btn-secondary" onclick="openPreviewModal('${t.id}')">Pratinjau (Preview Tiket)</button>
+          </div>
         `;
         adminTicketsList.appendChild(div);
       });
     }
 
-    /* AKSI ADMIN: APPROVE & CANCEL TIKET */
-    window.approveTicket = function(id) {
-      const idx = ticketsDatabase.findIndex(t => t.id === id);
-      if (idx !== -1) {
-        ticketsDatabase[idx].status = 'approved';
-        saveTicketsDB();
-        showToast(`Tiket ${id} disetujui (Approved)!`, 'success');
+    /* PRATINJAU MODAL UNTUK ADMIN SEBELUM APPROVE / CANCEL */
+    window.openPreviewModal = function(id) {
+      const ticket = ticketsDatabase.find(t => t.id === id);
+      if (!ticket) return;
+
+      activePreviewTicketId = id;
+      modalTicketTitle.textContent = `Pratinjau Tiket: ${ticket.id}`;
+
+      let badgeClass = 'yellow';
+      let badgeText = 'PENDING';
+      if (ticket.status === 'approved') { badgeClass = 'green'; badgeText = 'APPROVED'; }
+      else if (ticket.status === 'canceled') { badgeClass = 'red'; badgeText = 'CANCELED'; }
+
+      modalTicketDetails.innerHTML = `
+        <div><strong>Status:</strong> <span class="ticket-badge ${badgeClass}">${badgeText}</span></div>
+        <div><strong>Pengirim:</strong> ${ticket.userName} (${ticket.userId})</div>
+        <div><strong>Waktu Kirim:</strong> ${ticket.timestamp}</div>
+        <div><strong>Kategori SLA:</strong> ${ticket.category}</div>
+        <div><strong>Rincian Laporan:</strong></div>
+        <p style="background: rgba(0,0,0,0.03); padding:0.5rem; border-radius:6px; font-size:0.825rem;">${ticket.note || '-'}</p>
+        ${ticket.status === 'canceled' ? `<div style="color:#ef4444;"><strong>Alasan Penolakan:</strong> ${ticket.cancelReason}</div>` : ''}
+        ${ticket.photos && ticket.photos.length > 0 ? `
+          <div><strong>Foto Bukti (${ticket.photos.length}):</strong></div>
+          <div class="image-preview-grid">
+            ${ticket.photos.map(p => `<div class="preview-thumb-box"><img src="${p}" onclick="openImageModal('${p}')"></div>`).join('')}
+          </div>
+        ` : ''}
+      `;
+
+      if (ticket.status === 'pending') {
+        btnModalApprove.style.display = 'inline-flex';
+        btnModalCancel.style.display = 'inline-flex';
+      } else {
+        btnModalApprove.style.display = 'none';
+        btnModalCancel.style.display = 'none';
       }
+
+      previewModal.classList.add('active');
     };
 
-    window.cancelTicket = function(id) {
+    function closePreviewModal() {
+      previewModal.classList.remove('active');
+      activePreviewTicketId = null;
+    }
+
+    btnModalApprove?.addEventListener('click', () => {
+      if (!activePreviewTicketId) return;
+      const idx = ticketsDatabase.findIndex(t => t.id === activePreviewTicketId);
+      if (idx !== -1) {
+        ticketsDatabase[idx].status = 'approved';
+        ticketsDatabase[idx].readByUser = false;
+        saveTicketsDB();
+        showToast(`Tiket ${activePreviewTicketId} disetujui!`, 'success');
+        closePreviewModal();
+      }
+    });
+
+    btnModalCancel?.addEventListener('click', () => {
+      if (!activePreviewTicketId) return;
       const reason = prompt("Masukkan alasan pembatalan tiket (Wajib diisi):");
       if (!reason || reason.trim() === '') {
         alert("Alasan pembatalan WAJIB diisi!");
         return;
       }
-      const idx = ticketsDatabase.findIndex(t => t.id === id);
+      const idx = ticketsDatabase.findIndex(t => t.id === activePreviewTicketId);
       if (idx !== -1) {
         ticketsDatabase[idx].status = 'canceled';
         ticketsDatabase[idx].cancelReason = reason.trim();
+        ticketsDatabase[idx].readByUser = false;
         saveTicketsDB();
-        showToast(`Tiket ${id} dibatalkan (Canceled)!`, 'warning');
+        showToast(`Tiket ${activePreviewTicketId} dibatalkan!`, 'warning');
+        closePreviewModal();
+      }
+    });
+
+    function renderUserManagementTable() {
+      if (!userListBody) return;
+      userListBody.innerHTML = '';
+
+      usersDatabase.forEach((u) => {
+        const isSelf = currentUser && currentUser.username === u.username;
+        const isAdminAccount = u.username === DEFAULT_ADMIN.username;
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--card-border)';
+        tr.innerHTML = `
+          <td style="padding: 0.4rem; font-weight: 700; color: var(--accent-color);">${u.userId || '-'}</td>
+          <td style="padding: 0.4rem; font-weight: 600;">${u.fullName}</td>
+          <td style="padding: 0.4rem;">${u.username} <br><small style="color: var(--text-muted);">${u.email}</small></td>
+          <td style="padding: 0.4rem;"><span class="role-badge" style="font-size: 0.68rem; padding: 1px 6px;">${u.role || 'Pengguna'}</span></td>
+          <td style="padding: 0.4rem; text-align: center;">
+            ${isAdminAccount || isSelf ? '<span style="color: var(--text-muted); font-size: 0.75rem;">(Sistem)</span>' : `
+              <button onclick="deleteUserAccount('${u.username}')" style="padding: 0.2rem 0.4rem; font-size: 0.7rem; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer;">Hapus</button>
+            `}
+          </td>
+        `;
+        userListBody.appendChild(tr);
+      });
+    }
+
+    window.deleteUserAccount = function(username) {
+      if (username === DEFAULT_ADMIN.username) return;
+      if (confirm(`Hapus akun ${username}?`)) {
+        usersDatabase = usersDatabase.filter(u => u.username !== username);
+        saveUsersDB();
+        renderUserManagementTable();
+        showToast(`Akun ${username} dihapus!`, 'warning');
       }
     };
 
@@ -1098,15 +1257,19 @@
       if (currentUser.username === DEFAULT_ADMIN.username) {
         count = ticketsDatabase.filter(t => t.status === 'pending').length;
       } else {
-        count = ticketsDatabase.filter(t => t.userId === currentUser.userId && t.status !== 'pending').length;
+        count = ticketsDatabase.filter(t => t.userId === currentUser.userId && t.status !== 'pending' && !t.readByUser).length;
       }
       notifBadge.textContent = count;
       notifBadge.style.display = count > 0 ? 'block' : 'none';
     }
 
     btnNotifBell?.addEventListener('click', () => {
-      if (currentUser?.username === DEFAULT_ADMIN.username) navigateToPage('admin');
-      else navigateToPage('tickets');
+      if (currentUser?.username === DEFAULT_ADMIN.username) {
+        navigateToPage('admin');
+      } else {
+        clearUserNotifications();
+        navigateToPage('tickets');
+      }
     });
 
     tabLogin?.addEventListener('click', () => {
@@ -1187,13 +1350,6 @@
       showToast('Anda telah keluar.', 'info');
     });
 
-    function checkAdminAccess() {
-      const menuAdmin = document.getElementById('menuAdmin');
-      if (menuAdmin) {
-        menuAdmin.style.display = (currentUser && currentUser.username === DEFAULT_ADMIN.username) ? 'block' : 'none';
-      }
-    }
-
     function applyProfileToUI() {
       if (!currentUser) return;
       if (inputFullName) inputFullName.value = currentUser.fullName || '';
@@ -1225,9 +1381,6 @@
       }
     });
 
-    navLinks.forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); navigateToPage(link.dataset.page); }));
-    navProfileTrigger?.addEventListener('click', () => navigateToPage('account'));
-
     function openSidebar() { sidebar?.classList.add('active'); overlay?.classList.add('active'); }
     function closeSidebar() { sidebar?.classList.remove('active'); overlay?.classList.remove('active'); }
 
@@ -1252,9 +1405,9 @@
       `;
       toastContainer.appendChild(toast);
       setTimeout(() => toast.classList.add('show'), 10);
-      const dismiss = () => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 350); };
+      const dismiss = () => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); };
       toast.querySelector('.toast-close')?.addEventListener('click', dismiss);
-      setTimeout(dismiss, 3500);
+      setTimeout(dismiss, 3000);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
